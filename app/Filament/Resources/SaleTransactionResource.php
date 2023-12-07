@@ -1,0 +1,339 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\SaleTransactionResource\Pages;
+use App\Filament\Resources\SaleTransactionResource\RelationManagers;
+use App\Models\SaleTransaction;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Forms\Components\Wizard;
+use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use App\Models\Service;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Split;
+use Filament\Support\Enums\FontWeight;
+use Illuminate\Support\Facades\Blade;
+use Filament\Infolists\Components\Grid;
+use Filament\Tables\Filters\SelectFilter;
+
+class SaleTransactionResource extends Resource
+{
+    protected static ?string $model = SaleTransaction::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+
+    protected static ?string $navigationGroup = 'Shop';
+
+    public static function getEloquentQuery(): Builder
+    {
+        $userId = auth()->id();
+
+        if(auth()->user()->role->name === 'Staff')
+        {
+
+        return parent::getEloquentQuery()->where('processed_by', $userId);
+        
+        }
+
+        return parent::getEloquentQuery();
+    }
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Wizard::make([
+                    Wizard\Step::make('Choose Services')
+                        ->schema([
+                            Repeater::make('item')
+                            ->relationship()
+                            ->label('Services')
+                            ->schema([
+                                Select::make('service_id')
+                                ->label('Service Name')
+                                ->options(Service::query()->pluck('service_name', 'id'))
+                                ->searchable()
+                                ->required()
+                                ->reactive()
+                                ->afterStateUpdated(function($state, callable
+                                $set){
+                                    $service= Service::find($state);
+                                     if ($service) {
+                                        $set('price', number_format
+                                        ($service->price));
+                                        $set('unit_price', $service->price);
+                                        $set('price', $service->price);
+                                        $set('total_price', $service->price);
+                                        $set('service_price', $service->price);
+                                        $set('service_price_visible', $service->price);
+                                        $set('total_price_visible', $service->price);
+                                        $set('service_name', $service->service_name);
+                                        $set('description', $service->description);
+                                     }
+                                }),
+                                Hidden::make('service_name'),
+                                TextArea::make('description')
+                                ->disabled()
+                                ->hidden(fn (Get $get) => $get('service_id') === null ),
+                                Hidden::make('service_price'),
+                                TextInput::make('service_price_visible')
+                                ->disabled()
+                                ->label('Price')
+                                ->prefix('₱')
+                                ->hidden(fn (Get $get) => $get('service_id') === null ),
+                                TextInput::make('quantity')
+                                                    ->numeric()
+                                                    ->default(1)
+                                                    ->minValue(1)
+                                                    ->reactive()
+                                                    ->afterStateUpdated(function($state, callable $set, $get) {
+                                                        $quantity = (int)$get('quantity');
+                                                        $price = (float)$get('service_price');
+                                                        
+                                                        if ($quantity >= 0 && $price >= 0) {
+                                                            $total = $quantity * $price;
+                                                            $set('total_price_visible', number_format($total, 2));
+                                                            $set('total_price', number_format($total, 2)); // Format total price with 2 decimal places
+                                                        }
+                                                    })
+                                                    ->hidden(fn (Get $get) => $get('service_id') === null ),
+                                Hidden::make('total_price'),
+                                TextInput::make('total_price_visible')
+                                                    ->disabled()
+                                                    ->label('Sub total')
+                                                    ->required()
+                                                    ->prefix('₱')
+                                                    ->dehydrated(false)
+                                                    ->hidden(fn (Get $get) => $get('service_id') === null ),       
+                            ])
+                            ->addActionLabel('Add services')
+                            ->collapsible()
+                        ]),
+                    Wizard\Step::make('Process Payment')
+                        ->schema([
+                            Hidden::make('sales_name')
+                            ->label('Appointment Name')
+                            ->default(Str::random(10))
+                            ->unique(),
+                            Hidden::make('process_type')
+                            ->default('Walk-in'),
+                            Hidden::make('processed_by')
+                            ->default(auth()->id()),
+                            Placeholder::make('total_amount')
+                                ->label("Total Amount")
+                                ->content(function ($get) {
+                                    return '    '.'₱'.' '. collect($get('item'))
+                                        ->pluck('total_price')
+                                        ->sum();
+                                }),
+                            TextInput::make('amount_recieved')
+                                ->prefix('₱')
+                                ->placeholder('Enter customer cash...')
+                                ->required()
+                                ->numeric()
+                                ->reactive()
+                                ->afterStateUpdated(function ($set, $get, $state, $record) {
+
+                                    $total_amount = collect($get('item'))
+                                        ->pluck('total_price')
+                                        ->sum();
+
+                                    $change = ($state) - $total_amount;
+                                    if ($change < 0) {
+                                        $set('change_visible', 'Insufficient cash');
+                                        $set('change', 'Insufficient cash');
+                                    } else {
+                                        $set('change_visible', max(0, $change));
+                                        $set('customer_cash_change', max(0, $change));
+                                        $set('total_amount', max(0, $total_amount));
+                                    }
+                                }),
+                            Hidden::make('total_amount'),
+                            TextInput::make('change_visible')
+                                ->prefix('₱')
+                                ->disabled()
+                                ->label('Change')
+                                ->doesntStartWith(['Insufficient cash']),
+                            Hidden::make('customer_cash_change')
+                                ->doesntStartWith(['Insufficient cash']),
+                        ]),
+                ])
+                ->columnSpan('full')
+                ->submitAction(new HtmlString(Blade::render(<<<BLADE
+                <x-filament::button
+                    type="submit"
+                    size="sm"
+                >
+                    Checkout
+                </x-filament::button>
+            BLADE)))
+            //     ->submitAction(new HtmlString('<button type="submit" class="bg-primary-600 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded">
+            //     Create
+            // </button>
+            // '))
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+    return $infolist
+        ->schema([
+            TextEntry::make('sales_name')
+                ->label('Sales name')
+                ->size(TextEntry\TextEntrySize::Large)
+                ->weight(FontWeight::Bold)
+                ->copyable()
+                ->copyMessage('Copied!')
+                ->copyMessageDuration(1500),
+            TextEntry::make('customer.full_name')
+                ->label('Customer')
+                ->default('Guest')
+                ->size(TextEntry\TextEntrySize::Large)
+                ->weight(FontWeight::Bold),
+            TextEntry::make('staff.full_name')
+                ->label('Processed by')
+                ->size(TextEntry\TextEntrySize::Large)
+                ->weight(FontWeight::Bold),
+            Section::make([
+                TextEntry::make('process_type')
+                        ->label('Processed type')
+                        ->badge()
+                        ->color(fn (string $state): string => match ($state) {
+                            'Online Order' => 'primary',
+                            'Walk-in' => 'success',
+                        }),
+                TextEntry::make('total_amount')
+                             ->money('PHP', true)
+                             ->label('Total amount')
+                             ->weight(FontWeight::Bold),
+                TextEntry::make('customer_cash_change')
+                             ->money('PHP', true)
+                             ->label('Change')
+                             ->weight(FontWeight::Bold),
+                    ])->columns(3),
+                Fieldset::make('Services List')
+                    ->schema([
+                    RepeatableEntry::make('item')
+                        ->schema([
+                            ImageEntry::make('service.service_avatar')
+                            ->height(50),
+                            TextEntry::make('service.service_name')
+                            ->label('Name'),
+                            TextEntry::make('service.price')
+                            ->money('PHP', true)
+                            ->label('Price'),
+                            TextEntry::make('quantity'),
+                            TextEntry::make('total_price')
+                            ->label('Subtotal')
+                            ->money('PHP', true),
+                            TextEntry::make('service.description')
+                            ->label('Description'),
+                        ])
+                        ->columnSpan(2)
+                        ->columns('5')
+                    ]),
+            ]);
+    }
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('sales_name')
+                ->searchable()
+                ->sortable(),
+                ImageColumn::make('item.service.service_avatar')
+                ->square()
+                ->stacked(),
+                TextColumn::make('process_type')
+                ->label('Processed type')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'Online Order' => 'primary',
+                    'Walk-in' => 'success',
+                })
+                ->sortable(),
+                TextColumn::make('customer.full_name')
+                ->default('Customer: Guest')
+                ->sortable(),
+                TextColumn::make('staff.full_name')
+                ->label('Processed by')
+                ->sortable(),
+                TextColumn::make('total_amount')
+                 ->money('PHP', true)
+                 ->sortable()
+                 ->summarize([
+                    Sum::make()
+                    ->money('PHP', true),
+                ]),
+                 TextColumn::make('customer_cash_change')
+                 ->money('PHP', true)
+                 ->label('Change')
+                 ->sortable(),
+                 TextColumn::make('updated_at')
+                 ->label('Transaction date')
+                 ->date()
+                 ->sortable(),
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->filters([
+                SelectFilter::make('process_type')
+                ->label('Process type')
+                ->options([
+                    'Online Appointment' => 'Online Appointment',
+                    'Walk-in' => 'Walk-in',
+                    'Online Order' => 'Online Order',
+                ]),
+            ])
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+            ])
+            // ->bulkActions([
+            //     Tables\Actions\BulkActionGroup::make([
+            //         Tables\Actions\DeleteBulkAction::make(),
+            //     ]),
+            // ])
+            ->emptyStateActions([
+            ]);
+    }
+    
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+    
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListSaleTransactions::route('/'),
+            'create' => Pages\CreateSaleTransaction::route('/create'),
+            'view' => Pages\ViewSaleTransaction::route('/{record}'),
+            'edit' => Pages\EditSaleTransaction::route('/{record}/edit'),
+        ];
+    }    
+}
