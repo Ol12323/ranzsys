@@ -38,4 +38,9 @@ class Cart extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function time_slot()
+    {
+        return $this->belongsTo(TimeSlot::class);
+    }
 }

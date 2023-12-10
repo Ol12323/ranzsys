@@ -68,7 +68,7 @@ class ViewOrder extends ViewRecord
             Action::make('generateAcknowledgeReceipt')
             ->color('primary')
             ->hidden(function ($record){
-                return (abs($record->payment_due) > 0.01) || ($record->status === 'Pending');
+                return (abs($record->payment_due) > 0.01) || ($record->status != 'Completed') ;
             })
             ->url(fn (Model $record): string => route('generate.order-acknowledgement-receipt', $record))
             ->openUrlInNewTab(),

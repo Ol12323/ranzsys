@@ -239,8 +239,9 @@ class CartResource extends Resource
                 }
                 
                 // To get the expected output '2023-10-10'
-                $expectedOutput = $futureDate->format('Y-m-d');
-                
+                //$expectedOutput = $futureDate->format('Y-m-d');
+                //$expectedOutput = Carbon::createFromFormat('Y-m-d', $futureDate)->format('F d, Y');
+                $expectedOutput = $futureDate->format('F d, Y');
 
                 // You can now use $totalSubtotal as the total subtotal
                 return new HtmlString(view('order-summary', [
@@ -270,6 +271,7 @@ class CartResource extends Resource
                         
                         // To get the expected output '2023-10-10'
                         $expectedOutput = $futureDate->format('Y-m-d');
+                        //$expectedOutput = $futureDate->format('F d, Y');
 
                         // All records have valid file submissions, continue with the action.
                         $orderNotifTriggered = false;
@@ -319,27 +321,37 @@ class CartResource extends Resource
                                 $recipients = User::whereIn('role_id', [1, 2])->get();
                                 $order_id = $order->id;
                                 $recipient = auth()->user();
+                                $appointment_date = $record->appointment_date;
+                                $time_slot = $record->time_slot->TimeSlot;
+                                $formattedAppointmentDate = Carbon::createFromFormat('Y-m-d', $appointment_date)->format('F d, Y');
                         
                                 Notification::make()
-                                    ->title('Appointment order.')
-                                    ->success()
-                                    ->body('A new appointment order '.$order_name.' has been confirmed.')
+                                    ->icon('heroicon-o-shopping-cart')
+                                    ->iconColor('primary')
+                                    ->title('New order '.$order_name.'.')
+                                    ->body('Appointment date: '.$formattedAppointmentDate.', timeslot '.$time_slot.'.')
                                     ->actions([
                                         NotifAction::make('view')
                                             ->button()
                                             ->url("/owner/orders/{$order_id}"),
+                                        NotifAction::make('undo')
+                                            ->color('gray'),
                                     ])
                                     ->sendToDatabase($recipients);
                         
                                 // For the customer notification
                                 Notification::make()
-                                    ->title('Appointment order confirmed successfully. Please visit our shop on the confirmed service date.')
-                                    ->success()
+                                ->icon('heroicon-o-shopping-cart')
+                                ->iconColor('primary')
+                                ->title('New order '.$order_name.'.')
+                                ->body('Appointment date: '.$formattedAppointmentDate.', timeslot '.$time_slot.'.')
                                     ->actions([
                                         NotifAction::make('view')
                                             ->button()
                                             ->color('primary')
-                                            ->url("/customer/orders/{$order_id}"),
+                                            ->url("/customer/orders/{$order_id}"),       
+                                        NotifAction::make('undo')
+                                            ->color('gray'),
                                     ])
                                     ->sendToDatabase($recipient);
 
@@ -379,15 +391,20 @@ class CartResource extends Resource
                                 // For staff/owner notification
                                 $recipients = User::whereIn('role_id', [1, 2])->get();
                                 $order_id = $order->id;
+                                //$formattedEstimatedDate = $expectedOutput->format('F d, Y');
+                                $formattedEstimatedDate = Carbon::createFromFormat('Y-m-d', $expectedOutput)->format('F d, Y');
 
                                 Notification::make()
-                                    ->title('Printing order placed.')
-                                    ->success()
-                                    ->body('A new service order'.' '.$order_name.' '.'has been placed and requires your attention. Please review and approve the order. Once approved, the customer will be able to select the mode of payment.')
+                                ->icon('heroicon-o-shopping-cart')
+                                ->iconColor('primary')
+                                ->title('New order '.$order_name.'.')
+                                ->body('Estimated pickup date: '.$formattedEstimatedDate.'. Please review and approve the order. Once approved, the customer will be able to select the mode of payment.')
                                     ->actions([
                                         NotifAction::make('view')
                                         ->button()
-                                        ->url("/owner/orders/{$order_id}")
+                                        ->url("/owner/orders/{$order_id}"),
+                                        NotifAction::make('undo')
+                                            ->color('gray'),
                                     ])
                                     ->sendToDatabase($recipients);
 
@@ -396,13 +413,16 @@ class CartResource extends Resource
 
                                 // Trigger the notification only if all database operations were successful.
                                 Notification::make()
-                                    ->title('Service order placed.')
-                                    ->body('Your service order,'.$order_name.', is confirmed. Await approval from our team. After approval, you can choose mode of payment.')
-                                    ->success()
+                                    ->icon('heroicon-o-shopping-cart')
+                                    ->iconColor('primary')
+                                    ->title('New order '.$order_name.'.')
+                                    ->body('Estimated pickup date: '.$formattedEstimatedDate.'. Await approval from our team. After approval, you can choose mode of payment.')
                                     ->actions([
                                         NotifAction::make('view')
                                         ->button()
-                                        ->url("/customer/orders/{$order_id}")
+                                        ->url("/customer/orders/{$order_id}"),
+                                        NotifAction::make('undo')
+                                            ->color('gray'),
                                     ])
                                     ->sendToDatabase($recipient);
                                     $orderNotifTriggered = true;

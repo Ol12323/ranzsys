@@ -45,7 +45,7 @@
                                     <tr>
                                         <td colspan="4" class="py-3.5 pl-2 text-sm font-bold text-left rtl:text-right">
                                             @if($record->service->category->category_name != 'Printing')
-                                            Appointment date: {{$record->appointment_date}}
+                                            Appointment date: {{$formattedAppointmentDate = \Carbon\Carbon::createFromFormat('Y-m-d', $record->appointment_date)->format('F d, Y')}}
                                             @else
                                                 Printing
                                             @endif
@@ -110,7 +110,7 @@
                                 <tr>
                                     <td colspan="4" class="py-3.5 pl-2 text-sm font-bold text-left rtl:text-right">
                                         @if($record->service->category->category_name === 'Printing')
-                                        Estimated pickup date: {{$expectedOutput}} Payment is after approval of your order
+                                        Estimated pickup date: {{$expectedOutput}}, Payment is after approval of your order.
                                         @else
                                             Photography
                                         @endif
