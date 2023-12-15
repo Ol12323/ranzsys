@@ -51,7 +51,7 @@
             @endforeach
             @else
                 <div>
-                    No services is available yet.
+                    No services are available yet.
                 </div>
              @endif
           </div>
