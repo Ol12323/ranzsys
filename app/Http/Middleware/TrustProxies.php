@@ -12,7 +12,11 @@ class TrustProxies extends Middleware
      *
      * @var array<int, string>|string|null
      */
-    protected $proxies;
+    //protected $proxies;
+
+    protected $proxies = [
+        '1.2.3.4'  //replace with load balancer's public IP
+    ];
 
     /**
      * The headers that should be used to detect proxies.
