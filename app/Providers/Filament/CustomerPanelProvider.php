@@ -93,11 +93,4 @@ class CustomerPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/customer/theme.css');
     }
 
-    public function boot(): void
-    {
-        if($this->app->environment('production')) {
-            URL::forceScheme('https');
-        };
-
-    }
 }
