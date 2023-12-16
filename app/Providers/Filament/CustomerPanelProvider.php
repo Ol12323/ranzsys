@@ -89,6 +89,12 @@ class CustomerPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->darkMode()
-            ->viteTheme('resources/css/filament/customer/theme.css');
+            ->viteTheme('resources/css/filament/customer/theme.css')
+            ->bootUsing(function (Panel $panel) {
+                URL::forceRootUrl(Config::get('app.url'));
+                if (str_contains(Config::get('app.url'), 'https://')) {
+                    URL::forceScheme('https');
+                }
+            });
     }
 }
