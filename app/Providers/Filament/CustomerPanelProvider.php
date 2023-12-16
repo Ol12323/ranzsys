@@ -24,6 +24,7 @@ use App\Filament\Pages\Auth\CustomerLogin;
 use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
+use Illuminate\Support\Facades\URL;
 
 class CustomerPanelProvider extends PanelProvider
 {
@@ -91,10 +92,9 @@ class CustomerPanelProvider extends PanelProvider
             ->darkMode()
             ->viteTheme('resources/css/filament/customer/theme.css')
             ->bootUsing(function (Panel $panel) {
-                URL::forceRootUrl(Config::get('app.url'));
-                if (str_contains(Config::get('app.url'), 'https://')) {
+                if($this->app->environment('production')) {
                     URL::forceScheme('https');
-                }
+                };
             });
     }
 }
