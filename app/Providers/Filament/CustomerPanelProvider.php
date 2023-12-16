@@ -92,4 +92,12 @@ class CustomerPanelProvider extends PanelProvider
             ->darkMode()
             ->viteTheme('resources/css/filament/customer/theme.css');
     }
+
+    public function boot(): void
+    {
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
+        };
+
+    }
 }
