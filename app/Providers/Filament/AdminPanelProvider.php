@@ -78,4 +78,12 @@ class AdminPanelProvider extends PanelProvider
             ->darkMode(false)
             ->viteTheme('resources/css/filament/admin/theme.css');
     }
+
+    public function boot(): void
+    {
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
+        };
+
+    }
 }
