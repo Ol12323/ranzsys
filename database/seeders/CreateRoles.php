@@ -13,7 +13,7 @@ class CreateRoles extends Seeder
      */
     public function run(): void
     {
-        $role = [
+        $roles = [
             [
                 'name' => 'Owner',
                 'description' => 'Manage sales and services',
