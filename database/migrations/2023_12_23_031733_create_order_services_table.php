@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->foreign('service_id')->references('id')->on('services');
+            $table->foreign('service_id')->references('service_id')->on('services');
         });
     }
 
