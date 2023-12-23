@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('user_id');
             $table->decimal('price', 8, 2);
-            $tbale->integer('quantity');
+            $table->integer('quantity');
             $table->decimal('sub_total', 8, 2);
             $table->string('mode_of_payment');
             $table->date('appointment_date');
