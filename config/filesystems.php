@@ -62,7 +62,7 @@ return [
             'name'              => env('AZURE_STORAGE_NAME'),
             'key'               => env('AZURE_STORAGE_KEY'),
             'container'         => env('AZURE_STORAGE_CONTAINER'),
-            // 'prefix'            => env('AZURE_STORAGE_PREFIX', ''),
+            'prefix'            => null,
             'url'               => env('AZURE_STORAGE_URL', null),
         ],
 
