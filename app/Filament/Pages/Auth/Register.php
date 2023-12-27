@@ -5,7 +5,7 @@ namespace App\Filament\Pages\Auth;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\Auth\Register as BaseRegister;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Wizard;
 use Illuminate\Support\Facades\Blade;
@@ -38,6 +38,8 @@ class Register extends BaseRegister
                                  ->minLength(2)
                                  ->maxLength(255)
                                  ->required(),
+                            Hidden::make('avatar')
+                            ->default('Qcgj2IM4MhKpk0hxAjoKVqNlIS5caT-metaZGVmYXVsdC5wbmc=-.png'),
                             TextInput::make('phone_number')
                                  ->required()
                                  ->tel()
@@ -53,10 +55,6 @@ class Register extends BaseRegister
                         ]),
                     Wizard\Step::make('Step 2')
                         ->schema([        
-                         FileUpload::make('avatar')
-                                ->avatar()
-                                ->default('/default_avatar/default.png')
-                                ->hidden(),
                          $this->getEmailFormComponent(),
                          $this->getPasswordFormComponent()
                           ->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\S]{8,}$/'),
