@@ -12,17 +12,8 @@ class PasswordResetResponse implements Responsable
 {
     public function toResponse($request): RedirectResponse
     {
-        if (Filament::getCurrentPanel()->getId() === 'admin') {
-            if(Filament::auth()->user()->role->name === 'Staff')
-            {
-                return redirect()->to(RegisterSales::getUrl());
-            }
-
-                return redirect()->to(Filament::getUrl());
-        }
- 
-        if (Filament::getCurrentPanel()->getId() === 'customer') {
-            return redirect()->to(Home::getUrl());
-        }
+        return redirect()->to(
+            Filament::hasLogin() ? Filament::getLoginUrl() : Filament::getUrl(),
+        );
     }
 }
