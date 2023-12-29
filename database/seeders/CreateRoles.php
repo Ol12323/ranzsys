@@ -20,7 +20,7 @@ class CreateRoles extends Seeder
             ],
 
             [
-                'name' => 'Customer',
+                'name' => 'Staff',
                 'description' => 'Manage sales',
             ],
 
