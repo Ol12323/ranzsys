@@ -7,10 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use App\Filament\Pages\RegisterSales;
 use App\Filament\Pages\Home;
 use Filament\Facades\Filament;
+use Livewire\Features\SupportRedirects\Redirector;
  
 class EmailVerificationResponse implements Responsable
 {
-    public function toResponse($request): RedirectResponse
+    public function toResponse($request): RedirectResponse | Redirector
     {
         // You can use the Filament facade to get the current panel and check the ID
         if (Filament::getCurrentPanel()->getId() === 'admin') {

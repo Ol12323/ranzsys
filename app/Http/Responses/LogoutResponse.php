@@ -5,10 +5,11 @@ namespace App\Http\Responses;
 use Filament\Http\Responses\Auth\Contracts\LogoutResponse as Responsable;
 use Illuminate\Http\RedirectResponse;
 use Filament\Facades\Filament;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class LogoutResponse implements Responsable
 {
-    public function toResponse($request): RedirectResponse
+    public function toResponse($request): RedirectResponse | Redirector
     {
         if (Filament::getCurrentPanel()->getId() === 'admin') {
             return redirect()->to(
