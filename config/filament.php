@@ -35,6 +35,6 @@ return [
     |
     */
 
-    'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DISK', 'r2'),
+    'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DISK', 'local'),
 
 ];
