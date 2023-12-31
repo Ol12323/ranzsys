@@ -70,7 +70,7 @@ return [
             'driver' => 's3',
             'key' => env('CLOUDFLARE_R2_ACCESS_KEY_ID'),
             'secret' => env('CLOUDFLARE_R2_SECRET_ACCESS_KEY'),
-            'region' => 'us-east-1',
+            'region' => 'auto',
             'bucket' => env('CLOUDFLARE_R2_BUCKET'),
             'visibility' => 'private',
             'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
