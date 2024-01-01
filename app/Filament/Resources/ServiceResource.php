@@ -106,7 +106,7 @@ class ServiceResource extends Resource
                 ->square(),
                 TextColumn::make('service_name')
                 ->searchable(),
-                TextColumn::make('category.category_name')
+                TextColumn::make('service_categories.category_name')
                 ->badge()
                 ->color('gray')
                 ->icon('heroicon-m-tag'),
@@ -123,7 +123,7 @@ class ServiceResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('category')
-                ->relationship('category', 'category_name'),
+                ->relationship('service_categories', 'category_name'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
