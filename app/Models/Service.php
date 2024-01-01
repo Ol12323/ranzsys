@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Models\ServiceCategory;
 
 class Service extends Model
 {
@@ -23,7 +23,7 @@ class Service extends Model
         'service_avatar',
     ];
 
-    public function category()
+    public function service_categories()
     {
         return $this->belongsTo(ServiceCategory::class);
     }
