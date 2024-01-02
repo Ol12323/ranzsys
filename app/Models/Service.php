@@ -23,7 +23,7 @@ class Service extends Model
         'service_avatar',
     ];
 
-    public function service_categories()
+    public function category()
     {
         return $this->belongsTo(ServiceCategory::class);
     }
