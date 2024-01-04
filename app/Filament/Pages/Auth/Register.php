@@ -10,6 +10,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Wizard;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
+use Rawilk\FilamentPasswordInput\Password;
+use Illuminate\Support\Facades\Hash;
 
 class Register extends BaseRegister
 {
@@ -56,9 +58,20 @@ class Register extends BaseRegister
                     Wizard\Step::make('Step 2')
                         ->schema([        
                          $this->getEmailFormComponent(),
-                         $this->getPasswordFormComponent()
-                          ->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\S]{8,}$/'),
-                         $this->getPasswordConfirmationFormComponent(),
+                        //  $this->getPasswordFormComponent()
+                        //   ->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\S]{8,}$/'),
+                        //  $this->getPasswordConfirmationFormComponent(),
+                        Password::make('password')
+                        ->label('Password')
+                        ->required()
+                        ->regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\S]{8,}$/')
+                        ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                        ->same('passwordConfirmation')
+                        ->validationAttribute(__('filament-panels::pages/auth/register.form.password.validation_attribute')),
+                        Password::make('passwordConfirmation')
+                        ->label('Password confirmation')
+                        ->required()
+                        ->dehydrated(false),    
                         ]),
                 ])->submitAction(new HtmlString(Blade::render(<<<BLADE
                 <x-filament::button

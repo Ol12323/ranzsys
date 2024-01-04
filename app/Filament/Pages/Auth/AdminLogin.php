@@ -14,6 +14,7 @@ use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Illuminate\Validation\ValidationException;
+use Rawilk\FilamentPasswordInput\Password;
 
 class AdminLogin extends BaseLogin
 {
@@ -35,7 +36,11 @@ class AdminLogin extends BaseLogin
                 ->schema([
                 $this->getEmailFormComponent()
                 ->placeholder('Example@gmail.com'),
-                $this->getPasswordFormComponent()
+                // $this->getPasswordFormComponent()
+                // ->placeholder('Example123'),
+                Password::make('password')
+                ->label('Password')
+                ->required()
                 ->placeholder('Example123'),
                 $this->getRememberFormComponent(),
                 ]),

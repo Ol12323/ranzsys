@@ -25,6 +25,7 @@ use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 use Illuminate\Support\Facades\URL;
+use Awcodes\LightSwitch\LightSwitchPlugin;
 
 class CustomerPanelProvider extends PanelProvider
 {
@@ -90,7 +91,10 @@ class CustomerPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->darkMode()
-            ->viteTheme('resources/css/filament/customer/theme.css');
+            ->viteTheme('resources/css/filament/customer/theme.css')
+            ->plugins([
+            LightSwitchPlugin::make(),
+            ]);
     }
 
 }
