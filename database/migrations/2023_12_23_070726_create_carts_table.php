@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('design_file_path');
             $table->timestamps();
 
-            $table->foreign('service_id')->references('service_id')->on('services');
+            $table->foreign('service_id')->references('id')->on('services');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
