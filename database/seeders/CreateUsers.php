@@ -22,7 +22,7 @@ class CreateUsers extends Seeder
             'avatar' => 'default.png',
             'phone_number' => '09514093271',
             'date_of_birth' => '2001-11-02',
-            'address' => 'Homelabd subd., Dapco, Panabo city',
+            'address' => 'Homelabd Subd., Dapco, Panabo city',
             'role_id' => $roles[1],
             'email' => 'stanley.dalumpines@gmail.com',
             'password' => bcrypt('password'),

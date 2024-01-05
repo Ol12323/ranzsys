@@ -39,6 +39,7 @@ class AdminLogin extends BaseLogin
                 // $this->getPasswordFormComponent()
                 // ->placeholder('Example123'),
                 Password::make('password')
+                ->hint(filament()->hasPasswordReset() ? new HtmlString(Blade::render('<x-filament::link :href="filament()->getRequestPasswordResetUrl()"> {{ __(\'filament-panels::pages/auth/login.actions.request_password_reset.label\') }}</x-filament::link>')) : null)
                 ->label('Password')
                 ->required()
                 ->placeholder('Example123'),
