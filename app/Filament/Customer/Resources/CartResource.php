@@ -32,7 +32,7 @@ use Filament\Notifications\Actions\Action as NotifAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\TextArea;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Radio;
 use Illuminate\Support\HtmlString;
 use Carbon\Carbon;
