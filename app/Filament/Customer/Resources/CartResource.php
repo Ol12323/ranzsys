@@ -682,7 +682,7 @@ class CartResource extends Resource
                     ]),
                     Step::make('Design content')
                     ->schema([
-                        Forms\Components\TextArea::make('design_description')
+                        Textarea::make('design_description')
                         ->required(fn (Get $get) => $get('design_options') === 'describe_design')
                         ->hidden(fn (Get $get) => $get('design_options') === 'have_design'),
                         FileUpload::make('design_file_path')
