@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-bcmath": "*",
+        "ext-gd": "*",
         "awcodes/light-switch": "^1.0",
         "doctrine/dbal": "^3.7",
         "filament/filament": "3.0-stable",
