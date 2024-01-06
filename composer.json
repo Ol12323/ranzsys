@@ -9,8 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "ext-bcmath": "*",
-        "ext-gd": "*",
         "awcodes/light-switch": "^1.0",
         "doctrine/dbal": "^3.7",
         "filament/filament": "3.0-stable",
@@ -27,7 +25,9 @@
         "league/flysystem-aws-s3-v3": "3.0",
         "livewire/livewire": "*",
         "rawilk/filament-password-input": "^1.1",
-        "steffjenl/laravel-azure-blob-storage": "^1.2"
+        "steffjenl/laravel-azure-blob-storage": "^1.2",
+        "ext-bcmath": "*",
+        "ext-gd": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
