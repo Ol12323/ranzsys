@@ -8,6 +8,7 @@ use App\Models\SaleTransaction;
 use App\Models\SaleItem;
 use Illuminate\Support\Str;
 use Filament\Notifications\Notification;
+use Livewire\WithPagination;
 
 class POS extends Component
 {
@@ -19,6 +20,9 @@ class POS extends Component
     public $customerCash = 0.00;
     public $change = 0.00;
     public $disabled = true;
+
+    use WithPagination;
+
 
     public function calculateTotalAmount()
     {
