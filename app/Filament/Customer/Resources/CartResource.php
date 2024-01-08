@@ -729,7 +729,7 @@ class CartResource extends Resource
                 function (Model $record){
                     if($record->service->category->category_name === 'Printing' AND $record->design_type !== 'Not applicable'){
                         return true;
-                    }elseif($record->service->category->category_name === 'Photography' AND $record->mode_of_payment !== 'Not applicable'){
+                    }elseif($record->service->category->category_name !== 'Printing'  AND $record->mode_of_payment !== 'Not applicable'){
                         return true;
                     }
                         return false;

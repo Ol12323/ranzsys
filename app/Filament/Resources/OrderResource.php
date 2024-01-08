@@ -29,7 +29,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Support\Enums\FontWeight;
-use Filament\Forms\Components\TextArea;
+use Filament\Forms\Components\Textarea;
 
 class OrderResource extends Resource
 {

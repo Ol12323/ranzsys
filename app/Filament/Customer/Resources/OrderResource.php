@@ -22,7 +22,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Actions\Action as InfoAction;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextArea;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Support\Enums\FontWeight;
 use App\Filament\Pages\Catalogue;
