@@ -29,6 +29,9 @@ Route::get('/generate-invoice/order/{record}', [InvoiceController::class, 'gener
 
 Route::get('/generate-acknowledgement-receipt/order/{record}', [InvoiceController::class, 'generateAcknowledgementReceipt'])
     ->name('generate.order-acknowledgement-receipt');
+
+Route::get('/generate-acknowledgement-receipt/sale/{record}', [InvoiceController::class, 'generateSaleAcknowledgementReceipt'])
+    ->name('generate.sale-acknowledgement-receipt');
     
 Route::get('/generate-sales-report/from/{fromDate}/to/{toDate}', [InvoiceController::class, 'displayReport'])
     ->name('generate.sales-report');

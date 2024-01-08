@@ -152,6 +152,70 @@ class InvoiceController extends Controller
          return response($pdf)->header('Content-Type', 'application/pdf');
      }
 
+     public function generateSaleAcknowledgementReceipt($saleId)
+    {
+         // Retrieve the record based on the provided record ID
+         $record = SaleTransaction::findOrFail($saleId);
+
+         if ($record->customer_id) {
+            $customer = User::findOrFail($record->user_id);
+            $buyer = new Buyer([
+                'name' => $customer->full_name,
+                'custom_fields' => [
+                    'email' => $customer->email,
+                    // Add other custom fields as needed
+                ],
+            ]);
+        } else {
+            // Handle guest scenario (formerly walk-in)
+            $buyer = new Buyer([
+                'name' => 'Guest Customer',
+                // Add other custom fields for guest scenario
+            ]);
+        }
+
+         $seller = new Party([
+            'name' => 'Ranz Photography',
+            'address' => 'Door 1 Grageda Bldg. Quezon St. New Pandan',
+            'custom_fields' => [
+                'email' => 'photography.ranz@gmail.com',
+                // Add other custom fields as needed
+            ],
+        ]);
+         // Create an item instance
+         $item = $record->item;
+
+         //$mop = $record->mode_of_payment;
+
+         // Create an invoice instance
+         $invoice = Invoice::make()
+             ->buyer($buyer)
+             ->name('Acknowledgement Receipt')
+             ->currencySymbol('₱')
+             ->currencyCode('PHP')
+             ->notes('Not an official receipt.')
+             ->seller($seller)
+             ->status(__('invoices::invoice.paid'))
+             ->template('acknowledgement-receipt')
+             ->logo('images/logo.png');
+            
+
+             foreach ($item as $items) {
+                $invoiceItem = (new InvoiceItem())
+                    ->title($items->service->service_name)
+                    ->quantity($items->quantity)
+                    ->pricePerUnit($items->service->price);
+                
+                $invoice->addItem($invoiceItem);
+            }
+ 
+         // Generate the PDF invoice
+         $pdf = $invoice->stream();
+ 
+         // You can then return the PDF for download or display
+         return response($pdf)->header('Content-Type', 'application/pdf');
+     }
+
      public function displayReport($fromDate, $toDate){
             $fromDate = $fromDate;
             $toDate = $toDate;

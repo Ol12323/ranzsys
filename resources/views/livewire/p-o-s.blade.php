@@ -128,7 +128,7 @@
             </div>
             <div style="width: 100%; margin-top: 5px;">
               <x-filament::button outlined style="width: 100%" :disabled="$disabled" wire:click="submitWithInvoice">
-                Submit with invoice
+                Submit with receipt
               </x-filament::button>
             </div>
             <div></div>

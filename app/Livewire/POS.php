@@ -183,13 +183,13 @@ class POS extends Component
 
         Notification::make()
             ->success()
-            ->title('Transaction complete.')
+            ->title('New sale has been registered.')
             ->send();
 
         $saleId = $sale_transaction->id;
 
         // $this->redirect(route('generate.sale-invoice', $saleId));
-        return redirect()->route('generate.sale-invoice', $saleId)->with('_blank');
+        return redirect()->route('generate.sale-acknowledgement-receipt', $saleId)->with('_blank');
     }
 
     public function render()
