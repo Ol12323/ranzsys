@@ -7,7 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextArea;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use App\Models\User;
@@ -73,7 +73,7 @@ class ViewOrder extends ViewRecord
                 }
             )
             ->form([
-                TextArea::make('reason')
+                Textarea::make('reason')
                 ->required(),
             ])
             ->action(function (array $data): void{
