@@ -47,6 +47,7 @@ use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables\Columns\Layout\Split;
+use Filament\Support\Enums\FontWeight;
 
 class CartResource extends Resource
 {
@@ -453,22 +454,26 @@ class CartResource extends Resource
                     // Do nothing (or you can return null)
                 }),
                 TextColumn::make('price')
+                ->prefix('Price: ')
                 ->money('PHP', true)
                 ->action(function (Cart $record): void {
                     // Do nothing (or you can return null)
                 }),
                 TextColumn::make('quantity')
+                ->prefix('Quantity: ')
                 ->action(function (Cart $record): void {
                     // Do nothing (or you can return null)
                 }),
                 TextColumn::make('sub_total')
+                ->prefix('Subtotal: ')
                 ->label('Subtotal')
                 ->money('PHP', true)
                 ->money('PHP', true)
                 ->action(function (Cart $record): void {
                     // Do nothing (or you can return null)
                 })
-              ])->from('md'),
+                ->weight(FontWeight::Bold)
+            ])->from('md'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
