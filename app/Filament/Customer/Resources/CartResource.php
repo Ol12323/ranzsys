@@ -46,6 +46,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Support\Enums\MaxWidth;
+use Filament\Tables\Columns\Layout\Split;
 
 class CartResource extends Resource
 {
@@ -439,6 +440,7 @@ class CartResource extends Resource
             ])
             ->emptyStateHeading('Your cart is empty')
             ->columns([
+              Split::make([
                 ImageColumn::make('service.service_avatar')
                 ->square()
                 ->grow(false)
@@ -465,9 +467,8 @@ class CartResource extends Resource
                 ->money('PHP', true)
                 ->action(function (Cart $record): void {
                     // Do nothing (or you can return null)
-                }),
-
-
+                })
+              ])->from('md'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
