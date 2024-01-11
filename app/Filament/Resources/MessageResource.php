@@ -34,13 +34,17 @@ class MessageResource extends Resource
     protected static ?int $navigationSort = 2;
 
     public static function getNavigationBadge(): ?string
-    {
-        $unreadCount = static::getModel()::query()
-            ->where('read', false)
-            ->count();
+{
+    $unreadCount = static::getModel()::query()
+        ->join('users', function ($join) {
+            $join->on('messages.recipient_id', '=', 'users.id')
+                ->whereNotIn('users.role_id', [3]);
+        })
+        ->where('messages.read', false)
+        ->count();
 
         return $unreadCount >= 1 ? (string)$unreadCount : null;
-    }
+}
 
     public static function getNavigationBadgeColor(): ?string
     {
