@@ -37,7 +37,7 @@ class CheckAppointments extends Command
 
         foreach ($scheduledAppointments as $order) {
             if ($order->service_date === $tomorrow && $order->status != 'Completed' && $order->service_type === 'Appointment') {
-                $appointmentId = $order->id;
+                $orderId = $order->id;
                 $customerId = $order->user_id;
                 $timeSlot = $order->time_slot->TimeSlot;
                 $recipient = User::find($customerId);
@@ -50,7 +50,7 @@ class CheckAppointments extends Command
                 ->actions([
                     NotifAction::make('view')
                     ->button()
-                    ->url("/customer/appointments/{$appointmentId}")
+                    ->url("/customer/orders/{$orderId}")
                 ])
                 ->sendToDatabase($recipient);
 
@@ -60,18 +60,18 @@ class CheckAppointments extends Command
                 ->actions([
                     NotifAction::make('view')
                     ->button()
-                    ->url("/owner/appointments/{$appointmentId}")
+                    ->url("/owner/orders/{$orderId}")
                 ])
                 ->sendToDatabase($recipients);
 
-            }elseif($order->service_date < now('Asia/Manila') && $appointment->status != 'Completed' && $order->service_type === 'Appointment') {
-                $appointmentId = $order->id;
+            }elseif($order->service_date < now('Asia/Manila') && $order->status != 'Completed' && $order->service_type === 'Appointment') {
+                $orderId = $order->id;
                 $customerId = $order->user_id;
-                $timeSlot = $appointment->time_slot->TimeSlot;
+                $timeSlot = $order->time_slot->TimeSlot;
                 $recipient = User::find($customerId);
                 $recipients = User::whereIn('role_id', [1, 2])->get();
-                $appointment->status = 'Missed';
-                $appointment->save();
+                $order->status = 'Missed';
+                $order->save();
 
                 Notification::make()
                 ->title('Missed appointment alert.')
@@ -80,7 +80,7 @@ class CheckAppointments extends Command
                 ->actions([
                     NotifAction::make('view')
                     ->button()
-                    ->url("/customer/appointments/{$appointmentId}")
+                    ->url("/customer/orders/{$orderId}")
                 ])
                 ->sendToDatabase($recipient);
 
@@ -91,9 +91,27 @@ class CheckAppointments extends Command
                 ->actions([
                     NotifAction::make('view')
                     ->button()
-                    ->url("/owner/appointments/{$appointmentId}")
+                    ->url("/owner/orders/{$orderId}")
                 ])
                 ->sendToDatabase($recipients);
+            }elseif($order->status === 'Select payment method' && $order->service_date === $tomorrow){
+                $orderId = $order->id;
+                $customerId = $order->user_id;
+                $recipient = User::find($customerId);
+
+                $order->service_date = now()->addDays(3)->format('Y-m-d');
+                $order->save();
+
+                Notification::make()
+                    ->title('Payment method reminder.')
+                    ->body('Hello! Just a friendly reminder that you have an order scheduled for tomorrow, but you haven\'t selected a payment method yet. Your service date has been extended by 3 days. Please select a payment method at your earliest convenience.')
+                    ->info()
+                    ->actions([
+                        NotifAction::make('view')
+                            ->button()
+                            ->url("/customer/orders/{$orderId}")
+                    ])
+                    ->sendToDatabase($recipient);
             }
         }
     }
