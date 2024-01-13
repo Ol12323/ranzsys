@@ -13,6 +13,8 @@ class RegisterSales extends Page
 
     protected static ?string $navigationGroup = 'Shop';
 
+    protected static ?string $navigationLabel = 'Add Sales';
+
     public static function shouldRegisterNavigation(): bool
     {
         $user = auth()->user();

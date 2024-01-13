@@ -300,7 +300,8 @@ class OrderResource extends Resource
                         'Ready for pickup' => 'success',
                         'Completed' => 'success',
                         'Select payment method' => 'warning',
-                        'Picked up' => 'primary'
+                        'Picked up' => 'primary',
+                        'Missed' => 'danger'
                 }),
             ])
             ->filters([

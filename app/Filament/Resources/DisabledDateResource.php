@@ -22,7 +22,7 @@ class DisabledDateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationGroup = 'Settings';
 
     protected static ?int $navigationSort = 3;
 

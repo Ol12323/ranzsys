@@ -20,6 +20,14 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Pages\Auth\AdminLogin;
 use Filament\Navigation\NavigationItem;
+use Filament\Navigation\MenuItem;
+use App\Filament\Resources\SaleItemResource;
+use App\Filament\Resources\SaleTransactionResource;
+use App\Filament\Resources\ServiceResource;
+use App\Filament\Resources\ServiceCategoryResource;
+use App\Filament\Resources\DisabledDateResource;
+use App\Filament\Resources\UserResource;
+use App\Filament\Resources\TimeSlotResource;
 
 class AdminPanelProvider extends PanelProvider
 {

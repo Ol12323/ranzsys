@@ -24,7 +24,7 @@ class TimeSlotResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
 
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationGroup = 'Settings';
 
     protected static ?int $navigationSort = 4;
 
