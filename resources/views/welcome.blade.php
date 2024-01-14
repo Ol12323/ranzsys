@@ -4,7 +4,7 @@
 {{-- Landing Page --}}
 <div class="container px-14 py-16 mx-auto">
     <div class="items-center lg:flex">
-        <div class="w-full lg:w-1/2">
+       <div class="w-full lg:w-1/2">
             <div class="lg:max-w-lg">
                 <h1 class="text-3xl font-semibold text-white lg:text-4xl">WELCOME TO<br><span class="text-blue-500 ">RANZ PHOTOGRAPHY!</span></h1>
                 
@@ -17,11 +17,10 @@
         </div>
 
         <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-            <img class="w-full h-full lg:max-w-3xl rounded" src="{{ asset('images/photography.png') }}" alt="Catalogue-pana.svg">
+            <img class="w-full h-full lg:max-w-3xl rounded" src="{{ asset('images/photography-clone.png') }}" alt="Catalogue-pana.svg">
         </div>
     </div>
 </div>
-
 {{-- End of Landing Page --}}
 {{-- Featued service List --}}
 <div class="container px-6 py-8 mx-auto">

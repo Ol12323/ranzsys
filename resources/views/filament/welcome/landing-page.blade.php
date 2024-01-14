@@ -13,7 +13,7 @@
         </div>
 
         <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-            <img class="w-full h-full lg:max-w-3xl rounded" src="{{ asset('images/photography.png') }}" alt="Catalogue-pana.svg">
+            <img class="w-full h-full lg:max-w-3xl rounded" src="{{ asset('images/photography-clone.png') }}" alt="Catalogue-pana.svg">
         </div>
     </div>
 </div>
