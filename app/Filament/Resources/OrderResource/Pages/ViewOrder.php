@@ -39,6 +39,9 @@ class ViewOrder extends ViewRecord
             ->form([
                 Textarea::make('content')
                 ->required(),
+                FileUpload::make('attached_file')
+                ->label('Attached file(optional)')
+                ->multiple(),
             ])
             ->action(function (array $data): void {
                 $message = new Message([
@@ -46,6 +49,7 @@ class ViewOrder extends ViewRecord
                     'recipient_id' => $this->record->user_id,
                     'subject' => 'Online order:'.' '.$this->record->order_name,
                     'content' => $data['content'],
+                    'attached_file' => $data['attached_file'],
                     'read' => false,
                 ]);
                 $message->save();
@@ -681,7 +685,14 @@ class ViewOrder extends ViewRecord
                     ])
                     ->sendToDatabase($recipient);
                 }
-            }),    
+            }),
+            Action::make('generateAcknowledgeReceipt')
+            ->color('primary')
+            ->hidden(function ($record){
+                return (abs($record->payment_due) > 0.01) || ($record->status != 'Completed') ;
+            })
+            ->url(fn (Model $record): string => route('generate.order-acknowledgement-receipt', $record))
+            ->openUrlInNewTab(),    
         ];
     }
 }

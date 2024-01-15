@@ -18,12 +18,14 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\Section as InfoListSection;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Infolists\Components\ImageEntry;
 
 class MessageResource extends Resource
 {
@@ -68,6 +70,9 @@ class MessageResource extends Resource
                 TextArea::make('content')
                     ->required()
                     ->columnSpan('full'),
+                FileUpload::make('attached_file')
+                ->label('Attached file(optional)')
+                ->multiple(),
                 ])
             ]);
     }
@@ -101,6 +106,7 @@ class MessageResource extends Resource
                 ->schema([
                     TextEntry::make('content')
                     ->label('Content'),
+                    ImageEntry::make('attached_file'),
                 ])
             ]);
     }

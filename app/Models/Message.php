@@ -24,7 +24,10 @@ class Message extends Model
         'recipient_id',
         'subject',
         'content',
+        'attached_file',
         'read',
     ];
+
+    protected $casts = ['attached_file'=> 'array'];
 
 }

@@ -24,7 +24,9 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Section as InfoListSection;
+use Filament\Forms\Components\FileUpload;
 
 class MessageResource extends Resource
 {
@@ -55,6 +57,9 @@ class MessageResource extends Resource
                 TextArea::make('content')
                     ->required()
                     ->columnSpan('full'),
+                FileUpload::make('attached_file')
+                    ->label('Attached file(optional)')
+                    ->multiple(),
                 ])
             ]);
     }
@@ -90,6 +95,7 @@ class MessageResource extends Resource
                 ->schema([
                     TextEntry::make('content')
                     ->label('Content'),
+                    ImageEntry::make('attached_file'),
                 ])
             ]);
     }

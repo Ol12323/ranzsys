@@ -40,6 +40,9 @@ class ViewOrder extends ViewRecord
             ->form([
                 Textarea::make('content')
                 ->required(),
+                FileUpload::make('attached_file')
+                ->label('Attached file(optional)')
+                ->multiple(),
             ])
             ->action(function (array $data): void {
                 $message = new Message([
@@ -47,6 +50,7 @@ class ViewOrder extends ViewRecord
                     'recipient_id' => 1,
                     'subject' => 'Online order:'.' '.$this->record->order_name,
                     'content' => $data['content'],
+                    'attached_file' => $data['attached_file'],
                     'read' => false,
                 ]);
                 $message->save();
