@@ -147,6 +147,7 @@
                 </tr>
             </tbody>
         </table>
+        <p>{{ __('invoices::invoice.serial') }} <strong>{{ $invoice->getSerialNumber() }}</strong></p>
         <p>Date: <strong>{{ $invoice->getDate() }}</strong></p>
         <p class="buyer-name">
             Received from: <strong>{{ $invoice->seller->name }}</strong>

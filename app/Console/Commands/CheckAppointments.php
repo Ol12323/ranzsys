@@ -36,7 +36,7 @@ class CheckAppointments extends Command
         //$scheduledAppointments = Appointment::whereDate('appointment_date', $tomorrow)->get();
 
         foreach ($scheduledAppointments as $order) {
-            if ($order->service_date === $tomorrow && $order->status != 'Completed' && $order->service_type === 'Appointment') {
+            if ($order->service_date === $tomorrow && $order->status != 'Completed' && $order->service_type === 'Appointment' && $order->status != 'Cancelled') {
                 $orderId = $order->id;
                 $customerId = $order->user_id;
                 $timeSlot = $order->time_slot->TimeSlot;
@@ -64,7 +64,7 @@ class CheckAppointments extends Command
                 ])
                 ->sendToDatabase($recipients);
 
-            }elseif($order->service_date < now('Asia/Manila') && $order->status != 'Completed' && $order->service_type === 'Appointment') {
+            }elseif($order->service_date < now('Asia/Manila') && $order->status != 'Completed' && $order->service_type === 'Appointment' && $order->status != 'Cancelled') {
                 $orderId = $order->id;
                 $customerId = $order->user_id;
                 $timeSlot = $order->time_slot->TimeSlot;

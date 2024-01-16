@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Components\Placeholder;
@@ -61,11 +62,122 @@ class ViewOrder extends ViewRecord
                 ->send();
     
             }),
+            Action::make('cancelOrder')
+            ->requiresConfirmation()
+            ->outlined()
+            ->color('danger')
+            ->visible(
+                function (Model $record) {
+                    return $record->status =='Pending' || $record->status === 'Select payment method' && $record->service_type === 'Printing';
+                }
+            )
+            ->action(function (array $data): void{
+                $this->record->status = 'Cancelled';
+                $this->record->total_amount = $this->record->SumOfItemValues;
+                $this->record->payment_due = $this->record->SumOfItemValues;
+                $this->record->save();
+
+                //Auth notification
+                Notification::make()
+                ->title('Order cancelled successfully.')
+                ->success()
+                ->send();
+
+                //For staff/onwer notification
+                $recipients = User::whereIn('role_id', [1, 2])->get();
+                $order_name = $this->record->order_name;
+                $order_id = $this->record->id;
+
+                // User customer notification
+                Notification::make()
+                    ->title('Order'.' '.$order_name.' '. 'has been cancelled.')
+                    ->info()
+                    ->actions([
+                        NotifAction::make('view')
+                        ->button()
+                        ->url("/owner/orders/{$order_id}")
+                     ])
+                    ->sendToDatabase($recipients);
+            }),
+            Action::make('cancelAppointment')
+            ->requiresConfirmation()
+            ->outlined()
+            ->color('danger')
+            ->visible(
+                function (Model $record) {
+                    return $record->status == 'Confirmed';
+                }
+            )
+            ->action(function (array $data): void{
+                $this->record->status = 'Cancelled';
+                $this->record->save();
+
+                //Auth notification
+                Notification::make()
+                ->title('Order cancelled successfully.')
+                ->success()
+                ->send();
+
+                $recipientUserId = $this->record->user_id;
+                $recipient = User::find($recipientUserId);
+                $recipients = User::whereIn('role_id', [1, 2])->get();
+                $order_name = $this->record->order_name;
+                $customer_name = $this->record->user->FullName;
+                $order_id = $this->record->id;
+                $refund = $this->record->total_amount - $this->record->payment_due;
+
+                if(abs($refund) > 0.01){
+                // User customer
+                Notification::make()
+                ->title('Your order '.$order_name.' has been cancelled.')
+                ->info()
+                ->body('Ranz Photography will message you of your G-cash account for your refund,'.' Refund amount: ₱ '.abs($refund))
+                ->actions([
+                   NotifAction::make('view')
+                   ->button()
+                   ->url("/owner/customers/{$order_id}")
+                ])
+                ->sendToDatabase($recipient);
+                //Owner or staff
+                Notification::make()
+                ->title('Order '.$order_name.' has been cancelled.')
+                ->info()
+                ->body('Please message the customer, '.$customer_name.', for their G-cash account,'.' Refund amount: ₱ '.abs($refund))
+                ->actions([
+                   NotifAction::make('view')
+                   ->button()
+                   ->url("/owner/orders/{$order_id}")
+                ])
+                ->sendToDatabase($recipients);
+               
+                }else{
+                    // User customer
+                    Notification::make()
+                    ->title('Your order '.$order_name.' has been cancelled.')
+                    ->info()
+                    ->actions([
+                       NotifAction::make('view')
+                       ->button()
+                       ->url("/owner/customers/{$order_id}")
+                    ])
+                    ->sendToDatabase($recipient);
+                    //Owner or staff
+                    Notification::make()
+                    ->title('Order '.$order_name.' has been cancelled.')
+                    ->info()
+                    ->actions([
+                       NotifAction::make('view')
+                       ->button()
+                       ->url("/owner/orders/{$order_id}")
+                    ])
+                    ->sendToDatabase($recipients);
+                }
+            }),
             Action::make('generateBillingInvoice')
             ->color('info')
             ->outlined()
             ->hidden(function ($record){
-                return abs($record->payment_due) < 0.01;
+                return abs($record->payment_due) < 0.01 || $record->status === 'Cancelled';
             })
             ->url(fn (Model $record): string => route('generate.order-invoice', $record))
             ->openUrlInNewTab(),
@@ -235,7 +347,7 @@ class ViewOrder extends ViewRecord
             ->color('gray')
             ->visible(
                 function (Model $record) {
-                    return ($record->status === 'In progress' || $record->status === 'Ready for pickup' || $record->status === 'Confirmed');
+                    return ($record->status === 'In progress' || $record->status === 'Ready for pickup' || $record->status === 'Confirmed' || $record->status === 'Cancelled');
                 }
             )
             ->form([
@@ -339,6 +451,7 @@ class ViewOrder extends ViewRecord
                         $appointmentExists = Order::where([
                             ['service_date', '=', $date],
                             ['time_slot_id', '=', $time],
+                            ['status','!=', 'Cancelled']
                         ])->exists();
                 
                         $cartExists = Cart::where([

@@ -114,6 +114,7 @@ class CartResource extends Resource
                         $appointmentExists = Order::where([
                             ['service_date', '=', $date],
                             ['time_slot_id', '=', $time],
+                            ['status', '!=', 'Cancelled'],
                         ])->exists();
                 
                         $cartExists = Cart::where([
@@ -141,6 +142,7 @@ class CartResource extends Resource
                         $appointmentExists = Order::where([
                             ['service_date', '=', $date],
                             ['time_slot_id', '=', $time],
+                            ['status', '!=', 'Cancelled'],
                         ])->exists();
                 
                         $cartExists = Cart::where([
@@ -592,6 +594,7 @@ class CartResource extends Resource
                                 $appointmentExists = Order::where([
                                     ['service_date', '=', $date],
                                     ['time_slot_id', '=', $time],
+                                    ['status', '!=', 'Cancelled'],
                                 ])->exists();
                         
                                 $cartExists = Cart::where([
@@ -624,6 +627,7 @@ class CartResource extends Resource
                                     $appointmentExists = Order::where([
                                         ['service_date', '=', $date],
                                         ['time_slot_id', '=', $time],
+                                        ['status', '!=', 'Cancelled'],
                                     ])->exists();
                             
                                     $cartExists = Cart::where([

@@ -147,7 +147,6 @@ class InvoiceController extends Controller
  
          // Generate the PDF invoice
          $pdf = $invoice->stream();
- 
          // You can then return the PDF for download or display
          return response($pdf)->header('Content-Type', 'application/pdf');
      }

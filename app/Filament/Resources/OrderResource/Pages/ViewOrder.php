@@ -64,7 +64,7 @@ class ViewOrder extends ViewRecord
             ->color('info')
             ->outlined()
             ->hidden(function ($record){
-                return abs($record->payment_due) < 0.01;
+                return abs($record->payment_due) < 0.01 || $record->status === 'Cancelled';
             })
            ->url(fn (Model $record): string => route('generate.order-invoice', $record))
            ->openUrlInNewTab(), 
@@ -88,7 +88,7 @@ class ViewOrder extends ViewRecord
 
                 //Auth notification
                 Notification::make()
-                ->title('Order declined successfully')
+                ->title('Order declined successfully.')
                 ->success()
                 ->send();
 
@@ -99,7 +99,7 @@ class ViewOrder extends ViewRecord
 
                 // User customer notification
                 Notification::make()
-                    ->title('Order'.' '.$order_name.' '. 'has been declined')
+                    ->title('Order'.' '.$order_name.' '. 'has been declined.')
                     ->body('Declined message:'.' '.$message)
                     ->icon('heroicon-o-x-circle')
                     ->iconColor('danger')

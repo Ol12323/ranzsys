@@ -145,7 +145,8 @@ class OrderResource extends Resource
                         'Completed' => 'success',
                         'Select payment method' => 'warning',
                         'Picked up' => 'primary',
-                        'Missed' => 'danger'
+                        'Missed' => 'danger',
+                        'Cancelled' => 'gray'
                     }),
                     TextEntry::make('service_date')
                     ->icon('heroicon-m-clock')
@@ -270,7 +271,8 @@ class OrderResource extends Resource
                     'Completed' => 'success',
                     'Select payment method' => 'warning',
                     'Picked up' => 'primary',
-                    'Missed' => 'danger'
+                    'Missed' => 'danger',
+                    'Cancelled' => 'gray'
                 }),
                 TextColumn::make('service_date')
                 ->icon('heroicon-m-clock')
