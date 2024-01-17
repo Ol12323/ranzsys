@@ -131,7 +131,7 @@ class ViewOrder extends ViewRecord
                 Notification::make()
                 ->title('Your order '.$order_name.' has been cancelled.')
                 ->info()
-                ->body('Ranz Photography will message you of your G-cash account for your refund,'.' Refund amount: ₱ '.abs($refund))
+                ->body('Ranz Photography will message you of your G-cash account for your refund, Refund amount: ₱ '.abs($refund))
                 ->actions([
                    NotifAction::make('view')
                    ->button()
@@ -142,7 +142,7 @@ class ViewOrder extends ViewRecord
                 Notification::make()
                 ->title('Order '.$order_name.' has been cancelled.')
                 ->info()
-                ->body('Please message the customer, '.$customer_name.', for their G-cash account,'.' Refund amount: ₱ '.abs($refund))
+                ->body('Please message the customer, '.$customer_name.', for their G-cash account, Refund amount: ₱ '.abs($refund))
                 ->actions([
                    NotifAction::make('view')
                    ->button()
@@ -271,7 +271,7 @@ class ViewOrder extends ViewRecord
                  $order_id = $this->record->id;
 
                  Notification::make()
-                 ->title('Mode of payment confirmation')
+                 ->title('Mode of payment confirmation.')
                  ->success()
                  ->body('A customer has selected '.$data['mode_of_payment'].' as mode of payment for order'.' '.$order_name.' '. '.')
                  ->actions([
@@ -301,7 +301,7 @@ class ViewOrder extends ViewRecord
                  $order_id = $this->record->id;
 
                  Notification::make()
-                 ->title('Mode of payment confirmation')
+                 ->title('Mode of payment confirmation.')
                  ->success()
                  ->body('A customer has selected '.$data['mode_of_payment'].' as mode of payment for order'.' '.$order_name.' '. '.')
                  ->actions([
@@ -329,7 +329,7 @@ class ViewOrder extends ViewRecord
                  $order_id = $this->record->id;
 
                  Notification::make()
-                 ->title('Mode of payment confirmation')
+                 ->title('Mode of payment confirmation.')
                  ->success()
                  ->body('A customer has selected '.$data['mode_of_payment'].' as mode of payment for order'.' '.$order_name.' '. '.')
                  ->actions([
@@ -516,7 +516,7 @@ class ViewOrder extends ViewRecord
                         
                         Notification::make()
                             ->title('Appointment rescheduled.')
-                            ->success()
+                            ->info()
                             ->actions([
                                 NotifAction::make('view')
                                     ->button()
