@@ -28,6 +28,7 @@ use App\Filament\Resources\ServiceCategoryResource;
 use App\Filament\Resources\DisabledDateResource;
 use App\Filament\Resources\UserResource;
 use App\Filament\Resources\TimeSlotResource;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -84,6 +85,9 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->darkMode(false)
-            ->viteTheme('resources/css/filament/admin/theme.css');
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->plugins([
+                FilamentApexChartsPlugin::make()
+            ]);
     }
 }

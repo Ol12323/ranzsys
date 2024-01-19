@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Rawilk\FilamentPasswordInput\Password;
 use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Component;
 
 class Register extends BaseRegister
 {
@@ -68,6 +70,7 @@ class Register extends BaseRegister
                         ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                         ->same('passwordConfirmation')
                         ->validationAttribute(__('filament-panels::pages/auth/register.form.password.validation_attribute')),
+                        $this->getPasswordHintComponent(),
                         Password::make('passwordConfirmation')
                         ->label('Password confirmation')
                         ->required()
@@ -91,4 +94,17 @@ class Register extends BaseRegister
             ->hidden(),
         ];
     }
+
+    protected function getPasswordHintComponent(): Component
+        {
+            return Placeholder::make('passwordHint')
+            ->label('')
+            ->content(new HtmlString('<div class="text-sm text-gray-500 dark:text-gray-400">
+            <ul class="list-disc pl-4">
+                <li class="">Include both uppercase and lowercase letters.</li>
+                <li class="">Make sure to use at least one digit (0-9).</li>
+                <li class="">Ensure the password is at least 8 characters long.</li>
+            </ul>
+        </div>'));
+        }
 }
