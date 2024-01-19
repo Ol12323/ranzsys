@@ -303,7 +303,8 @@ class OrderResource extends Resource
                         'Completed' => 'success',
                         'Select payment method' => 'warning',
                         'Picked up' => 'primary',
-                        'Missed' => 'danger'
+                        'Missed' => 'danger',
+                        'Cancelled' => 'gray'
                 }),
             ])
             ->filters([

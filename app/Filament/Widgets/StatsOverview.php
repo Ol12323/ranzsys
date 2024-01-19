@@ -22,7 +22,7 @@ class StatsOverview extends BaseWidget
 
     public function redirectToSaleTransactionResource()
     {
-        $url = UserResource::getUrl(); // Replace with the actual logic to get the URL
+        $url = SaleTransactionResource::getUrl(); // Replace with the actual logic to get the URL
         return redirect()->to($url);
     }
 
