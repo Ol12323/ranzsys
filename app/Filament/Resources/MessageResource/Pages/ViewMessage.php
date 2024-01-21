@@ -9,6 +9,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use App\Models\Message;
+use App\Models\MessageContent;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,34 +22,34 @@ class ViewMessage extends ViewRecord
         return [
             Action::make('Reply')
             ->form([
-                Textarea::make('content')
+                TextArea::make('body')
                 ->required(),
-                FileUpload::make('attached_file')
-                ->label('Attached file(optional)')
-                ->multiple(),
+                FileUpload::make('image_path')
+                ->label('Upload image (Optional)')
+                ->multiple()
+                ->minSize(10)
+                ->maxSize(1024),
             ])
-            ->visible(function(Model $record){
-                $true = $this->record->recipient_id === auth()->id();
-
-                return $true;
-            })
             ->action(function (array $data): void {
-                $message = new Message([
+                $subject = $this->record->subject;
+                $messageID = $this->record->id;
+
+
+                $messageContent = new MessageContent([
+                    'messages_id' => $messageID,
+                    'body' => $data['body'],
                     'sender_id' => auth()->user()->id,
-                    'recipient_id' => $this->record->sender_id,
-                    'subject' => $this->record->subject,
-                    'content' => $data['content'],
-                    'attached_file' => $data['attached_file'],
-                    'read' => false,
+                    'recipient_id' => 1,
+                    'image_path' => $data['image_path'],
                 ]);
-                $message->save();
-    
+                $messageContent->save();
+
                 Notification::make()
                 ->title('Reply sent successfully.')
                 ->success()
                 ->send();
     
-            })
+            }),
         ];
     }
 }

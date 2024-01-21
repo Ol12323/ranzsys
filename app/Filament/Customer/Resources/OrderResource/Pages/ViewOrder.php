@@ -17,6 +17,7 @@ use Filament\Notifications\Actions\Action as NotifAction;
 use Filament\Notifications\Notification;
 use App\Models\User;
 use App\Models\Message;
+use App\Models\MessageContent;
 use App\Models\Order;
 use App\Models\Cart;
 use Filament\Forms\Get;
@@ -39,28 +40,59 @@ class ViewOrder extends ViewRecord
             ->outlined()
             ->color('success')
             ->form([
-                Textarea::make('content')
+                TextArea::make('body')
                 ->required(),
-                FileUpload::make('attached_file')
-                ->label('Attached file(optional)')
-                ->multiple(),
+                FileUpload::make('image_path')
+                ->label('Upload image (Optional)')
+                ->multiple()
+                ->minSize(10)
+                ->maxSize(1024),
             ])
             ->action(function (array $data): void {
-                $message = new Message([
-                    'sender_id' => auth()->user()->id,
-                    'recipient_id' => 1,
-                    'subject' => 'Online order:'.' '.$this->record->order_name,
-                    'content' => $data['content'],
-                    'attached_file' => $data['attached_file'],
-                    'read' => false,
-                ]);
-                $message->save();
+                $subject = $this->record->order_name;
+                $recipient = $this->record->user_id;
+
+                $subjectExists = Message::where([
+                    ['subject', '=', $subject],
+                ])->first();
+
+                 if($subjectExists){
+                    $messageContent = new MessageContent([
+                        'messages_id' => $subjectExists->id,
+                        'body' => $data['body'],
+                        'sender_id' => auth()->user()->id,
+                        'recipient_id' => 1,
+                        'image_path' => $data['image_path'],
+                    ]);
+                    $messageContent->save();
     
-                Notification::make()
-                ->title('Message sent successfully.')
-                ->success()
-                ->send();
+                    Notification::make()
+                    ->title('Message sent successfully.')
+                    ->success()
+                    ->send();
+                 }else{
+                    $message = new Message([
+                        'subject' => $subject,
+                        'read' => false,
+                    ]);
+                    $message->save();
     
+                    $messageContent = new MessageContent([
+                        'messages_id' => $message->id,
+                        'body' => $data['body'],
+                        'sender_id' => auth()->user()->id,
+                        'recipient_id' => 1,
+                        'image_path' => $data['image_path'],
+                    ]);
+                    $messageContent->save();
+    
+                    Notification::make()
+                    ->title('Message sent successfully.')
+                    ->success()
+                    ->send();
+                 }   
+
+                
             }),
             Action::make('cancelOrder')
             ->requiresConfirmation()

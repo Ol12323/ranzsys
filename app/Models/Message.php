@@ -9,22 +9,18 @@ class Message extends Model
 {
     use HasFactory;
 
-    public function sender()
+    /**
+     * Get all of the messageContent for the Message
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messageContent()
     {
-        return $this->belongsTo(User::class, 'sender_id');
-    }
-
-    public function recipient()
-    {
-        return $this->belongsTo(User::class, 'recipient_id');
+        return $this->hasMany(MessageContent::class, 'messages_id')->orderBy('created_at', 'desc');
     }
 
     public $fillable = [
-        'sender_id',
-        'recipient_id',
         'subject',
-        'content',
-        'attached_file',
         'read',
     ];
 

@@ -26,6 +26,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\Section as InfoListSection;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 
 class MessageResource extends Resource
 {
@@ -36,21 +37,18 @@ class MessageResource extends Resource
     protected static ?int $navigationSort = 2;
 
     public static function getNavigationBadge(): ?string
-{
-    $unreadCount = static::getModel()::query()
-        ->join('users', function ($join) {
-            $join->on('messages.recipient_id', '=', 'users.id')
-                ->whereNotIn('users.role_id', [3]);
-        })
-        ->where('messages.read', false)
-        ->count();
+    {
+        $unreadCount = static::getModel()::query()
+            ->where('read', false)
+            ->whereHas('messageContent', function (Builder $query){
+            //$authId = Auth::id();
+                
+                $query->where('sender_id', 1)
+                      ->orWhere('recipient_id', 1);
+            })
+            ->count();
 
         return $unreadCount >= 1 ? (string)$unreadCount : null;
-}
-
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return 'primary';
     }
 
     public static function form(Form $form): Form
@@ -81,44 +79,56 @@ class MessageResource extends Resource
     {
         return $infolist
             ->schema([
-                Infolists\Components\TextEntry::make('sender.FullName')
-                ->label('From')
+                TextEntry::make('subject')
                 ->size(TextEntry\TextEntrySize::Large)
                 ->weight(FontWeight::Bold)
-                ->hidden(function($record){
-                    $true = $record->sender_id === auth()->id();
-
-                    return $true;
-                }),
-                Infolists\Components\TextEntry::make('recipient.FullName')
-                ->label('Send to')
-                ->size(TextEntry\TextEntrySize::Large)
-                ->weight(FontWeight::Bold)
-                ->hidden(function($record){
-                    $true = $record->recipient_id === auth()->id();
-
-                    return $true;
-                }),
-                Infolists\Components\TextEntry::make('subject')
-                ->size(TextEntry\TextEntrySize::Large)
-                ->weight(FontWeight::Bold),
-                InfoListSection::make()
+                ->columnSpan(2),
+                RepeatableEntry::make('messageContent')
+                ->label('')
                 ->schema([
-                    TextEntry::make('content')
-                    ->label('Content'),
-                    ImageEntry::make('attached_file'),
-                ])
+                    TextEntry::make('me')
+                    ->visible(function(Model $record){
+                        return auth()->user()->id === $record->sender_id;
+                    })
+                    ->size(TextEntry\TextEntrySize::Large)
+                    ->weight(FontWeight::Bold),
+                    TextEntry::make('sender.FullName')
+                    ->label('From')
+                    ->hidden(function(Model $record){
+                        return auth()->user()->id === $record->sender_id;
+                    })
+                    ->size(TextEntry\TextEntrySize::Large)
+                    ->weight(FontWeight::Bold),
+                    TextEntry::make('created_at')
+                    ->label('')
+                    ->since(),
+                    TextEntry::make('body')
+                    ->label('')
+                    ->columnSpan(2),
+                    ImageEntry::make('image_path')
+                    ->label(''),
+                    // ->visible(function(Model $record){
+                    //     return $record->messageContent->image_path !== null;
+                    // })
+                ])->columnSpan(2)
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function (Builder $query) {
+                // Remove global scopes
+                $query->withoutGlobalScopes();
+
+                // Add additional conditions to the query
+                $query->whereHas('messageContent', function ($query) {
+                    $query->where('sender_id', 1)
+                        ->orWhere('recipient_id', 1);
+                });
+
+            })
             ->columns([
-                TextColumn::make('sender.FullName')
-                ->label('From'),
-                TextColumn::make('recipient.FullName')
-                ->label('To'),
                 TextColumn::make('subject')
                 ->weight(FontWeight::Bold),
                 TextColumn::make('created_at')
@@ -136,12 +146,12 @@ class MessageResource extends Resource
                     return $record->read === 1 || $record->sender_id === auth()->id();
                 }),
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                //Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
