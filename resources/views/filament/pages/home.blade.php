@@ -35,7 +35,7 @@
         </div>
     </div>
     {{-- Contact --}}
-    <section class="bg-transparent">
+    <section class="bg-transparent" id="contact">
         <div class="container px-6 py-12 mx-auto">
             <div>
                 <p class="font-medium text-blue-500">Contact us</p>

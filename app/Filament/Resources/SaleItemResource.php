@@ -29,6 +29,11 @@ class SaleItemResource extends Resource
 
     protected static ?string $navigationLabel = 'Sales';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

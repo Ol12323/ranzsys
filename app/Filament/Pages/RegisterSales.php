@@ -13,7 +13,7 @@ class RegisterSales extends Page
 
     protected static ?string $navigationGroup = 'Shop';
 
-    protected static ?string $navigationLabel = 'Add Sales';
+    protected static ?string $navigationLabel = 'Walk In';
 
     public static function shouldRegisterNavigation(): bool
     {

@@ -18,7 +18,13 @@ class PreventAuthenticatedUsers
     {
         if (auth()->check())
          {
-            return redirect()->to(Home::getUrl());
+            $user = auth()->user()->role->name;
+
+            if ($user === 'Customer') {
+                return redirect()->to(Home::getUrl());
+            } else {
+                return redirect('/owner'); // Replace 'dashboard' with your actual dashboard route name
+            }
          }
 
          return $next($request);

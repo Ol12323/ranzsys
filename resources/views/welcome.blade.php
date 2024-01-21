@@ -22,9 +22,10 @@
                 
                 <p class="mt-3 text-gray-400">Bring Your Memories to Life: Immerse Yourself in the Art of Print with Ranz Photography Printing Services – Transforming Pixels into Timeless Masterpieces.</p>
                 
-                <button class="w-full px-5 py-2 mt-6 text-sm tracking-wider text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    <a href="{{route('catalog')}}">Shop now</a>
-                </button>
+                <div class="flex flex-col mt-6 space-y-3 lg:space-y-0 lg:flex-row">
+                  <a href="{{route('catalog')}}" class="block px-5 py-2 text-sm font-medium tracking-wider text-center text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500">Shop now</a>
+                  <a href="#contact" class="block px-5 py-2 text-sm font-medium tracking-wider text-center text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md lg:mx-4 hover:bg-gray-300">Contact us</a>
+              </div>
 
             </div>
         </div>

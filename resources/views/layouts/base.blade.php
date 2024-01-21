@@ -26,7 +26,7 @@
         </header>
         @yield('content')
  {{-- Contact --}}
- <section class="bg-gray-950">
+ <section class="bg-gray-950" id="contact">
     <div class="container px-6 py-12 mx-auto">
         <div>
             <p class="font-medium text-blue-500">Contact us</p>
