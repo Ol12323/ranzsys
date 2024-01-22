@@ -93,7 +93,7 @@ class CartResource extends Resource
                     return $record->service->category->category_name != 'Printing';
                 }),
                 DatePicker::make('appointment_date')
-                -live()
+                ->live()
                 ->date()
                 ->native(false)
                 ->minDate(now()->addDays(2)) 
