@@ -56,20 +56,20 @@ class InvoiceController extends Controller
          $invoice = Invoice::make()
              ->buyer($buyer)
              ->currencySymbol('₱')
-             ->currencyCode('PHP')
+             ->currencyCode('Philippine Peso')
              ->notes('Not an official receipt.');
              if ($mop === 'g-cash-partial') {
                 $invoice->discountByPercent(50)
                         ->seller($seller)
-                        ->logo('images/logo.png');
+                        ->logo('images/ranz-logo.jpg');
             } elseif ($mop === 'g-cash') {
                 $invoice->discountByPercent(100)
                         ->seller($seller)
-                        ->logo('images/logo.png');
+                        ->logo('images/ranz-logo.jpg');
             }else 
             {
                 $invoice->seller($seller)
-                        ->logo('images/logo.png');
+                        ->logo('images/ranz-logo.jpg');
             }
 
              foreach ($item as $items) {
@@ -128,12 +128,12 @@ class InvoiceController extends Controller
              ->buyer($buyer)
              ->name('Acknowledgement Receipt')
              ->currencySymbol('₱')
-             ->currencyCode('PHP')
+             ->currencyCode('Philippine Peso')
              ->notes('Not an official receipt.')
              ->seller($seller)
              ->status(__('invoices::invoice.paid'))
              ->template('acknowledgement-receipt')
-             ->logo('images/logo.png');
+             ->logo('images/ranz-logo.jpg');
             
 
              foreach ($item as $items) {
@@ -191,12 +191,12 @@ class InvoiceController extends Controller
              ->buyer($buyer)
              ->name('Acknowledgement Receipt')
              ->currencySymbol('₱')
-             ->currencyCode('PHP')
+             ->currencyCode('Philippine Peso')
              ->notes('Not an official receipt.')
              ->seller($seller)
              ->status(__('invoices::invoice.paid'))
              ->template('acknowledgement-receipt')
-             ->logo('images/logo.png');
+             ->logo('images/ranz-logo.jpg');
             
 
              foreach ($item as $items) {

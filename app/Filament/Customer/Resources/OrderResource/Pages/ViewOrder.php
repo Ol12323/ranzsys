@@ -499,6 +499,7 @@ class ViewOrder extends ViewRecord
                     ->native(false)
                     ->required()
                     ->label('New date')
+                    ->live()
                     ->closeOnDateSelection()
                     ->minDate(now()->addDays(2)) 
                     ->maxDate(now()->addDays(30))
@@ -529,7 +530,32 @@ class ViewOrder extends ViewRecord
                         },
                     ])
                     ->label('New timeslot')
-                    ->options(TimeSlot::all()->pluck('time_slot', 'id'))
+                    //->options(TimeSlot::all()->pluck('time_slot', 'id'))
+                    ->options(function (Get $get){
+                        $appointmentDate = $get('appointment_date');
+
+                        $pairedTimeSlotsAppointments = Order::where('service_date', $appointmentDate)
+                            ->pluck('time_slot_id')
+                            ->toArray();
+                    
+                        $pairedTimeSlotsOrders = Cart::where('appointment_date', $appointmentDate)
+                            ->pluck('time_slot_id')
+                            ->toArray();
+                    
+                        $pairedTimeSlots = array_merge($pairedTimeSlotsAppointments, $pairedTimeSlotsOrders);
+                    
+                        // Use whereNotIn directly on the TimeSlot model to filter out the time slots
+                        $timeSlots = TimeSlot::whereNotIn('id', $pairedTimeSlots)
+                            ->get()
+                            ->pluck('time_slot', 'id');
+                    
+                        return $timeSlots;
+                    })
+                    ->default(function(){
+                        $timeslot = $this->record->time_slot_id;
+
+                        return $timeslot;
+                    })
                     ->required(),
             ])
             ->action(function (array $data, Model $record){

@@ -355,6 +355,17 @@
                             {{ $invoice->formatCurrency($invoice->total_amount) }}
                         </td>
                     </tr>
+
+                    {{-- Test --}}
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ trans('invoices::invoice.amount_in_words') }}</td>
+                        <td class="text-right pr-0 total-amount">
+                            <p>
+                                 {{ $invoice->getTotalAmountInWords() }}
+                            </p>
+                        </td>
+                    </tr>
             </tbody>
         </table>
 
@@ -364,9 +375,9 @@
             </p>
         @endif
 
-        <p>
+        {{-- <p>
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
-        </p>
+        </p> --}}
         <p>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
         </p>

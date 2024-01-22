@@ -40,7 +40,7 @@ return [
          *
          * Example: Amount in words: Eight hundred fifty thousand sixty-eight EUR and fifteen ct.
          */
-        'fraction' => 'ct.',
+        'fraction' => 'cents.',
         'symbol'   => '€',
 
         /*
