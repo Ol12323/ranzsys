@@ -93,7 +93,6 @@ class CartResource extends Resource
                     return $record->service->category->category_name != 'Printing';
                 }),
                 DatePicker::make('appointment_date')
-                ->live()
                 ->date()
                 ->native(false)
                 ->minDate(now()->addDays(2)) 
@@ -130,27 +129,7 @@ class CartResource extends Resource
                 ]),
                 Radio::make('time_slot_id')
                 ->label('Timeslot')
-                //->options(TimeSlot::all()->pluck('time_slot', 'id'))
-                ->options(function (Get $get){
-                    $appointmentDate = $get('appointment_date');
-
-                    $pairedTimeSlotsAppointments = Order::where('service_date', $appointmentDate)
-                        ->pluck('time_slot_id')
-                        ->toArray();
-                
-                    $pairedTimeSlotsOrders = Cart::where('appointment_date', $appointmentDate)
-                        ->pluck('time_slot_id')
-                        ->toArray();
-                
-                    $pairedTimeSlots = array_merge($pairedTimeSlotsAppointments, $pairedTimeSlotsOrders);
-                
-                    // Use whereNotIn directly on the TimeSlot model to filter out the time slots
-                    $timeSlots = TimeSlot::whereNotIn('id', $pairedTimeSlots)
-                        ->get()
-                        ->pluck('time_slot', 'id');
-                
-                    return $timeSlots;
-                })
+                ->options(TimeSlot::all()->pluck('time_slot', 'id'))
                 ->columnSpan('full')
                 ->visible(function(Model $record){
                     return $record->service->category->category_name != 'Printing';
@@ -667,7 +646,10 @@ class CartResource extends Resource
                             ->options(function (Get $get){
                                 $appointmentDate = $get('appointment_date');
 
-                                $pairedTimeSlotsAppointments = Order::where('service_date', $appointmentDate)
+                                $pairedTimeSlotsAppointments = Order::where([
+                                    ['service_date', $appointmentDate],
+                                    ['status', '!=', 'Cancelled'],
+                                    ])
                                     ->pluck('time_slot_id')
                                     ->toArray();
                             
