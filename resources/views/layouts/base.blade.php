@@ -6,7 +6,7 @@
         <meta name="application-name" content="{{ config('app.name') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('images/ranz-logo.png') }}">
         <title>{{ config('app.name') }}</title>
  
         <style>
@@ -18,7 +18,6 @@
         @filamentStyles
         @vite('resources/css/app.css')
         @livewireStyles
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     </head>
     <body class="antialiased bg-gray-950">
         <header class="">

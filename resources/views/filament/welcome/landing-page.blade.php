@@ -1,16 +1,3 @@
-{{-- <section class="bg-transparent">
-    <div class="container px-6 py-16 mx-auto text-center">
-        <div class="max-w-lg mx-auto">
-            <h1 class="text-3xl font-semibold text-blue-500 lg:text-4xl">WELCOME TO RANZ PHOTOGRAPHY!</h1>
-            <p class="mt-6 text-gray-500 dark:text-gray-300">Bring Your Memories to Life: Immerse Yourself in the Art of Print with Ranz Photography Printing Services – Transforming Pixels into Timeless Masterpieces.</p>
-        </div>
-
-        <div class="flex justify-center mt-10">
-            <img class="object-cover w-full h-full rounded-xl lg:w-4/5" src="{{asset('images/image-1.png')}}" />
-        </div>
-    </div>
-</section> --}}
-
 <div class="container px-6 py-16 mx-auto">
     <div class="items-center lg:flex">
         <div class="w-full lg:w-1/2">

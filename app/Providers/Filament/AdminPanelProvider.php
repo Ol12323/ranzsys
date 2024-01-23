@@ -43,7 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->emailVerification()
             ->topNavigation()
-            ->favicon(asset('images/logo.png'))
+            ->favicon(asset('images/ranz-logo.png'))
             ->profile(EditProfile::class)
             ->colors([
                 'danger' => Color::Red,

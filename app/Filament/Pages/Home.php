@@ -29,10 +29,10 @@ class Home extends Page
         return false;
     }
 
-    public function getHeader(): ?View
-    {
-        return view('filament.welcome.landing-page');
-    }
+    // public function getHeader(): ?View
+    // {
+    //     return view('filament.welcome.landing-page');
+    // }
 
     public function getFooter(): ?View
     {
@@ -50,4 +50,5 @@ class Home extends Page
 
     protected static string $view = 'filament.pages.home';
 
+    protected static string $layout = 'layouts.filament';
 }

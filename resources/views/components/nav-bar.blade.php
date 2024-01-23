@@ -1,4 +1,4 @@
-<nav x-data="{ isOpen: false }" class="mb-8 h-16 py-4 px-8 mx-auto lg:flex lg:justify-between lg:items-center bg-gray-900 shadow-sm ring-1 ring-white/10">
+<nav x-data="{ isOpen: false }" class="h-16 py-4 px-8 mx-auto lg:flex lg:justify-between lg:items-center bg-gray-900 shadow-sm ring-1 ring-white/10">
     <div class="flex items-center justify-between">
        @include('vendor.filament-panels.components.logo')
         <!-- Mobile menu button -->

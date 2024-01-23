@@ -14,7 +14,7 @@
     </div>
 </section> --}}
 
-<div class="container px-14 py-16 mx-auto">
+{{-- <div class="container px-14 py-16 mx-auto">
     <div class="items-center lg:flex">
         <div class="w-full lg:w-1/2">
             <div class="lg:max-w-lg">
@@ -34,8 +34,16 @@
             <img class="w-full h-full lg:max-w-3xl" src="{{asset('images/image-1.png')}}" alt="Catalogue-pana.svg">
         </div>
     </div>
+</div> --}}
+<div class="w-auto bg-center bg-cover h-[38rem] rounded" style="background-image: url('{{asset('images/image-2.jpg')}}');">
+  <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
+  <div class="text-center">
+    <h1 class="text-3xl font-semibold text-white lg:text-4xl">Capture Moments with our <span class="text-blue-400">Photography</span> Services</h1>
+  <button class="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500"><a href="#contact">Contact us</a></button>
+  </div>
 </div>
-<section class="bg-transparent">
+</div>
+<section class="mt-6 bg-transparent">
   <div class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
       <h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight xl:text-3xl text-white">
           Capturing Moments, Creating Memories: <span class="text-blue-500">The Importance of Photography.</span>
