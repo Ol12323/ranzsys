@@ -1,45 +1,13 @@
 @extends('layouts.base')
 
 @section('content')
-{{-- Landing Page --}}
-{{-- <section class="bg-transparent">
-    <div class="container px-14 py-16 mx-auto text-center">
-        <div class="max-w-lg mx-auto">
-            <h1 class="text-3xl font-semibold text-blue-500 lg:text-4xl">WELCOME TO RANZ PHOTOGRAPHY!</h1>
-            <p class="mt-6 text-gray-300">Bring Your Memories to Life: Immerse Yourself in the Art of Print with Ranz Photography Printing Services – Transforming Pixels into Timeless Masterpieces.</p>
-        </div>
-        <div class="flex justify-center mt-10">
-            <img class="object-cover w-full h-full rounded-xl lg:w-4/5" src="{{asset('images/image-1.png')}}" />
-        </div>
-    </div>
-</section> --}}
-
-{{-- <div class="container px-14 py-16 mx-auto">
-    <div class="items-center lg:flex">
-        <div class="w-full lg:w-1/2">
-            <div class="lg:max-w-lg">
-                <h1 class="text-3xl font-semibold text-white lg:text-4xl">Welcome  <br> to <span class="text-blue-500 ">Ranz Photography!</span></h1>
-                
-                <p class="mt-3 text-gray-400">Bring Your Memories to Life: Immerse Yourself in the Art of Print with Ranz Photography Printing Services – Transforming Pixels into Timeless Masterpieces.</p>
-                
-                <div class="flex flex-col mt-6 space-y-3 lg:space-y-0 lg:flex-row">
-                  <a href="{{route('catalog')}}" class="block px-5 py-2 text-sm font-medium tracking-wider text-center text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500">Shop now</a>
-                  <a href="#contact" class="block px-5 py-2 text-sm font-medium tracking-wider text-center text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md lg:mx-4 hover:bg-gray-300">Contact us</a>
-              </div>
-
-            </div>
-        </div>
-
-        <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-            <img class="w-full h-full lg:max-w-3xl" src="{{asset('images/image-1.png')}}" alt="Catalogue-pana.svg">
-        </div>
-    </div>
-</div> --}}
 <div class="w-auto bg-center bg-cover h-[38rem] rounded" style="background-image: url('{{asset('images/image-2.jpg')}}');">
   <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
   <div class="text-center">
     <h1 class="text-3xl font-semibold text-white lg:text-4xl">Capture Moments with our <span class="text-blue-400">Photography</span> Services</h1>
-  <button class="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500"><a href="#contact">Contact us</a></button>
+    <a href="#contact" class="inline-flex items-center justify-center w-full px-5 py-2 mt-6 transition-colors duration-300 transform border rounded-lg bg-transparent border-white text-white sm:w-auto hover:bg-white/5 ring-gray-700 focus:ring focus:ring-gray-200 focus:ring-opacity-80">
+      Contact us
+  </a>
   </div>
 </div>
 </div>

@@ -1,18 +1,22 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-7ff5f36a.css",
+    "file": "assets/app-6751879e.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-8933745b.css",
+    "file": "assets/theme-ba13b4d4.css",
     "isEntry": true,
     "src": "resources/css/filament/admin/theme.css"
   },
   "resources/css/filament/customer/theme.css": {
-    "file": "assets/theme-b5141b7c.css",
+    "file": "assets/theme-3917a923.css",
     "isEntry": true,
     "src": "resources/css/filament/customer/theme.css"
+  },
+  "resources/css/filament/images/image-2.jpg": {
+    "file": "assets/image-2-6f3e69a4.jpg",
+    "src": "resources/css/filament/images/image-2.jpg"
   },
   "resources/js/app.js": {
     "file": "assets/app-5c2c607a.js",
@@ -20,7 +24,7 @@
     "src": "resources/js/app.js"
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-0b167c9f.css",
+    "file": "assets/app-ff46aabf.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }

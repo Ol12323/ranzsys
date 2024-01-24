@@ -1,3 +1,10 @@
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
 @config './tailwind.config.js';
+
+.fi-simple-layout {
+    /* Use the correct relative path to your image */
+    background-image: url('../images/image-2.jpg');
+    background-size: cover; /* Example property */
+}
+
   

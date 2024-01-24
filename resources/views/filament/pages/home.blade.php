@@ -3,7 +3,9 @@
         <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
         <div class="text-center">
           <h1 class="text-3xl font-semibold text-white lg:text-4xl">Capture Moments with our <span class="text-blue-400">Photography</span> Services</h1>
-        <button class="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500"><a href="#contact">Contact us</a></button>
+          <a href="#contact" class="inline-flex items-center justify-center w-full px-5 py-2 mt-6 transition-colors duration-300 transform border rounded-lg bg-transparent border-white text-white sm:w-auto hover:bg-white/5 ring-gray-700 focus:ring focus:ring-gray-200 focus:ring-opacity-80">
+            Contact us
+        </a>
         </div>
     </div>
     </div>
