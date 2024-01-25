@@ -76,7 +76,7 @@ class SalesPerServiceChart extends ApexChartWidget
             ],
             'series' => [
                 [
-                    'name' => 'Sale',
+                    'name' => 'Sale ₱',
                     'data' => $salesTotals,
                 ],
             ],

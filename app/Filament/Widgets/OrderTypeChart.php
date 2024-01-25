@@ -64,7 +64,7 @@ class OrderTypeChart extends ApexChartWidget
             ],
             'series' => [
                 [
-                    'name' => 'BasicBarChart',
+                    'name' => 'Sale ₱',
                     'data' => $totals,
                 ],
             ],

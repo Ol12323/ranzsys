@@ -1,10 +1,10 @@
 <footer class="bg-transparent">
     <div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
         <a href="#">
-            <img class="w-auto h-6 sm:h-7" src="{{asset('images/logo.png')}}" alt="">
+            <img class="w-auto h-6 sm:h-7" src="{{asset('images/ranz-logo.png')}}" alt="">
         </a>
 
-        <p class="text-sm text-gray-300">© Copyright 2021. All Rights Reserved.</p>
+        <p class="text-sm text-gray-600 dark:text-gray-300">© Copyright 2021. All Rights Reserved.</p>
 
         <div class="flex -mx-2">
             <a href="https://www.facebook.com/profile.php?id=100064168503688" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Facebook">

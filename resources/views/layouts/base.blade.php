@@ -86,7 +86,7 @@
 <footer class="bg-transparent">
     <div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
         <a href="#">
-            <img class="w-auto h-6 sm:h-7" src="{{asset('images/logo.png')}}" alt="">
+            <img class="w-auto h-6 sm:h-7" src="{{asset('images/ranz-logo.png')}}" alt="">
         </a>
 
         <p class="text-sm text-gray-300">© Copyright 2021. All Rights Reserved.</p>
