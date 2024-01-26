@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="w-auto bg-center bg-cover h-[38rem] rounded" style="background-image: url('{{asset('images/image-2.jpg')}}');">
+<div class="w-auto bg-center bg-cover h-[38rem] rounded" style="background-image: url('{{asset('images/landing-bg-image.png')}}');">
   <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
   <div class="text-center">
     <h1 class="text-3xl font-semibold text-white lg:text-4xl">Capture Moments with our <span class="text-blue-400">Photography</span> Services</h1>

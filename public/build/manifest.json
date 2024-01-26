@@ -10,13 +10,13 @@
     "src": "resources/css/filament/admin/theme.css"
   },
   "resources/css/filament/customer/theme.css": {
-    "file": "assets/theme-3a9ed77d.css",
+    "file": "assets/theme-64928041.css",
     "isEntry": true,
     "src": "resources/css/filament/customer/theme.css"
   },
-  "resources/css/filament/images/image-2.jpg": {
-    "file": "assets/image-2-6f3e69a4.jpg",
-    "src": "resources/css/filament/images/image-2.jpg"
+  "resources/css/filament/images/auth-bg-image.png": {
+    "file": "assets/auth-bg-image-b5727454.png",
+    "src": "resources/css/filament/images/auth-bg-image.png"
   },
   "resources/js/app.js": {
     "file": "assets/app-5c2c607a.js",

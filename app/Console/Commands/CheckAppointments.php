@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action as NotifAction;
+use Carbon\Carbon;
 
 class CheckAppointments extends Command
 {
@@ -33,9 +34,16 @@ class CheckAppointments extends Command
         
         $scheduledAppointments = Order::all();
 
-        //$scheduledAppointments = Appointment::whereDate('appointment_date', $tomorrow)->get();
-
         foreach ($scheduledAppointments as $order) {
+
+            // Assuming $order->service_date is a valid date string
+            $serviceDate = Carbon::parse($order->service_date, 'Asia/Manila');
+
+            $now = Carbon::now('Asia/Manila');
+
+            // Calculate the difference in days
+            $dayDifference = $now->diffInDays($serviceDate);
+
             if ($order->service_date === $tomorrow && $order->status != 'Completed' && $order->service_type === 'Appointment' && $order->status != 'Cancelled') {
                 $orderId = $order->id;
                 $customerId = $order->user_id;
@@ -64,7 +72,7 @@ class CheckAppointments extends Command
                 ])
                 ->sendToDatabase($recipients);
 
-            }elseif($order->service_date < now('Asia/Manila') && $order->status != 'Completed' && $order->service_type === 'Appointment' && $order->status != 'Cancelled') {
+            }elseif($dayDifference > 1 && $order->service_type === 'Appointment' && $order->status === 'Confirmed') {
                 $orderId = $order->id;
                 $customerId = $order->user_id;
                 $timeSlot = $order->time_slot->TimeSlot;

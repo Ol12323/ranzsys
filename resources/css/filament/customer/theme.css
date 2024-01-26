@@ -3,8 +3,9 @@
 
 .fi-simple-layout {
     /* Use the correct relative path to your image */
-    background-image: url('../images/image-2.jpg');
-    background-size: cover; /* Example property */
+    background-image: url('../images/auth-bg-image.png'); 
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
   
