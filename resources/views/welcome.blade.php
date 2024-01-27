@@ -1,10 +1,22 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="w-auto bg-center bg-cover h-[38rem] rounded" style="background-image: url('{{asset('images/landing-bg-image.png')}}');">
+<div class="w-auto bg-center bg-cover h-[38rem] rounded" style="background-image: url('{{asset('images/landing-bg-image-v2.png')}}');">
   <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
   <div class="text-center">
-    <h1 class="text-3xl font-semibold text-white lg:text-4xl">Capture Moments with our <span class="text-blue-400">Photography</span> Services</h1>
+       <h1 class="text-5xl font-extrabold text-center lg:text-7xl 2xl:text-8xl">
+        <span class="text-transparent bg-gradient-to-br bg-clip-text from-white via-white-500 to-white">
+            Welcome to
+        </span>
+
+        <span class="text-transparent bg-gradient-to-tr bg-clip-text from-blue-700 via-blue-700 to-blue-700">
+            Ranz photography!
+        </span>
+    </h1>
+
+    <p class="max-w-3xl mx-auto mt-6 text-lg text-center text-white md:text-xl">
+        Capture moments with our photography and printing services.
+    </p>
     <div class="flex flex-col mt-4 mb-4 lg:mb-8 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
       <a href="#featuredServices" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-gray-300 hover:bg-white/5 focus:ring-4 focus:ring-gray-100">
           Featured services
@@ -17,7 +29,7 @@
   </div>
 </div>
 </div>
-<section class="mt-6 bg-transparent">
+<section class="mt-20 bg-transparent">
   <div class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
       <h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight xl:text-3xl text-white">
           Capturing Moments, Creating Memories: <span class="text-blue-500">The Importance of Photography.</span>
