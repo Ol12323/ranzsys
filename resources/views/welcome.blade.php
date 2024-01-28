@@ -9,7 +9,7 @@
             Welcome to
         </span>
 
-        <span class="text-transparent bg-gradient-to-tr bg-clip-text from-blue-700 via-blue-700 to-blue-700">
+        <span class="text-transparent bg-gradient-to-tr bg-clip-text from-white via-white to-white">
             Ranz photography!
         </span>
     </h1>
