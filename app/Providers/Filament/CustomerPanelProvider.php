@@ -94,7 +94,8 @@ class CustomerPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/customer/theme.css')
             ->plugins([
             LightSwitchPlugin::make(),
-            ]);
+            ])
+            ->globalSearch(false);
     }
 
 }

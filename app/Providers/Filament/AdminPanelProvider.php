@@ -88,6 +88,7 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugins([
                 FilamentApexChartsPlugin::make()
-            ]);
+            ])
+            ->globalSearch(false);
     }
 }

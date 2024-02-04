@@ -451,6 +451,7 @@ class CartResource extends Resource
                     // Do nothing (or you can return null)
                 }),
                 TextColumn::make('service.service_name')
+                ->searchable()
                 ->label('')
                 ->action(function (Cart $record): void {
                     // Do nothing (or you can return null)

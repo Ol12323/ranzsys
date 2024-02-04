@@ -131,9 +131,11 @@ class MessageResource extends Resource
             })
             ->columns([
                 TextColumn::make('subject')
-                ->weight(FontWeight::Bold),
+                ->weight(FontWeight::Bold)
+                ->searchable(),
                 TextColumn::make('created_at')
-                ->date(),
+                ->date()
+                ->sortable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
