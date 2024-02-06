@@ -1,33 +1,29 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="w-auto bg-center bg-cover h-[38rem] rounded" style="background-image: url('{{asset('images/landing-bg-image-v3.2.png')}}');">
-  <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
-  <div class="text-center">
-       <h1 class="text-5xl font-extrabold text-center lg:text-7xl 2xl:text-8xl">
-        <span class="text-transparent bg-gradient-to-br bg-clip-text from-white via-white-500 to-white">
-            Welcome to
-        </span>
+<div class="px-6 py-16 mx-auto bg-transparent">
+  <div class="items-center lg:flex">
+      <div class="w-full lg:w-1/2">
+          <div class="lg:max-w-lg">
+              <h1 class="text-3xl font-semibold text-white lg:text-4xl">WELCOME <br> TO <span class="text-blue-500 ">RANZ PHOTOGRAPHY!</span></h1>
+              
+              <p class="mt-3 text-gray-400">Transforming moments into masterpieces. Immerse yourself in the unparalleled quality of our prints. </p>
+              <div class="flex flex-col mt-6 space-y-3 lg:space-y-0 lg:flex-row">
+                <a href="#featuredServices" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-blue-600 rounded-lg border border-blue-600 hover:bg-white/5 focus:ring-4 focus:ring-blue-500">
+                  Featured services
+              </a>
+              <a href="#contact" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-blue-600 hover:underline">
+                Contact us
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a>  
+            </div>
+          </div>
+      </div>
 
-        <span class="text-transparent bg-gradient-to-tr bg-clip-text from-white via-white to-white">
-            Ranz photography!
-        </span>
-    </h1>
-
-    <p class="max-w-3xl mx-auto mt-6 text-lg text-center text-white md:text-xl">
-        Capture moments with our photography and printing services.
-    </p>
-    <div class="flex flex-col mt-4 mb-4 lg:mb-8 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-      <a href="#featuredServices" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-gray-300 hover:bg-white/5 focus:ring-4 focus:ring-gray-100">
-          Featured services
-      </a>
-      <a href="#contact" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white hover:underline">
-        Contact us
-        <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-    </a>  
+      <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
+          <img class="w-full h-full lg:max-w-3xl" src="{{asset('images/landing-page-image.png')}}" alt="">
+      </div>
   </div>
-  </div>
-</div>
 </div>
 <section class="mt-20 bg-transparent">
   <div class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
