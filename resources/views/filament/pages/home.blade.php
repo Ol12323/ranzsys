@@ -17,9 +17,8 @@
               </div>
             </div>
         </div>
-  
         <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-            <img class="w-full h-full lg:max-w-3xl" src="{{asset('images/landing-page-image.png')}}" alt="">
+            <img class="w-full h-full lg:max-w-3xl" src="{{asset('images/landing-page-image-main.png')}}" alt="">
         </div>
     </div>
   </div>
