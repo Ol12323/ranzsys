@@ -41,6 +41,8 @@ class CheckAppointments extends Command
 
             $now = Carbon::now('Asia/Manila');
 
+            //Compare if now if today is greater than $service_date
+            $compare = $now > $serviceDate;
             // Calculate the difference in days
             $dayDifference = $now->diffInDays($serviceDate);
 
@@ -72,7 +74,7 @@ class CheckAppointments extends Command
                 ])
                 ->sendToDatabase($recipients);
 
-            }elseif($dayDifference > 1 && $order->service_type === 'Appointment' && $order->status === 'Confirmed') {
+            }elseif($compare && $dayDifference == 1 && $order->service_type === 'Appointment' && $order->status === 'Confirmed') {
                 $orderId = $order->id;
                 $customerId = $order->user_id;
                 $timeSlot = $order->time_slot->TimeSlot;
