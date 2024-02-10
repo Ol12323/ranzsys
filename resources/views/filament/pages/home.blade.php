@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-            <img class="w-full h-full lg:max-w-3xl" src="{{asset('images/landing-page-image-main.png')}}" alt="">
+            <img class="rounded w-full h-full lg:max-w-3xl" src="{{asset('images/landing-image-gif.gif')}}" alt="">
         </div>
     </div>
   </div>
