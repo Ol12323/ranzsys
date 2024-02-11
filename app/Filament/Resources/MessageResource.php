@@ -93,7 +93,9 @@ class MessageResource extends Resource
                     ->size(TextEntry\TextEntrySize::Large)
                     ->weight(FontWeight::Bold),
                     TextEntry::make('sender.FullName')
-                    ->label('From')
+                    ->label(function(Model $record){
+                        return $record->sender->role->name;
+                    })
                     ->hidden(function(Model $record){
                         return auth()->user()->id === $record->sender_id;
                     })

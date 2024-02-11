@@ -54,7 +54,7 @@ class CustomerPanelProvider extends PanelProvider
             ])
             ->userMenuItems([
                 MenuItem::make()
-                    ->label('My purchases')
+                    ->label('Completed transactions')
                     ->url(fn (): string => SaleTransactionResource::getUrl())
                     ->icon('heroicon-o-credit-card'),
                 // ...
