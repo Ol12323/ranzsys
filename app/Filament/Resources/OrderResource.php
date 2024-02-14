@@ -75,7 +75,54 @@ class OrderResource extends Resource
                 ->copyable()
                 ->copyMessage('Copied!')
                 ->copyMessageDuration(1500),
-                TextEntry::make('sumOfItemValues')
+                TextEntry::make('user.FullName')
+                ->label('Customer')
+                ->size(TextEntry\TextEntrySize::Large)
+                ->weight(FontWeight::Bold)
+                ->copyable()
+                ->copyMessage('Copied!')
+                ->copyMessageDuration(1500),
+                Fieldset::make('Order information')
+                ->label('')
+                ->schema([
+                    TextEntry::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Declined' => 'danger',
+                        'Pending' => 'gray',
+                        'Payment method confirmed' => 'info',
+                        'Payment received' => 'primary',
+                        'Confirmed' => 'primary',
+                        'In progress' => 'warning',
+                        'Ready for pickup' => 'success',
+                        'Completed' => 'success',
+                        'Select payment method' => 'warning',
+                        'Picked up' => 'primary',
+                        'Missed' => 'danger',
+                        'Cancelled' => 'gray'
+                    }),
+                    TextEntry::make('service_date')
+                    ->icon('heroicon-m-clock')
+                    ->date(),
+                    TextEntry::make('time_slot.time_slot')
+                    ->hidden(function(Model $record){
+                        return ($record->time_slot_id === NULL);
+                    }),
+                    TextEntry::make('sumOfItemValues')
+                    ->label('Total amount')
+                    ->money('PHP', TRUE)
+                    ->weight(FontWeight::Bold),
+                    TextEntry::make('mode_of_payment')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'cash' => 'success',
+                        'g-cash' => 'primary',
+                        'g-cash-partial' => 'info',
+                        'Not yet applicable' => 'gray'
+                    }),
+                    // Amount due
+                    TextEntry::make('sumOfItemValues')
                 ->label('Total amount due')
                 ->size(TextEntry\TextEntrySize::Large)
                 ->weight(FontWeight::Bold)
@@ -114,61 +161,7 @@ class OrderResource extends Resource
                 ->visible(function(Model $record){
                     return ($record->mode_of_payment === 'g-cash-partial' AND $record->status === 'In progress' || 'Ready for pickup' || 'Picked up' || 'Completed');
                 }),
-                TextEntry::make('user.FullName')
-                ->label('Customer')
-                ->size(TextEntry\TextEntrySize::Large)
-                ->weight(FontWeight::Bold)
-                ->copyable()
-                ->copyMessage('Copied!')
-                ->copyMessageDuration(1500),
-                Fieldset::make('Order information')
-                ->label('')
-                ->schema([
-                    TextEntry::make('service_type')
-                    ->icon('heroicon-m-tag')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Appointment' => 'appointmentColor',
-                        'Printing' => 'orderColor',
-                    }),
-                    TextEntry::make('status')
-                    ->label('Status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Declined' => 'danger',
-                        'Pending' => 'gray',
-                        'Payment method confirmed' => 'info',
-                        'Payment received' => 'primary',
-                        'Confirmed' => 'primary',
-                        'In progress' => 'warning',
-                        'Ready for pickup' => 'success',
-                        'Completed' => 'success',
-                        'Select payment method' => 'warning',
-                        'Picked up' => 'primary',
-                        'Missed' => 'danger',
-                        'Cancelled' => 'gray'
-                    }),
-                    TextEntry::make('service_date')
-                    ->icon('heroicon-m-clock')
-                    ->date(),
-                    TextEntry::make('time_slot.time_slot')
-                    ->hidden(function(Model $record){
-                        return ($record->time_slot_id === NULL);
-                    }),
-                    TextEntry::make('sumOfItemValues')
-                    ->label('Total amount')
-                    ->money('PHP', TRUE)
-                    ->weight(FontWeight::Bold),
-                    TextEntry::make('mode_of_payment')
-                    ->label('MOP')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'cash' => 'success',
-                        'g-cash' => 'primary',
-                        'g-cash-partial' => 'info',
-                        'Not yet applicable' => 'gray'
-                    }), 
-                ])->columns(6),
+                ])->columns(5),
                 Fieldset::make('Order services')
                 ->schema([
                     RepeatableEntry::make('service')
@@ -251,13 +244,6 @@ class OrderResource extends Resource
                 ->square()
                 ->stacked()
                 ->label('Orders'),
-                TextColumn::make('service_type')
-                ->icon('heroicon-m-tag')
-                ->badge()
-                ->color(fn (string $state): string => match ($state) {
-                    'Appointment' => 'appointmentColor',
-                    'Printing' => 'orderColor',
-                }),
                 TextColumn::make('status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
@@ -282,7 +268,6 @@ class OrderResource extends Resource
                 ->label('Total Amount')
                 ->money('PHP', TRUE),
                 TextColumn::make('mode_of_payment')
-                ->label('MOP')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
                     'cash' => 'success',

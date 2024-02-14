@@ -11,7 +11,7 @@ return [
     'serial'                 => 'Serial No.',
     'date'                   => 'Invoice date',
     'seller'                 => 'Seller',
-    'buyer'                  => 'Buyer',
+    'buyer'                  => 'Customer',
     'address'                => 'Address',
     'code'                   => 'Code',
     'vat'                    => 'VAT code',

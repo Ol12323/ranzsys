@@ -315,7 +315,7 @@
                 @if($invoice->taxable_amount)
                     <tr>
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.taxable_amount') }}</td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.taxable_amount') }}</td
                         <td class="text-right pr-0">
                             {{ $invoice->formatCurrency($invoice->taxable_amount) }}
                         </td>

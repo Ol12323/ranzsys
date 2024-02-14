@@ -56,7 +56,7 @@ class InvoiceController extends Controller
          $invoice = Invoice::make()
              ->buyer($buyer)
              ->currencySymbol('₱')
-             ->currencyCode('Philippine Peso')
+             ->currencyCode('peso')
              ->notes('Not an official receipt.');
              if ($mop === 'g-cash-partial') {
                 $invoice->discountByPercent(50)
@@ -128,7 +128,7 @@ class InvoiceController extends Controller
              ->buyer($buyer)
              ->name('Acknowledgement Receipt')
              ->currencySymbol('₱')
-             ->currencyCode('Philippine Peso')
+             ->currencyCode('peso')
              ->notes('Not an official receipt.')
              ->seller($seller)
              ->status(__('invoices::invoice.paid'))
@@ -191,7 +191,7 @@ class InvoiceController extends Controller
              ->buyer($buyer)
              ->name('Acknowledgement Receipt')
              ->currencySymbol('₱')
-             ->currencyCode('Philippine Peso')
+             ->currencyCode('peso')
              ->notes('Not an official receipt.')
              ->seller($seller)
              ->status(__('invoices::invoice.paid'))

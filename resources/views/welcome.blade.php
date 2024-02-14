@@ -1,27 +1,20 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="px-6 py-16 mx-auto bg-transparent">
-  <div class="items-center lg:flex">
-      <div class="w-full lg:w-1/2">
-          <div class="lg:max-w-lg">
-              <h1 class="text-3xl font-semibold text-white lg:text-4xl">WELCOME <br> TO <span class="text-blue-500 ">RANZ PHOTOGRAPHY!</span></h1>
-              
-              <p class="mt-3 text-gray-400">Transforming moments into masterpieces. Immerse yourself in the unparalleled quality of our prints. </p>
-              <div class="flex flex-col mt-6 space-y-3 lg:space-y-0 lg:flex-row">
-                <a href="#featuredServices" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-blue-600 rounded-lg border border-blue-600 hover:bg-white/5 focus:ring-4 focus:ring-blue-500">
-                  Featured services
-              </a>
-              <a href="#contact" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-blue-600 hover:underline">
-                Contact us
-                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </a>  
-            </div>
-          </div>
-      </div>
-
-      <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-          <img class="rounded w-full h-full lg:max-w-3xl" src="{{asset('images/landing-image-gif.gif')}}" alt="">
+<div class="w-full bg-center bg-cover h-[38rem]" style="background-image: url('{{asset('images/landing-bg-image.png')}}');">
+  <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
+      <div class="text-center">
+          <h1 class="text-3xl font-semibold text-white lg:text-4xl">Capture moments, frame <span class="text-blue-400">memories</span> beautifully.</h1>
+          <div class="mt-6">
+            <a href="#featuredServices"
+                class="inline-flex items-center justify-center w-full px-4 py-2.5 mt-4 overflow-hidden text-sm text-white transition-colors duration-300 bg-blue-600 rounded-lg shadow sm:w-auto sm:mx-2 sm:mt-0 hover:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                    Featured services
+            </a>
+            <a href="#contact"
+            class="inline-flex items-center justify-center w-full px-4 py-2.5 mt-4 overflow-hidden text-sm text-white transition-colors duration-300 border border-blue-600 rounded-lg shadow sm:w-auto sm:mx-2 sm:mt-0 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                    Contact us
+          </a>
+        </div>
       </div>
   </div>
 </div>
@@ -41,24 +34,24 @@
       <div class="flex flex-wrap md:-m-2 -m-1">
         <div class="flex flex-wrap w-1/2">
           <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="w-full object-cover h-full object-center block" src="{{asset('images/image-2.jpg')}}">
+            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-2.jpg')}}">
           </div>
           <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="w-full object-cover h-full object-center block" src="{{asset('images/image-6.jpg')}}">
+            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-6.jpg')}}">
           </div>
           <div class="md:p-2 p-1 w-full">
-            <img alt="gallery" class="w-full h-full object-cover object-center block" src="{{asset('images/image-4.jpg')}}">
+            <img alt="gallery" class="rounded w-full h-full object-cover object-center block opacity-75" src="{{asset('images/image-4.jpg')}}">
           </div>
         </div>
         <div class="flex flex-wrap w-1/2">
           <div class="md:p-2 p-1 w-full">
-            <img alt="gallery" class="w-full h-full object-cover object-center block" src="{{asset('images/image-5.jpg')}}">
+            <img alt="gallery" class="rounded w-full h-full object-cover object-center block opacity-75" src="{{asset('images/image-5.jpg')}}">
           </div>
           <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="w-full object-cover h-full object-center block" src="{{asset('images/image-5.jpg')}}">
+            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-5.jpg')}}">
           </div>
           <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="w-full object-cover h-full object-center block" src="{{asset('images/image-8.jpg')}}">
+            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-8.jpg')}}">
           </div>
         </div>
       </div>

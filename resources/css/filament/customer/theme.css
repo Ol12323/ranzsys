@@ -8,4 +8,13 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
+.fi-ta-header {
+    @apply flex justify-end !important;
+}
+
+.fi-ta-header .fi-ta-actions {
+    @apply flex flex-wrap justify-end !important;
+}
+  
+
   

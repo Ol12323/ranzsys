@@ -29,6 +29,7 @@ use App\Models\DisabledDate;
 use App\Models\TimeSlot;
 use Closure;
 use Carbon\Carbon;
+use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
 
 class ViewOrder extends ViewRecord
 {
@@ -475,7 +476,7 @@ class ViewOrder extends ViewRecord
                 return ($record->status === 'Confirmed' || $record->status === 'Missed' && $record->service_type === 'Appointment');
             })
             ->form([
-                DatePicker::make('appointment_date')
+                FlatPickr::make('appointment_date')
                 ->rules([
                     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                         $time = $get('time_slot_id');
@@ -497,7 +498,6 @@ class ViewOrder extends ViewRecord
                         }
                     },
                 ])
-                    ->native(false)
                     ->hint(function(){
                         $date = $this->record->service_date;
 
@@ -507,14 +507,9 @@ class ViewOrder extends ViewRecord
                     })
                     ->required()
                     ->label('New date')
-                    ->closeOnDateSelection()
-                    ->minDate(now()->addDays(2)) 
+                    ->minDate(now()->addDays(3)) 
                     ->maxDate(now()->addDays(30))
-                    ->disabledDates(
-                        function() {
-                            return DisabledDate::pluck('disabled_date')->toArray();
-                        }
-                    ),
+                    ->disabledDates(DisabledDate::pluck('disabled_date')->toArray()),
                 Radio::make('time_slot_id')
                     ->rules([
                         fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {

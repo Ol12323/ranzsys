@@ -48,12 +48,14 @@ use Filament\Tables\Columns\SelectColumn;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Support\Enums\FontWeight;
+use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
+use Filament\Tables\Enums\ActionsPosition;
 
 class CartResource extends Resource
 {
     protected static ?string $model = Cart::class;
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 4;
 
     public static function getNavigationBadge(): ?string
     {
@@ -92,23 +94,17 @@ class CartResource extends Resource
                 ->visible(function(Model $record){
                     return $record->service->category->category_name != 'Printing';
                 }),
-                DatePicker::make('appointment_date')
-                ->date()
-                ->native(false)
-                ->minDate(now()->addDays(2)) 
+                Flatpickr::make('appointment_date')
+                ->minDate(now()->addDays(3)) 
                 ->maxDate(now()->addDays(30))
-                ->disabledDates(
-                    function() {
-                        return DisabledDate::pluck('disabled_date')->toArray();
-                    }
-                )
+                ->disabledDates(DisabledDate::pluck('disabled_date')->toArray())
                 ->columnSpan('full')
                 ->visible(function(Model $record){
                     return $record->service->category->category_name != 'Printing';
                 })
                 ->rules([
                     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                        $date = Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('Y-m-d');
+                        $date = Carbon::parse($value)->format('Y-m-d');
                         $time = $get('time_slot_id');
         
                         $appointmentExists = Order::where([
@@ -136,7 +132,7 @@ class CartResource extends Resource
                 })
                 ->rules([
                     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                        $date = Carbon::createFromFormat('Y-m-d H:i:s', $get('appointment_date'))->format('Y-m-d');
+                        $date = Carbon::parse($get('appointment_date'))->format('Y-m-d');
                         $time = $value;
         
                         $appointmentExists = Order::where([
@@ -586,62 +582,14 @@ class CartResource extends Resource
                     ]),
                     Step::make('Set appointment')
                     ->schema([
-                        DatePicker::make('appointment_date')
-                        ->rules([
-                            fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                                $time = $get('time_slot_id');
-                                $date = $value;
-                
-                                $appointmentExists = Order::where([
-                                    ['service_date', '=', $date],
-                                    ['time_slot_id', '=', $time],
-                                    ['status', '!=', 'Cancelled'],
-                                ])->exists();
-                        
-                                $cartExists = Cart::where([
-                                    ['appointment_date', '=', $date],
-                                    ['time_slot_id', '=', $time],
-                                ])->exists();
-        
-                                if($appointmentExists || $cartExists){
-                                    $fail('The selected appointment date and time slot are already in use.');
-                                }
-                            },
-                        ])
-                            ->native(false)
+                        FlatPickr::make('appointment_date')
                             ->live()
                             ->required()
-                            ->minDate(now()->addDays(2)) 
+                            ->minDate(now()->addDays(3)) 
                             ->maxDate(now()->addDays(30))
                             ->label('Date')
-                            ->closeOnDateSelection()
-                            ->disabledDates(
-                                function() {
-                                    return DisabledDate::pluck('disabled_date')->toArray();
-                                }
-                            ),
+                            ->disabledDates(DisabledDate::pluck('disabled_date')->toArray()),
                         Radio::make('time_slot_id')
-                            ->rules([
-                                fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                                    $date = $get('appointment_date');
-                                    $time = $value;
-                    
-                                    $appointmentExists = Order::where([
-                                        ['service_date', '=', $date],
-                                        ['time_slot_id', '=', $time],
-                                        ['status', '!=', 'Cancelled'],
-                                    ])->exists();
-                            
-                                    $cartExists = Cart::where([
-                                        ['appointment_date', '=', $date],
-                                        ['time_slot_id', '=', $time],
-                                    ])->exists();
-            
-                                    if($appointmentExists || $cartExists){
-                                        $fail('The selected appointment date and time slot are already in use.');
-                                    }
-                                },
-                            ])
                             ->label('Timeslot')
                             //->options(TimeSlot::all()->pluck('time_slot', 'id'))
                             ->options(function (Get $get){
