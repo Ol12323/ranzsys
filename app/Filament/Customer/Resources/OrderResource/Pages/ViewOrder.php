@@ -476,7 +476,7 @@ class ViewOrder extends ViewRecord
                 return ($record->status === 'Confirmed' || $record->status === 'Missed' && $record->service_type === 'Appointment');
             })
             ->form([
-                FlatPickr::make('appointment_date')
+                DatePicker::make('appointment_date')
                 ->rules([
                     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                         $time = $get('time_slot_id');
@@ -506,7 +506,8 @@ class ViewOrder extends ViewRecord
                         return 'Current selected appointment date: '.$formatDate;
                     })
                     ->required()
-                    ->disableMobile(false)
+                    ->native(false)
+                    ->date()
                     ->label('New date')
                     ->minDate(now()->addDays(3)) 
                     ->maxDate(now()->addDays(30))

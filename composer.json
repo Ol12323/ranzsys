@@ -12,7 +12,6 @@
         "ext-bcmath": "*",
         "ext-gd": "*",
         "awcodes/light-switch": "^1.0",
-        "coolsam/flatpickr": "^3.0",
         "doctrine/dbal": "^3.7",
         "filament/filament": "3.0-stable",
         "filament/notifications": "3.0-stable",

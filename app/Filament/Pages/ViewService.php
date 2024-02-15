@@ -67,11 +67,12 @@ class ViewService extends Page implements HasForms, HasActions
         
                         Notification::make()
                         ->title('You\'ve successfully added service to your cart.')
+                        ->body('Please set appointment or select design to checkout the service.')
                         ->success()
                         ->actions([
                             NotifAction::make('view')
                                 ->button()
-                                ->color('info')
+                                ->color('primary')
                                 ->url(fn (): string => CartResource::getUrl()),
                             NotifAction::make('undo')
                                 ->color('gray'),
@@ -92,10 +93,11 @@ class ViewService extends Page implements HasForms, HasActions
         
                         Notification::make()
                         ->title('You\'ve successfully added service to your cart.')
+                        ->body('Please set appointment or select design to checkout the service.')
                         ->success()
                         ->actions([
                             NotifAction::make('view')
-                                ->button('info')
+                                ->button('primary')
                                 ->url(fn (): string => CartResource::getUrl()),
                             NotifAction::make('undo')
                                 ->color('gray'),

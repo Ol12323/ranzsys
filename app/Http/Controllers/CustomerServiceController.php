@@ -79,6 +79,7 @@ class CustomerServiceController extends Controller
 
                 Notification::make()
                 ->title('You\'ve successfully added service to your cart')
+                ->body('Please set appointment or select design to checkout the service.')
                 ->success()
                 ->actions([
                     NotifAction::make('view')
@@ -104,6 +105,7 @@ class CustomerServiceController extends Controller
 
                 Notification::make()
                 ->title('You\'ve successfully added service to your cart')
+                ->body('Please set appointment or select design to checkout the service.')
                 ->success()
                 ->actions([
                     NotifAction::make('view')
@@ -128,93 +130,4 @@ class CustomerServiceController extends Controller
             return view('view-service', compact('service', 'alternatives', 'disabledDate', 'timeSlot'));
     }
 
-    public function setAppointment(Request $request) {
-        $date = $request->input('date');
-        $time = $request->input('timeSlot');
-        $id = $request->input('id');
-    
-        $not_unique = Appointment::where([
-            ['appointment_date', '=', $date],
-            ['time_slot_id', '=', $time],
-        ])->exists();
-    
-        if ($not_unique) {
-            Notification::make()
-                ->title('Appointment date and timeslot are already taken. Please choose another.')
-                ->danger()
-                ->send();
-
-                $service = Service::find($id);
-                $disabledDate = DisabledDate::query()->get();
-                $timeSlot = timeSlot::query()->get();
-                $alternatives = Service::where('availability_status', '!=', 'Not Available')
-                ->orderBy('created_at', 'desc')
-                ->take(4)
-                ->get();
-    
-            return view('view-service', compact('service', 'alternatives', 'disabledDate', 'timeSlot'));
-        
-        } else {
-            $service = Service::find($id);
-            $disabledDate = DisabledDate::query()->get();
-            $timeSlot = timeSlot::query()->get();
-    
-            // Create and save the appointment
-            $appointment_name = Str::random(10);
-            $appointment = new Appointment([
-                'name' => $appointment_name,
-                'customer_id' => auth()->user()->id,
-                'appointment_date' => $date,
-                'time_slot_id' => $time,
-                'status' => 'Scheduled',
-                'total_amount' => $service->price,
-            ]);
-    
-            $appointment->save();
-    
-            $appointment_item = new AppointmentItem([
-                'appointment_id' => $appointment->id,
-                'service_id' => $service->id,
-                'quantity' => 1,
-                'unit_price' => $service->price,
-            ]);
-            $appointment_item->save();
-    
-            // For the staff/owner notification
-            $recipients = User::whereIn('role_id', [1, 2])->get();
-            $appoinment_id = $appointment->id;
-    
-            Notification::make()
-                ->title('Appointment Scheduled')
-                ->success()
-                ->body('A new appointment' . ' ' . $appointment_name . ' ' . 'has been scheduled.')
-                ->actions([
-                    NotifAction::make('view')
-                        ->button()
-                        ->url("/owner/appointments/{$appoinment_id}"),
-                ])
-                ->sendToDatabase($recipients);
-    
-            // For the customer notification
-            Notification::make()
-                ->title('Appointment' . ' ' . $appointment_name . ' ' . 'set successfully.')
-                ->success()
-                ->actions([
-                    NotifAction::make('view')
-                        ->button()
-                        ->color('info')
-                        ->url("/customer/appointments/{$appoinment_id}"),
-                    NotifAction::make('undo')
-                        ->color('gray'),
-                ])
-                ->send();
-    
-            $alternatives = Service::where('availability_status', '!=', 'Not Available')
-                ->orderBy('created_at', 'desc')
-                ->take(4)
-                ->get();
-    
-            return view('view-service', compact('service', 'alternatives', 'disabledDate', 'timeSlot'));
-        }
-    }    
 }

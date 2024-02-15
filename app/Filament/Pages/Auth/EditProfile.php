@@ -16,9 +16,6 @@ class EditProfile extends BaseEditProfile
     {
         return $form
             ->schema([
-                Select::make('role_id')
-                ->relationship(name: 'role', titleAttribute: 'name')
-                ->disabled(),
                 FileUpload::make('avatar')
                 ->avatar()
                 ->required()

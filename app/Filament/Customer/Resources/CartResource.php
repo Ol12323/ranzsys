@@ -49,7 +49,6 @@ use Filament\Support\Enums\MaxWidth;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Enums\ActionsPosition;
-use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
 
 class CartResource extends Resource
 {
@@ -94,8 +93,9 @@ class CartResource extends Resource
                 ->visible(function(Model $record){
                     return $record->service->category->category_name != 'Printing';
                 }),
-                FlatPickr::make('appointment_date')
-                ->disableMobile(false)
+                DatePicker::make('appointment_date')
+                ->native(false)
+                ->date()
                 ->minDate(now()->addDays(3)) 
                 ->maxDate(now()->addDays(30))
                 ->disabledDates(DisabledDate::pluck('disabled_date')->toArray())
@@ -583,10 +583,11 @@ class CartResource extends Resource
                     ]),
                     Step::make('Set appointment')
                     ->schema([
-                        FlatPickr::make('appointment_date')
+                        DatePicker::make('appointment_date')
                             ->live()
+                            ->native(false)
+                            ->date()
                             ->required()
-                            ->disableMobile(false)
                             ->minDate(now()->addDays(3)) 
                             ->maxDate(now()->addDays(30))
                             ->label('Date')
