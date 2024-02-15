@@ -506,7 +506,7 @@ class ViewOrder extends ViewRecord
                         return 'Current selected appointment date: '.$formatDate;
                     })
                     ->required()
-                    ->clickOpens(true)
+                    ->disableMobile(false)
                     ->label('New date')
                     ->minDate(now()->addDays(3)) 
                     ->maxDate(now()->addDays(30))

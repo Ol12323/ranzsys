@@ -95,7 +95,7 @@ class CartResource extends Resource
                     return $record->service->category->category_name != 'Printing';
                 }),
                 FlatPickr::make('appointment_date')
-                ->clickOpens(true)
+                ->disableMobile(false)
                 ->minDate(now()->addDays(3)) 
                 ->maxDate(now()->addDays(30))
                 ->disabledDates(DisabledDate::pluck('disabled_date')->toArray())
@@ -584,8 +584,9 @@ class CartResource extends Resource
                     Step::make('Set appointment')
                     ->schema([
                         FlatPickr::make('appointment_date')
+                            ->live()
                             ->required()
-                            ->clickOpens(true)
+                            ->disableMobile(false)
                             ->minDate(now()->addDays(3)) 
                             ->maxDate(now()->addDays(30))
                             ->label('Date')
