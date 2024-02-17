@@ -5,12 +5,12 @@
     "src": "resources/css/app.css"
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-04ccaff9.css",
+    "file": "assets/theme-80027084.css",
     "isEntry": true,
     "src": "resources/css/filament/admin/theme.css"
   },
   "resources/css/filament/customer/theme.css": {
-    "file": "assets/theme-f13299e3.css",
+    "file": "assets/theme-c6f43f64.css",
     "isEntry": true,
     "src": "resources/css/filament/customer/theme.css"
   },
