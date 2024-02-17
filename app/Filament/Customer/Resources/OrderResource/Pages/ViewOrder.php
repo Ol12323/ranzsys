@@ -6,6 +6,7 @@ use App\Filament\Customer\Resources\OrderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -38,7 +39,9 @@ class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            ActionGroup::make([
             Action::make('sendMessage')
+            ->label('Send Message')
             ->outlined()
             ->color('success')
             ->form([
@@ -97,6 +100,7 @@ class ViewOrder extends ViewRecord
                 
             }),
             Action::make('cancelOrder')
+            ->label('Cancel Order')
             ->requiresConfirmation()
             ->outlined()
             ->color('danger')
@@ -134,6 +138,7 @@ class ViewOrder extends ViewRecord
                     ->sendToDatabase($recipients);
             }),
             Action::make('cancelAppointment')
+            ->label('Cancel Appointment')
             ->requiresConfirmation()
             ->outlined()
             ->color('danger')
@@ -208,6 +213,7 @@ class ViewOrder extends ViewRecord
                 }
             }),
             Action::make('generateBillingInvoice')
+            ->label('Generate Billing Invoice')
             ->color('info')
             ->outlined()
             ->hidden(function ($record){
@@ -215,7 +221,105 @@ class ViewOrder extends ViewRecord
             })
             ->url(fn (Model $record): string => route('generate.order-invoice', $record))
             ->openUrlInNewTab(),
+            Action::make('viewPaymentMethodDetails')
+            ->label('View Payment Method Details')
+            ->modalSubmitAction(false)
+            ->outlined()
+            ->color('gray')
+            ->visible(
+                function (Model $record) {
+                    return ($record->status === 'In progress' || $record->status === 'Ready for pickup' || $record->status === 'Confirmed' || $record->status === 'Cancelled');
+                }
+            )
+            ->form([
+                Placeholder::make('modeOfPayment')
+                ->content(function (Model $record) {
+                    $mop = $record->mode_of_payment;
+                    if($mop === 'cash'){
+                        return new HtmlString(Blade::render(<<<BLADE
+                        <x-filament::badge color="success"
+                        >
+                        $mop
+                        </x-filament::badge>
+                        BLADE)); 
+                    }elseif($mop === 'g-cash'){
+                        return new HtmlString(Blade::render(<<<BLADE
+                        <x-filament::badge color="primary"
+                        >
+                        $mop
+                        </x-filament::badge>
+                        BLADE)); 
+                    }else{
+                        return new HtmlString(Blade::render(<<<BLADE
+                        <x-filament::badge color="info"
+                        >
+                        $mop
+                        </x-filament::badge>
+                        BLADE)); 
+                    }
+                   
+                 }),
+                Placeholder::make('totalAmount')
+                ->content(function (Model $record) {
+                    $total = $record->sumOfItemValues;
+ 
+                    return '₱' . number_format($total, 2);
+                 }),
+                 Placeholder::make('paymentDue')
+                ->content(function (Model $record) {
+                    $total = $record->sumOfItemValues * .5;
+ 
+                    return '₱' . number_format($total, 2); 
+                 })
+                 ->visible(function (Model $record) {
+                    return $record->mode_of_payment === 'g-cash-partial';
+                }),
+                 Placeholder::make('note')
+                ->content(function (Model $record) {
+                    $total = $record->sumOfItemValues;
+ 
+                    return 'Please be advised that the selected mode of payment for your order is cash on pickup. We kindly request that you prepare the total amount due on the pickup date. Thank you for your cooperation, and we look forward to serving you.'; 
+                 })
+                ->visible(function (Model $record) {
+                    return $record->mode_of_payment === 'cash';
+                }
+               ),
+                FileUpload::make('fileImage')
+                ->label('Payment screenshot')
+                ->downloadable()
+                ->disabled()
+                ->openable()
+                ->default(function (Model $record) {
+                   $file = $record->receipt_screenshot;
+
+                   return $file;
+                    
+                })
+                ->visible(
+                    function (Model $record) {
+                        return $record->mode_of_payment === 'g-cash';
+                    }
+                ),
+                FileUpload::make('fileImage')
+                ->label('Partial payment screenshot')
+                ->downloadable()
+                ->disabled()
+                ->openable()
+                ->default(function (Model $record) {
+                   $file = $record->receipt_screenshot;
+
+                   return $file;
+                    
+                })
+                ->visible(
+                    function (Model $record) {
+                        return $record->mode_of_payment === 'g-cash-partial';
+                    }
+                ),
+            ]),
+            ]),
             Action::make('generateAcknowledgeReceipt')
+            ->label('Generate Acknowledge Receipt')
             ->color('primary')
             ->hidden(function ($record){
                 return (abs($record->payment_due) > 0.01) || ($record->status != 'Completed') ;
@@ -223,6 +327,8 @@ class ViewOrder extends ViewRecord
             ->url(fn (Model $record): string => route('generate.order-acknowledgement-receipt', $record))
             ->openUrlInNewTab(),
             Action::make('selectPaymentMethod')
+            ->label('Select Payment Method')
+            ->color('primary')
             ->visible(
                 function (Model $record) {
                     return $record->status === 'Select payment method';
@@ -375,102 +481,8 @@ class ViewOrder extends ViewRecord
                 }
             }
             ),
-            Action::make('viewPaymentMethodDetails')
-            ->modalSubmitAction(false)
-            ->outlined()
-            ->color('gray')
-            ->visible(
-                function (Model $record) {
-                    return ($record->status === 'In progress' || $record->status === 'Ready for pickup' || $record->status === 'Confirmed' || $record->status === 'Cancelled');
-                }
-            )
-            ->form([
-                Placeholder::make('modeOfPayment')
-                ->content(function (Model $record) {
-                    $mop = $record->mode_of_payment;
-                    if($mop === 'cash'){
-                        return new HtmlString(Blade::render(<<<BLADE
-                        <x-filament::badge color="success"
-                        >
-                        $mop
-                        </x-filament::badge>
-                        BLADE)); 
-                    }elseif($mop === 'g-cash'){
-                        return new HtmlString(Blade::render(<<<BLADE
-                        <x-filament::badge color="primary"
-                        >
-                        $mop
-                        </x-filament::badge>
-                        BLADE)); 
-                    }else{
-                        return new HtmlString(Blade::render(<<<BLADE
-                        <x-filament::badge color="info"
-                        >
-                        $mop
-                        </x-filament::badge>
-                        BLADE)); 
-                    }
-                   
-                 }),
-                Placeholder::make('totalAmount')
-                ->content(function (Model $record) {
-                    $total = $record->sumOfItemValues;
- 
-                    return '₱' . number_format($total, 2);
-                 }),
-                 Placeholder::make('paymentDue')
-                ->content(function (Model $record) {
-                    $total = $record->sumOfItemValues * .5;
- 
-                    return '₱' . number_format($total, 2); 
-                 })
-                 ->visible(function (Model $record) {
-                    return $record->mode_of_payment === 'g-cash-partial';
-                }),
-                 Placeholder::make('note')
-                ->content(function (Model $record) {
-                    $total = $record->sumOfItemValues;
- 
-                    return 'Please be advised that the selected mode of payment for your order is cash on pickup. We kindly request that you prepare the total amount due on the pickup date. Thank you for your cooperation, and we look forward to serving you.'; 
-                 })
-                ->visible(function (Model $record) {
-                    return $record->mode_of_payment === 'cash';
-                }
-               ),
-                FileUpload::make('fileImage')
-                ->label('Payment screenshot')
-                ->downloadable()
-                ->disabled()
-                ->openable()
-                ->default(function (Model $record) {
-                   $file = $record->receipt_screenshot;
-
-                   return $file;
-                    
-                })
-                ->visible(
-                    function (Model $record) {
-                        return $record->mode_of_payment === 'g-cash';
-                    }
-                ),
-                FileUpload::make('fileImage')
-                ->label('Partial payment screenshot')
-                ->downloadable()
-                ->disabled()
-                ->openable()
-                ->default(function (Model $record) {
-                   $file = $record->receipt_screenshot;
-
-                   return $file;
-                    
-                })
-                ->visible(
-                    function (Model $record) {
-                        return $record->mode_of_payment === 'g-cash-partial';
-                    }
-                ),
-            ]),
             Actions\Action::make('rescheduleAppointment')
+            ->label('Reschedule Appointment')
             ->color('primary')
             ->visible(function (Model $record){
                 return ($record->status === 'Confirmed' || $record->status === 'Missed' && $record->service_type === 'Appointment');

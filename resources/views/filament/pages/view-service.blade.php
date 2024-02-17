@@ -24,6 +24,23 @@
                         </p>
                     </div>
                     <div class="flex flex-wrap items-center gap-4">
+                      @if($this->containsTarpaulin)
+                      <x-filament::dropdown placement="end">
+                          <x-slot name="trigger">
+                              <x-filament::button outlined>
+                                  Other Sizes
+                              </x-filament::button>
+                          </x-slot>
+                          
+                          <x-filament::dropdown.list>
+                            @foreach ($this->tarpaulinServices as $tarpaulin)
+                              <x-filament::dropdown.list.item href="{{route('view-service', ['id' => $tarpaulin->id])}}" tag="a">
+                                  {{$tarpaulin->service_name}}
+                              </x-filament::dropdown.list.item>
+                              @endforeach
+                          </x-filament::dropdown.list>
+                      </x-filament::dropdown>
+                      @endif
                        {{$this->addToCartAction}}
                        <x-filament-actions::modals />
                     </div>

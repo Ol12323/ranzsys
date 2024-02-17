@@ -19,6 +19,12 @@ class Message extends Model
         return $this->hasMany(MessageContent::class, 'messages_id')->orderBy('created_at', 'desc');
     }
 
+    /**
+     * Get all of the test for the Message
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    
     public $fillable = [
         'subject',
         'read',

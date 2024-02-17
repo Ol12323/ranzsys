@@ -42,15 +42,6 @@
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach($records as $record)
                                     @if ($record->service->category->category_name != 'Printing')
-                                    <tr>
-                                        <td colspan="4" class="py-3.5 pl-2 text-sm font-bold text-left rtl:text-right">
-                                            @if($record->service->category->category_name != 'Printing')
-                                            Appointment date: {{$formattedAppointmentDate = \Carbon\Carbon::createFromFormat('Y-m-d', $record->appointment_date)->format('F d, Y')}}
-                                            @else
-                                                Printing
-                                            @endif
-                                        </td>
-                                    </tr>
                                 <tr>
                                     <td class="px-8 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div class="inline-flex items-center gap-x-3">
@@ -102,20 +93,20 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="4" class="py-3.5 pl-2 text-sm font-bold text-left rtl:text-right">
+                                        @if($record->service->category->category_name != 'Printing')
+                                        Appointment date: {{$formattedAppointmentDate = \Carbon\Carbon::createFromFormat('Y-m-d', $record->appointment_date)->format('F d, Y')}}, Timeslot: {{$record->time_slot->time_slot}}
+                                        @else
+                                            Printing
+                                        @endif
+                                    </td>
+                                </tr>
                                 @endif
                                 @endforeach
 
                                 @foreach($records as $record)
                                 @if ($record->service->category->category_name === 'Printing')
-                                <tr>
-                                    <td colspan="4" class="py-3.5 pl-2 text-sm font-bold text-left rtl:text-right">
-                                        @if($record->service->category->category_name === 'Printing')
-                                        Estimated pickup date: {{$expectedOutput}}, Payment is after approval of your order.
-                                        @else
-                                            Photography
-                                        @endif
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td class="px-8 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div class="inline-flex items-center gap-x-3">
@@ -164,6 +155,15 @@
                                                     @endphp
                                             </h4>
                                         </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="py-3.5 pl-2 text-sm font-bold text-left rtl:text-right">
+                                        @if($record->service->category->category_name === 'Printing')
+                                        Estimated pickup date: {{$expectedOutput}}, Payment is after approval of your order.
+                                        @else
+                                            Photography
+                                        @endif
                                     </td>
                                 </tr>
                                 @endif

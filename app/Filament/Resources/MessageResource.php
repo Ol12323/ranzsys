@@ -27,6 +27,7 @@ use Filament\Infolists\Components\Section as InfoListSection;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\Actions\Action as InfoAction;
 
 class MessageResource extends Resource
 {
@@ -112,6 +113,35 @@ class MessageResource extends Resource
                     // ->visible(function(Model $record){
                     //     return $record->messageContent->image_path !== null;
                     // })
+                    TextEntry::make('viewImage')
+                        ->label('')
+                            ->visible(function(Model $record){
+                                if($record->image_path != null){
+
+                                    return true;
+                                }else{
+
+                                    return false;
+                                }
+                        })
+                        ->suffixAction(
+                            InfoAction::make('viewImage')
+                                ->label('View Images')
+                                ->modalSubmitAction(false)
+                                ->icon('heroicon-m-folder-open')
+                                ->form([
+                                    FileUpload::make('image_path')
+                                    ->downloadable()
+                                    ->disabled()
+                                    ->openable()
+                                    ->default(function (Model $record) {
+                                        foreach ($record->messageContent as $contents) {
+                                            $image = $contents->image_path;
+                                            return $image;
+                                        }
+                                   }),
+                                ])
+                        ),
                 ])->columnSpan(2)
             ]);
     }

@@ -63,6 +63,7 @@ class ListOrders extends ListRecords
     {
         return [
             Action::make('browseServices')
+            ->label('Browse Services')
             ->icon('heroicon-m-magnifying-glass')
             ->url(Catalogue::getUrl())
         ];

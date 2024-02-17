@@ -39,13 +39,31 @@ class ViewService extends Page implements HasForms, HasActions
 
     public function mount()
     {
+        // $this->id = session('id');
+        // $this->service = Service::find($this->id);
+        // $this->alternatives = Service::where('availability_status','!=','Not Available')
+        // ->whereNotIn('id', [$this->id])
+        // ->orderBy('created_at', 'desc')
+        // ->take(4)
+        // ->get();
+
         $this->id = session('id');
         $this->service = Service::find($this->id);
-        $this->alternatives = Service::where('availability_status','!=','Not Available')
-        ->whereNotIn('id', [$this->id])
-        ->orderBy('created_at', 'desc')
-        ->take(4)
+        $this->containsTarpaulin = Str::contains($this->service->service_name, 'Tarpaulin');
+
+        $this->tarpaulinServices = Service::where('availability_status', '!=', 'Not Available')
+        ->where('service_name', 'like', '%Tarpaulin%')
         ->get();
+
+        $this->alternatives = Service::where('availability_status', '!=', 'Not Available')
+        ->whereHas('category', function($query) {
+            $query->where('category_name', $this->service->category->category_name);
+        })
+        ->where('id', '<>', $this->id) // Ensure the current service is excluded
+        ->orderBy('created_at', 'desc')
+        ->take(8)
+        ->get();
+
     }
 
     public function addToCartAction(): Action

@@ -26,6 +26,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Set;
 use App\Models\Message;
 use App\Models\MessageContent;
+use Filament\Actions\ActionGroup;
 
 class ViewOrder extends ViewRecord
 {
@@ -34,7 +35,9 @@ class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            ActionGroup::make([
             Action::make('sendMessage')
+            ->label('Send Message')
             ->outlined()
             ->color('success')
             ->form([
@@ -89,10 +92,9 @@ class ViewOrder extends ViewRecord
                     ->success()
                     ->send();
                  }   
-
-                
             }),
             Action::make('generateBillingInvoice')
+            ->label('Generate Billing Invoice')
             ->color('info')
             ->outlined()
             ->hidden(function ($record){
@@ -137,48 +139,8 @@ class ViewOrder extends ViewRecord
                     ->iconColor('danger')
                     ->sendToDatabase($recipient);
             }),
-            Action::make('approve')
-            ->requiresConfirmation()
-                ->modalHeading('Approve pending order')
-                ->modalDescription('Are you sure you\'d like to approve this pending order? This action cannot be undone.')
-                ->modalSubmitActionLabel('Yes, approve it')
-                ->visible(
-                    function (Model $record) {
-                        return $record->status === 'Pending';
-                    }
-                )
-                ->action(
-                function (array $data): void{
-                $this->record->status = 'Select payment method';
-                $this->record->total_amount = $this->record->SumOfItemValues;
-                $this->record->payment_due = $this->record->SumOfItemValues;
-                $this->record->save();
-                
-
-                 Notification::make()
-                 ->title('Order approved successfully.')
-                 ->success()
-                 ->send();
-
-                $recipientUserId = $this->record->user_id;
-                $recipient = User::find($recipientUserId);
-                $order_name = $this->record->order_name;
-                $order_id = $this->record->id;
-
-                // User customer notification
-                Notification::make()
-                    ->title('Order'.' '.$order_name.' '.'has been approved.')
-                    ->body('Please confirm your payment by selecting your preferred payment method.')
-                    ->success()
-                    ->actions([
-                        NotifAction::make('view')
-                        ->button()
-                        ->url("/customer/orders/{$order_id}"),
-                    ])
-                    ->sendToDatabase($recipient);
-                }),
-
             Action::make('viewPaymentMethodDetails')
+            ->label('View Payment Method Details')
             ->modalSubmitAction(false)
             ->outlined()
             ->color('gray')
@@ -269,7 +231,49 @@ class ViewOrder extends ViewRecord
                     }
                 ),
             ]),
+            ]),
+            Action::make('approve')
+            ->requiresConfirmation()
+                ->modalHeading('Approve pending order')
+                ->modalDescription('Are you sure you\'d like to approve this pending order? This action cannot be undone.')
+                ->modalSubmitActionLabel('Yes, approve it')
+                ->visible(
+                    function (Model $record) {
+                        return $record->status === 'Pending';
+                    }
+                )
+                ->action(
+                function (array $data): void{
+                $this->record->status = 'Select payment method';
+                $this->record->total_amount = $this->record->SumOfItemValues;
+                $this->record->payment_due = $this->record->SumOfItemValues;
+                $this->record->save();
+                
+
+                 Notification::make()
+                 ->title('Order approved successfully.')
+                 ->success()
+                 ->send();
+
+                $recipientUserId = $this->record->user_id;
+                $recipient = User::find($recipientUserId);
+                $order_name = $this->record->order_name;
+                $order_id = $this->record->id;
+
+                // User customer notification
+                Notification::make()
+                    ->title('Order'.' '.$order_name.' '.'has been approved.')
+                    ->body('Please confirm your payment by selecting your preferred payment method.')
+                    ->success()
+                    ->actions([
+                        NotifAction::make('view')
+                        ->button()
+                        ->url("/customer/orders/{$order_id}"),
+                    ])
+                    ->sendToDatabase($recipient);
+            }),
             Action::make('startAppointment')
+            ->label('Start Appointment')
             ->requiresConfirmation()
             ->visible(
                 function (Model $record) {
@@ -286,6 +290,7 @@ class ViewOrder extends ViewRecord
                  ->send();
             }),
             Action::make('confirmPaymentMethod')
+            ->label('Confirm Payment Method')
             ->modalSubmitAction(fn (StaticAction $action) => $action->label('Confirm'))
             ->visible(
                 function (Model $record) {
@@ -444,6 +449,7 @@ class ViewOrder extends ViewRecord
                     }),
             ]),
             Action::make('setToReadyForPickUp')
+            ->label('Set To Ready For Pickup')
              ->visible(
                 function (Model $record) {
                     return $record->status === 'In progress';
@@ -512,6 +518,7 @@ class ViewOrder extends ViewRecord
             }),
 
             Action::make('setToOrderPickedUp')
+            ->label('Set To Order Pickup')
              ->visible(
                 function (Model $record) {
                     return $record->status === 'Ready for pickup';
@@ -719,6 +726,7 @@ class ViewOrder extends ViewRecord
                 }
             }),
             Action::make('generateAcknowledgeReceipt')
+            ->label('Generate Acknowledge Receipt')
             ->color('primary')
             ->hidden(function ($record){
                 return (abs($record->payment_due) > 0.01) || ($record->status != 'Completed') ;

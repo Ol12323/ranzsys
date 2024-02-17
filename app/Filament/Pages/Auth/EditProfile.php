@@ -9,6 +9,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\DatePicker;
 use Livewire\TemporaryUploadedFile;
 use Filament\Forms\Components\Select;
+use App\Filament\Pages\Home;
  
 class EditProfile extends BaseEditProfile
 {
@@ -40,5 +41,10 @@ class EditProfile extends BaseEditProfile
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
             ]);
+    }
+
+    protected function getRedirectUrl(): ?string
+    {
+        return '/';
     }
 }
