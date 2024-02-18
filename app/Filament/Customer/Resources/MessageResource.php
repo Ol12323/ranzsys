@@ -30,6 +30,7 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Support\Facades\Auth;
+use Filament\Infolists\Components\Actions\Action as InfoAction;
 
 class MessageResource extends Resource
 {
@@ -39,15 +40,18 @@ class MessageResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $unreadCount = static::getModel()::query()
-            ->where('read', false)
-            ->whereHas('messageContent', function (Builder $query){
-                $authId = Auth::id();
-                
-                $query->where('sender_id', $authId)
-                      ->orWhere('recipient_id', $authId);
-            })
-            ->count();
+        $authId = Auth::id();
+
+        $unreadCount = Message::query()
+        ->whereHas('messageContent', function ($query) use ($authId) {
+            $query->where('recipient_id', $authId)
+                ->whereColumn('messages_id', 'messages.id') // Assuming message_id is the foreign key linking messageContent to Message
+                ->where('created_at', function ($subQuery) {
+                    $subQuery->from('message_contents')
+                             ->selectRaw('MAX(created_at)');
+                });
+        })
+        ->count();
 
         return $unreadCount >= 1 ? (string)$unreadCount : null;
     }
@@ -105,10 +109,44 @@ class MessageResource extends Resource
                     ->label('')
                     ->columnSpan(2),
                     ImageEntry::make('image_path')
-                    ->label(''),
-                    // ->visible(function(Model $record){
-                    //     return $record->messageContent->image_path !== null;
-                    // })
+                    ->label('Images')
+                    ->height(40)
+                    ->square()
+                    ->stacked()
+                    ->visible(function(Model $record){
+                        $bool = $record->image_path;
+
+                        if($bool == null){
+                            return false;
+                        }else{
+                            return true;
+                        }
+                    })
+                    ->columnSpan(2)
+                    ->hintAction(
+                        InfoAction::make('viewImages')
+                            ->label('View Images')
+                            ->modalSubmitAction(false)
+                            ->icon('heroicon-m-eye')
+                            ->form([
+                                FileUpload::make('images')
+                                ->label('')
+                                ->downloadable()
+                                ->multiple()
+                                ->disabled()
+                                ->openable()
+                                ->default(function (Model $record) {
+                                    $imagePaths = []; // Initialize an empty array to store image paths
+
+                                    foreach ($record->messageContent as $contents) {
+                                        // If image_path is cast as an array, you need to merge it with the existing array
+                                        $imagePaths = array_merge($imagePaths, $contents->image_path);
+                                    }
+
+                                    return $imagePaths;
+                                }),
+                            ])
+                    ),
                 ])->columnSpan(2)
             ]);
     }

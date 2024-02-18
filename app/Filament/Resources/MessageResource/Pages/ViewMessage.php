@@ -35,15 +35,27 @@ class ViewMessage extends ViewRecord
                 $messageID = $this->record->id;
 
 
-                $messageContent = new MessageContent([
-                    'messages_id' => $messageID,
-                    'body' => $data['body'],
-                    'sender_id' => auth()->user()->id,
-                    'recipient_id' => 1,
-                    'image_path' => $data['image_path'],
-                ]);
-                $messageContent->save();
+                $previousMessageContent = MessageContent::where('messages_id', $messageID)
+                    ->latest()
+                    ->first();
 
+                if ($previousMessageContent) {
+                    if ($previousMessageContent->sender_id != auth()->user()->id) {
+                        $recipientId = $previousMessageContent->sender_id;
+                    } else {
+                        $recipientId = $previousMessageContent->recipient_id;
+                    }
+
+                    $messageContent = new MessageContent([
+                        'messages_id' => $messageID,
+                        'body' => $data['body'],
+                        'sender_id' => auth()->user()->id,
+                        'recipient_id' => $recipientId,
+                        'image_path' => $data['image_path'],
+                    ]);
+                    $messageContent->save();
+                }
+                
                 Notification::make()
                 ->title('Reply sent successfully.')
                 ->success()

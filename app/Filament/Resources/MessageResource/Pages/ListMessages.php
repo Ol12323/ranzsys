@@ -57,7 +57,7 @@ class ListMessages extends ListRecords
                     'messages_id' => $message->id,
                     'body' => $data['body'],
                     'sender_id' => auth()->user()->id,
-                    'recipient_id' => 1,
+                    'recipient_id' => $data['recipient_id'],
                     'image_path' => $data['image_path'],
                 ]);
                 $messageContent->save();
