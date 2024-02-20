@@ -2,10 +2,8 @@
 @config './tailwind.config.js';
 
 .fi-simple-layout {
-    /* Use the correct relative path to your image */
-    background-image: url('../images/auth-bg-image.png'); 
+    background-image: url('../images/promotional-image-2.jpg');
     background-size: cover;
-    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .fi-ta-header {

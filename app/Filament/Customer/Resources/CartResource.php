@@ -169,19 +169,21 @@ class CartResource extends Resource
                TextArea::make('design_description')
                ->label('Design description')
                ->required(function(Model $record){
-                   return $record->service->category->category_name === 'Printing' AND $record->design_type === 'describe_design';
+                   return $record->service->category->category_name === 'Printing';
                })
                ->visible(function(Model $record){
-                   return $record->service->category->category_name === 'Printing' AND $record->design_type === 'describe_design';
+                   return $record->service->category->category_name === 'Printing';
                })
                ->columnSpan('full'),
                 FileUpload::make('design_file_path')
+                ->image()
+                ->multiple()
                 ->label('Design file')
                 ->required(function(Model $record){
-                    return $record->service->category->category_name === 'Printing' AND $record->design_type === 'have_design';
+                    return $record->service->category->category_name === 'Printing';
                 })
                 ->visible(function(Model $record){
-                    return $record->service->category->category_name === 'Printing' AND $record->design_type === 'have_design';
+                    return $record->service->category->category_name === 'Printing';
                 })
                 ->columnSpan('full'),
             ]);
@@ -661,36 +663,47 @@ class CartResource extends Resource
                         ->live()
                         ->required()
                         ->options([
-                            'have_design' => 'I already have a design',
-                            'describe_design' => 'I need to describe my design',
+                            'have_design' => 'I already have a design.',
+                            'describe_design' => 'I need to describe my design. (+ ₱100.00 Fee)',
                         ])                        
                     ]),
                     Step::make('Design content')
                     ->schema([
                         Textarea::make('design_description')
-                        ->required(fn (Get $get) => $get('design_options') === 'describe_design')
-                        ->hidden(fn (Get $get) => $get('design_options') === 'have_design'),
+                        ->required(),
                         FileUpload::make('design_file_path')
-                        ->maxSize(1024)
-                        ->required(fn (Get $get) => $get('design_options') === 'have_design')
-                        ->hidden(fn (Get $get) => $get('design_options') === 'describe_design'),
+                        ->image()
+                        ->multiple()
+                        ->label('Upload Pictures')
+                        ->hint('Please upload formal pictures.')
+                        ->required(),
                     ]),
                 ])
                 ->action(function (array $data, Cart $record): void {
-                    if($data['design_options'] === 'have_design'){
-                        $record->design_type = $data['design_options'];
-                        $record->design_file_path = $data['design_file_path'];
-                        $record->save();
-                    }else{
+                        if($data['design_options'] === 'describe_design'){
+                        $record->sub_total = $record->sub_total + 100.00;
                         $record->design_type = $data['design_options'];
                         $record->design_description = $data['design_description'];
+                        $record->design_file_path = $data['design_file_path'];
                         $record->save();
-                    }
 
-                    Notification::make()
-                    ->title('Design attached successfully.  You can now select and checkout this service.')
-                    ->success()
-                    ->send();
+                        Notification::make()
+                        ->title('Design attached successfully.  You can now select and checkout this service.')
+                        ->body('A ₱100.00 fee for the layout is added to your selected service.')
+                        ->success()
+                        ->send();
+
+                        }else{
+                        $record->design_type = $data['design_options'];
+                        $record->design_description = $data['design_description'];
+                        $record->design_file_path = $data['design_file_path'];
+                        $record->save();
+                        
+                        Notification::make()
+                        ->title('Design attached successfully.  You can now select and checkout this service.')
+                        ->success()
+                        ->send();
+                        }
                 }),
                 Tables\Actions\EditAction::make()
                 ->label('My appointment details')

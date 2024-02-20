@@ -29,6 +29,8 @@ class OrderService extends Model
         return $this->belongsTo(Service::class);
     }
 
+    protected $casts = ['design_file_path'=> 'array'];
+
     public $fillable = [
         'order_id',
         'service_id',

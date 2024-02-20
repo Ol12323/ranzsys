@@ -27,6 +27,7 @@ use Filament\Forms\Set;
 use App\Models\Message;
 use App\Models\MessageContent;
 use Filament\Actions\ActionGroup;
+use Carbon\Carbon;
 
 class ViewOrder extends ViewRecord
 {
@@ -605,7 +606,9 @@ class ViewOrder extends ViewRecord
             ])      
             ->action(function (array $data): void{
                 $mop = $this->record->mode_of_payment;
+
                 if($mop === 'cash'){
+                    $this->record->service_date = Carbon::now()->toDateString();
                     $this->record->status = 'Picked up';
                     $this->record->payment_due = 0.00;
                     $this->record->save();
@@ -665,6 +668,7 @@ class ViewOrder extends ViewRecord
                 }
             }else{
 
+                $this->record->service_date = Carbon::now()->toDateString();
                 $this->record->status = 'Picked up';
                 $this->record->payment_due = 0.00;
                 $this->record->save();

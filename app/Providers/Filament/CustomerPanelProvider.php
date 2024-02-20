@@ -65,7 +65,7 @@ class CustomerPanelProvider extends PanelProvider
             ->emailVerification()
             ->profile(EditProfile::class)
             ->topNavigation()
-            ->favicon(asset('images/ranz-logo.png'))
+            ->favicon(asset('images/system-logo.png'))
             ->discoverResources(in: app_path('Filament/Customer/Resources'), for: 'App\\Filament\\Customer\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

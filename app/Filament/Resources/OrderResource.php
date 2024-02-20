@@ -82,6 +82,9 @@ class OrderResource extends Resource
                 ->copyable()
                 ->copyMessage('Copied!')
                 ->copyMessageDuration(1500),
+                Fieldset::make('Order')
+                ->label('')
+                ->schema([
                 Fieldset::make('Order information')
                 ->label('')
                 ->schema([
@@ -104,6 +107,27 @@ class OrderResource extends Resource
                     }),
                     TextEntry::make('service_date')
                     ->icon('heroicon-m-clock')
+                    ->suffix(function(Order $record){
+                        $type = $record->service_type;
+                        $status = $record->status;
+
+                        if ($type === 'Printing' && $status != 'Picked up' && $status != 'Completed') {
+                            return '(Estimated)';
+                        } elseif ($type === 'Printing' && ($status === 'Picked up' || $status === 'Completed')) {
+                            return null;
+                        } else {
+                            return null;
+                        }
+                    })
+                    ->tooltip(function(Order $record){
+                        $type = $record->service_type;
+    
+                        if($type === 'Printing'){
+                            return 'Pickup from 8am-5pm only.';
+                        }else{
+                            return 'Please be formal on the appointment day.';
+                        }
+                    })
                     ->date(),
                     TextEntry::make('time_slot.time_slot')
                     ->hidden(function(Model $record){
@@ -162,7 +186,7 @@ class OrderResource extends Resource
                     return ($record->mode_of_payment === 'g-cash-partial' AND $record->status === 'In progress' || 'Ready for pickup' || 'Picked up' || 'Completed');
                 }),
                 ])->columns(5),
-                Fieldset::make('Order services')
+                Fieldset::make('Order details')
                 ->schema([
                     RepeatableEntry::make('service')
                     ->label('')
@@ -176,61 +200,69 @@ class OrderResource extends Resource
                         TextEntry::make('quantity'),
                         TextEntry::make('subtotal')
                         ->money('PHP', TRUE),
-                        TextEntry::make('design_file_path')
+                        TextEntry::make('design_type')
                         ->visible(function(Model $record){
-                            return $record->design_type === 'have_design';
+                            $bool = $record->order->service_type;
+    
+                            if($bool === 'Printing'){
+                                return true;
+                            }else{
+                                return false;
+                            }
+                        }),
+                        ImageEntry::make('design_file_path')
+                        ->square()
+                        ->height(40)
+                        ->stacked()
+                        ->label('Uploaded Pictures')
+                        ->visible(function(Model $record){
+                            $bool = $record->order->service_type;
+    
+                            if($bool === 'Printing'){
+                                return true;
+                            }else{
+                                return false;
+                            }
                         })
-                        ->limit(5)
-                        ->label('Design file')
-                        ->suffixAction(
+                        ->hintAction(
                             InfoAction::make('viewImage')
-                                ->label('View design file')
+                                ->label('')
                                 ->modalSubmitAction(false)
-                                ->icon('heroicon-m-folder-open')
+                                ->icon('heroicon-m-eye')
                                 ->form([
                                     FileUpload::make('fileImage')
                                     ->label('File')
+                                    ->multiple()
                                     ->downloadable()
                                     ->disabled()
                                     ->openable()
                                     ->default(function (Model $record) {
+                                        $images = []; // Initialize an empty array to store image paths
+
                                         foreach ($record->service as $services) {
-                                            $image = $services->design_file_path;
-                                            return $image;
+                                            // If image_path is cast as an array, you need to merge it with the existing array
+                                            $images = array_merge($images, $services->design_file_path);
                                         }
+    
+                                        return $images;
                                    }),
                                 ])
                         ),
                         TextEntry::make('design_description')
                         ->visible(function(Model $record){
-                            return $record->design_type === 'describe_design';
-                        })
-                        ->limit(5)
-                        ->label('Design description')
-                        ->suffixAction(
-                            InfoAction::make('viewImage')
-                                ->label('View design description')
-                                ->modalSubmitAction(false)
-                                ->icon('heroicon-m-folder-open')
-                                ->form([
-                                    TextArea::make('design_description')
-                                    ->disabled()
-                                    ->default(function (Model $record) {
-                                        foreach ($record->service as $services) {
-                                            $description = $services->design_description;
-                                            return $description;
-                                        }
-                                   })
-                                ])
-                            ),
-                        TextEntry::make('service.description')
-                        ->label('Description')
-                        ->markdown()
-                        ->html(),
+                            $bool = $record->order->service_type;
+    
+                            if($bool === 'Printing'){
+                                return true;
+                            }else{
+                                return false;
+                            }
+                        }),
                     ])
                     ->columnSpan('full')
                     ->columns(5)
                 ])
+            ]),
             ]);
     }
 
@@ -262,6 +294,28 @@ class OrderResource extends Resource
                 }),
                 TextColumn::make('service_date')
                 ->icon('heroicon-m-clock')
+                ->tooltip(function(Order $record){
+                    $type = $record->service_type;
+
+                    if($type === 'Printing'){
+                        return 'Pickup from 8am-5pm only.';
+                    }else{
+                        return 'Timeslot: '.$record->time_slot->timeslot;
+                    }
+                })
+                ->suffix(function(Order $record){
+                    $type = $record->service_type;
+                    $status = $record->status;
+
+                    if ($type === 'Printing' && $status != 'Picked up' && $status != 'Completed') {
+                        return '(Estimated)';
+                    } elseif ($type === 'Printing' && ($status === 'Picked up' || $status === 'Completed')) {
+                        return null;
+                    } else {
+                        return null;
+                    }
+                    
+                })
                 ->date()
                 ->sortable(),
                 TextColumn::make('sumOfItemValues')

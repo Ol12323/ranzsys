@@ -1,63 +1,59 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="w-full bg-center bg-cover h-[38rem]" style="background-image: url('{{asset('images/landing-bg-image.png')}}');">
-  <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
-      <div class="text-center">
-          <h1 class="text-3xl font-semibold text-white lg:text-4xl">Capture moments, frame <span class="text-blue-400">memories</span> beautifully.</h1>
-          <div class="mt-6">
-            <a href="#featuredServices"
-                class="inline-flex items-center justify-center w-full px-4 py-2.5 mt-4 overflow-hidden text-sm text-white transition-colors duration-300 bg-blue-600 rounded-lg shadow sm:w-auto sm:mx-2 sm:mt-0 hover:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                    Featured services
-            </a>
-            <a href="#contact"
-            class="inline-flex items-center justify-center w-full px-4 py-2.5 mt-4 overflow-hidden text-sm text-white transition-colors duration-300 border border-blue-600 rounded-lg shadow sm:w-auto sm:mx-2 sm:mt-0 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                    Contact us
-          </a>
-        </div>
+<section class="bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600 via-transparent to-transparent dark:bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] dark:from-blue-600 dark:via-gray-950 dark:to-gray-950">
+  <div class="container px-6 py-16 mx-auto text-center">
+      <div class="max-w-lg mx-auto">
+          <h1 class="text-3xl font-semibold text-white lg:text-4xl">Welcome to Ranz Photography And Printing Services</h1>
+          <p class="mt-6 text-gray-300">Capture every moment and make it count.</p>
+          <button class="px-5 py-2 mt-6 text-sm font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg hover:bg-blue-500 lg:mx-0 lg:w-auto focus:outline-none">
+            <a href="#featuredServices">Featured Services</a>
+          </button>
+          <p class="mt-3 text-sm text-gray-400 "><a href="#contact">Contact us</a></p>
       </div>
-  </div>
-</div>
-<section class="mt-20 bg-transparent">
-  <div class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
-      <h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight xl:text-3xl text-white">
-          Capturing Moments, Creating Memories: <span class="text-blue-500">The Importance of Photography.</span>
-      </h2>
 
-      <p class="max-w-4xl mt-6 text-center text-gray-300">
-        Photography is more than just images; it's a powerful storytelling tool that preserves moments and creates lasting memories. Explore the significance of photography and its ability to convey emotions, document history, and showcase the beauty in every frame.
-      </p>
+      <div class="flex justify-center mt-10">
+          <img class="object-cover w-full h-full rounded-xl lg:w-4/5" src="{{asset('images/promotional-image-3.png')}}" />
+      </div>
   </div>
 </section>
-<section class="text-gray-600 body-font">
-    <div class="container px-14 py-24 mx-auto flex flex-wrap">
-      <div class="flex flex-wrap md:-m-2 -m-1">
-        <div class="flex flex-wrap w-1/2">
-          <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-2.jpg')}}">
-          </div>
-          <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-6.jpg')}}">
-          </div>
-          <div class="md:p-2 p-1 w-full">
-            <img alt="gallery" class="rounded w-full h-full object-cover object-center block opacity-75" src="{{asset('images/image-4.jpg')}}">
-          </div>
-        </div>
-        <div class="flex flex-wrap w-1/2">
-          <div class="md:p-2 p-1 w-full">
-            <img alt="gallery" class="rounded w-full h-full object-cover object-center block opacity-75" src="{{asset('images/image-5.jpg')}}">
-          </div>
-          <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-5.jpg')}}">
-          </div>
-          <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="rounded w-full object-cover h-full object-center block opacity-75" src="{{asset('images/image-8.jpg')}}">
-          </div>
-        </div>
+<section class="text-gray-600 body-font bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-blue-600 via-gray-950 to-gray-950">
+<div class="container px-5 py-24 mx-auto flex flex-wrap">
+  <div class="flex flex-wrap md:-m-2 -m-1">
+    <div class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
+      <h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight xl:text-3xl text-white">
+        Capturing Moments, Creating Memories: <span class="text-blue-400">The Importance of Photography.</span>
+    </h2>
+  
+    <p class="max-w-4xl mt-6 text-center text-gray-300">
+      Photography is more than just images; it's a powerful storytelling tool that preserves moments and creates lasting memories. Explore the significance of photography and its ability to convey emotions, document history, and showcase the beauty in every frame.
+    </p>
+    </div>
+    <div class="flex flex-wrap w-1/2">
+      <div class="md:p-2 p-1 w-1/2">
+        <img alt="gallery" class="rounded w-full object-cover h-full object-center block" src="{{asset('images/image-2.jpg')}}">
+      </div>
+      <div class="md:p-2 p-1 w-1/2">
+        <img alt="gallery" class="rounded w-full object-cover h-full object-center block" src="{{asset('images/image-6.jpg')}}">
+      </div>
+      <div class="md:p-2 p-1 w-full">
+        <img alt="gallery" class="rounded w-full h-full object-cover object-center block" src="{{asset('images/image-4.jpg')}}">
       </div>
     </div>
-  </section>
-
+    <div class="flex flex-wrap w-1/2">
+      <div class="md:p-2 p-1 w-full">
+        <img alt="gallery" class="rounded w-full h-full object-cover object-center block" src="{{asset('images/image-5.jpg')}}">
+      </div>
+      <div class="md:p-2 p-1 w-1/2">
+        <img alt="gallery" class="rounded w-full object-cover h-full object-center block" src="{{asset('images/image-5.jpg')}}">
+      </div>
+      <div class="md:p-2 p-1 w-1/2">
+        <img alt="gallery" class="rounded w-full object-cover h-full object-center block" src="{{asset('images/image-8.jpg')}}">
+      </div>
+    </div>
+  </div>
+</div>
+</section>
 {{-- End of Landing Page --}}
 {{-- Featued service List --}}
 <div id="featuredServices" class="container px-6 py-8 mx-auto">

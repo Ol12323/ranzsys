@@ -1,22 +1,22 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-de72597a.css",
+    "file": "assets/app-25963845.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-80027084.css",
+    "file": "assets/theme-1c1743ef.css",
     "isEntry": true,
     "src": "resources/css/filament/admin/theme.css"
   },
   "resources/css/filament/customer/theme.css": {
-    "file": "assets/theme-c6f43f64.css",
+    "file": "assets/theme-f10e985e.css",
     "isEntry": true,
     "src": "resources/css/filament/customer/theme.css"
   },
-  "resources/css/filament/images/auth-bg-image.png": {
-    "file": "assets/auth-bg-image-b5727454.png",
-    "src": "resources/css/filament/images/auth-bg-image.png"
+  "resources/css/filament/images/promotional-image-2.jpg": {
+    "file": "assets/promotional-image-2-212d8c35.jpg",
+    "src": "resources/css/filament/images/promotional-image-2.jpg"
   },
   "resources/js/app.js": {
     "file": "assets/app-5c2c607a.js",
@@ -24,7 +24,7 @@
     "src": "resources/js/app.js"
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-6e2f5c18.css",
+    "file": "assets/app-37509201.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }

@@ -6,7 +6,7 @@
         <meta name="application-name" content="{{ config('app.name') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/png" href="{{ asset('images/ranz-logo.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('images/system-logo.png') }}">
         <title>{{ config('app.name') }}</title>
  
         <style>
@@ -86,7 +86,7 @@
 <footer class="bg-transparent">
     <div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
         <a href="#">
-            <img class="w-auto h-6 sm:h-7" src="{{asset('images/ranz-logo.png')}}" alt="">
+            <img class="w-auto h-6 sm:h-7" src="{{asset('images/system-logo.png')}}" alt="">
         </a>
 
         <p class="text-sm text-gray-300">© Copyright 2021. All Rights Reserved.</p>
