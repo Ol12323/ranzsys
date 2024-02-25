@@ -25,19 +25,19 @@
         </header>
         @yield('content')
  {{-- Contact --}}
- <section class="bg-gray-950" id="contact">
+ <section class="bg-blue-800" id="contact">
     <div class="container px-6 py-12 mx-auto">
         <div>
-            <p class="font-medium text-blue-500">Contact us</p>
+            <p class="font-medium text-white">Contact us</p>
 
             <h1 class="mt-2 text-2xl font-semibold text-white md:text-3xl">Get in touch</h1>
 
-            <p class="mt-3 text-gray-400">Our friendly team is always here to chat.</p>
+            <p class="mt-3 text-gray-200">Our friendly team is always here to chat.</p>
         </div>
 
         <div class="grid grid-cols-1 gap-12 mt-10 md:grid-cols-2 lg:grid-cols-3">
             <div>
-                <span class="inline-block p-3 text-blue-500 rounded-full bg-gray-800">
+                <span class="inline-block p-3 text-blue-500 rounded-full bg-gray-950">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -46,12 +46,12 @@
                 </span>
 
                 <h2 class="mt-4 text-lg font-medium text-white">Email</h2>
-                <p class="mt-2 text-gray-400">Our friendly team is here to help.</p>
-                <p class="mt-2 text-blue-400">ranzphotography@yahoo.com</p>
+                <p class="mt-2 text-gray-300">Our friendly team is here to help.</p>
+                <p class="mt-2 text-gray-200">ranzphotography@yahoo.com</p>
             </div>
 
             <div>
-                <span class="inline-block p-3 text-blue-500 rounded-full bg-gray-800">
+                <span class="inline-block p-3 text-blue-500 rounded-full bg-gray-950">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -61,12 +61,12 @@
                 </span>
 
                 <h2 class="mt-4 text-lg font-medium text-white">Office</h2>
-                <p class="mt-2 text-gray-400">Come say hello at our office HQ.</p>
-                <p class="mt-2 text-blue-400">Door 1 Grageda Bldg. Quezon St. New Pandan</p>
+                <p class="mt-2 text-gray-300">Come say hello at our office HQ.</p>
+                <p class="mt-2 text-gray-200">Door 1 Grageda Bldg. Quezon St. New Pandan</p>
             </div>
 
             <div>
-                <span class="inline-block p-3 text-blue-500 rounded-full bg-gray-800">
+                <span class="inline-block p-3 text-blue-500 rounded-full bg-gray-950">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -75,8 +75,8 @@
                 </span>
 
                 <h2 class="mt-4 text-lg font-medium text-white">Phone</h2>
-                <p class="mt-2 text-gray-400">Mon-Fri from 8am to 5pm.</p>
-                <p class="mt-2 text-blue-400">0946 052 0523</p>
+                <p class="mt-2 text-gray-300">Mon-Fri from 8am to 5pm.</p>
+                <p class="mt-2 text-gray-200">0946 052 0523</p>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
         <p class="text-sm text-gray-300">© Copyright 2021. All Rights Reserved.</p>
 
         <div class="flex -mx-2">
-            <a href="https://www.facebook.com/profile.php?id=100064168503688" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Facebook">
+            <a href="https://www.facebook.com/profile.php?id=100064168503688" class="mx-2 transition-colors duration-300 text-gray-300 hover:text-blue-500" aria-label="Facebook">
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -103,7 +103,7 @@
         </div>
     </div>
 </footer>
-{{-- End of footer --}}
+{{-- End of Footer --}}
         @stack('scripts')
         @livewireScripts
         @livewire('notifications')

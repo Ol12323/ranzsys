@@ -1,3 +1,4 @@
+{{-- Footer --}}
 <footer class="bg-transparent">
     <div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
         <a href="#">
@@ -7,7 +8,7 @@
         <p class="text-sm text-gray-600 dark:text-gray-300">© Copyright 2021. All Rights Reserved.</p>
 
         <div class="flex -mx-2">
-            <a href="https://www.facebook.com/profile.php?id=100064168503688" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Facebook">
+            <a href="https://www.facebook.com/profile.php?id=100064168503688" class="mx-2 transition-colors duration-300 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500" aria-label="Facebook">
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -18,3 +19,4 @@
         </div>
     </div>
 </footer>
+{{-- End of footer --}}

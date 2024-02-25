@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
 @section('content')
-<section class="bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600 via-transparent to-transparent dark:bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] dark:from-blue-600 dark:via-gray-950 dark:to-gray-950">
-  <div class="container px-6 py-16 mx-auto text-center">
+<section class="bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-800 via-gray-950 to-orange-500">
+  <div class="pt-16 mx-auto text-center">
       <div class="max-w-lg mx-auto">
-          <h1 class="text-3xl font-semibold text-white lg:text-4xl">Welcome to Ranz Photography And Printing Services</h1>
+          <h1 class="font-mono text-3xl title-font font-semibold text-white lg:text-4xl">WELCOME TO RANZ PHOTOGRAPHY AND PRINTING SERVICES</h1>
           <p class="mt-6 text-gray-300">Capture every moment and make it count.</p>
           <button class="px-5 py-2 mt-6 text-sm font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg hover:bg-blue-500 lg:mx-0 lg:w-auto focus:outline-none">
             <a href="#featuredServices">Featured Services</a>
@@ -13,16 +13,52 @@
       </div>
 
       <div class="flex justify-center mt-10">
-          <img class="object-cover w-full h-full rounded-xl lg:w-4/5" src="{{asset('images/promotional-image-3.png')}}" />
+          <img class="object-cover w-full h-full" src="{{asset('images/promotional-image-3.png')}}" />
       </div>
   </div>
 </section>
-<section class="text-gray-600 body-font bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-blue-600 via-gray-950 to-gray-950">
+<section class="bg-gradient-to-b from-gray-950 via-blue-600-950 to-transparent text-gray-600 body-font">
+  <div class="container px-5 pt-24 mx-auto">
+    <div class="flex flex-wrap -m-4">
+      <div class="lg:w-1/3 sm:w-1/2 p-4">
+        <div class="flex relative">
+          <img alt="gallery" class="rounded absolute inset-0 w-full h-full object-cover object-center" src="{{asset('images/image-12.jpg')}}">
+          <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-gray-950 opacity-0 hover:opacity-100">
+            <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">CAPTURE THE MOMENT</h2>
+            <h1 class="title-font text-lg font-medium text-gray-300 mb-3">Solo Adventures in Photography</h1>
+            <p class="leading-relaxed">Embark on a journey in our photography studio. Capture beauty, moments, creativity.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-1/3 sm:w-1/2 p-4">
+        <div class="flex relative">
+          <img alt="gallery" class="rounded absolute inset-0 w-full h-full object-cover object-center" src="{{asset('images/image-4.jpg')}}">
+          <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-gray-950 opacity-0 hover:opacity-100">
+            <h2 class="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">CAPTURE THE MOMENT</h2>
+            <h1 class="title-font text-lg font-medium text-gray-300 mb-3">Duo Studio Photography Sessions</h1>
+            <p class="leading-relaxed">Experience the magic of studio photography together. Explore poses, backdrops, and creativity.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-1/3 sm:w-1/2 p-4">
+        <div class="flex relative">
+          <img alt="gallery" class="rounded absolute inset-0 w-full h-full object-cover object-center" src="{{asset('images/image-2.jpg')}}">
+          <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-gray-950 opacity-0 hover:opacity-100">
+            <h2 class="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">CAPTURE THE MOMENT</h2>
+            <h1 class="title-font text-lg font-medium text-gray-300 mb-3">Group Studio Photography Sessions</h1>
+            <p class="leading-relaxed">Gather your friends for a group studio photography session. Explore poses, backdrops, and creativity together.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="text-gray-600 body-font bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-blue-800 via-transparent to-transparent">
 <div class="container px-5 py-24 mx-auto flex flex-wrap">
   <div class="flex flex-wrap md:-m-2 -m-1">
     <div class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
       <h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight xl:text-3xl text-white">
-        Capturing Moments, Creating Memories: <span class="text-blue-400">The Importance of Photography.</span>
+        Capturing Moments, Creating Memories: <span class="text-blue-600">The Importance of Photography.</span>
     </h2>
   
     <p class="max-w-4xl mt-6 text-center text-gray-300">
