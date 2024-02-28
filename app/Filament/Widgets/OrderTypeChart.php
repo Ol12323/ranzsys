@@ -50,7 +50,7 @@ class OrderTypeChart extends ApexChartWidget
         ->groupBy('process_type')
         ->whereRaw("created_at BETWEEN ? AND ?", [
             Carbon::parse($this->filterFormData['date_start']),
-            Carbon::parse($this->filterFormData['date_end']),
+            Carbon::parse($this->filterFormData['date_end'])->addDay(),
         ])
         ->get();
     
