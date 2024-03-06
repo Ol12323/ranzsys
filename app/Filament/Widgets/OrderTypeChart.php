@@ -94,40 +94,40 @@ class OrderTypeChart extends ApexChartWidget
     }
 
     protected function extraJsOptions(): ?RawJs
-{
-    return RawJs::make(<<<'JS'
     {
-        xaxis: {
-            labels: {
-                formatter: function (val, timestamp, opts) {
+        return RawJs::make(<<<'JS'
+        {
+            xaxis: {
+                labels: {
+                    formatter: function (val, timestamp, opts) {
+                        return '₱' + val
+                    }
+                }
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (val, index) {
+                        return val
+                    }
+                }
+            },
+            tooltip: {
+                x: {
+                    formatter: function (val) {
+                        return val
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val, opt) {
                     return '₱' + val
-                }
+                },
+                dropShadow: {
+                    enabled: true
+                },
             }
-        },
-        yaxis: {
-            labels: {
-                formatter: function (val, index) {
-                    return val
-                }
-            }
-        },
-        tooltip: {
-            x: {
-                formatter: function (val) {
-                    return val
-                }
-            }
-        },
-        dataLabels: {
-            enabled: true,
-            formatter: function (val, opt) {
-                return '₱' + val
-            },
-            dropShadow: {
-                enabled: true
-            },
         }
+        JS);
     }
-    JS);
-}
 }

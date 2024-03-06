@@ -84,7 +84,7 @@ class StatsOverview extends BaseWidget
             Stat::make('', $customerCount = User::whereHas('role', function ($query) {
                 $query->where('name', 'Customer');
             })->count())
-            ->description('Total customer')
+            ->description('Registered customers')
             ->descriptionIcon('heroicon-m-user-group')
             ->color('primary')
             ->extraAttributes([
