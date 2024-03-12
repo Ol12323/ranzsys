@@ -59,7 +59,10 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                // PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_KEY => config_path('certs/bc29357fe5b573-key.pem'),
+                PDO::MYSQL_ATTR_SSL_CERT => config_path('certs/bc29357fe5b573-cert.pem'),
+                PDO::MYSQL_ATTR_SSL_CA => config_path('certs/cleardb-ca.pem'),
             ]) : [],
         ],
 
