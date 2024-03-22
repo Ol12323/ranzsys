@@ -272,10 +272,10 @@ class OrderResource extends Resource
             ->columns([
                 TextColumn::make('order_name')
                 ->searchable(),
-                ImageColumn::make('service.service.service_avatar')
-                ->square()
-                ->stacked()
-                ->label('Orders'),
+                // ImageColumn::make('service.service.service_avatar')
+                // ->square()
+                // ->stacked()
+                // ->label('Orders'),
                 TextColumn::make('status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {

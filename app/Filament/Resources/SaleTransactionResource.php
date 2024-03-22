@@ -265,9 +265,9 @@ class SaleTransactionResource extends Resource
                 TextColumn::make('sales_name')
                 ->searchable()
                 ->sortable(),
-                ImageColumn::make('item.service.service_avatar')
-                ->square()
-                ->stacked(),
+                // ImageColumn::make('item.service.service_avatar')
+                // ->square()
+                // ->stacked(),
                 TextColumn::make('process_type')
                 ->label('Processed type')
                 ->badge()
@@ -303,7 +303,6 @@ class SaleTransactionResource extends Resource
                 SelectFilter::make('process_type')
                 ->label('Process type')
                 ->options([
-                    'Online Appointment' => 'Online Appointment',
                     'Walk-in' => 'Walk-in',
                     'Online Order' => 'Online Order',
                 ]),

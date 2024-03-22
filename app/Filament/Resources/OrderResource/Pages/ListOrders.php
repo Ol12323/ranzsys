@@ -9,6 +9,7 @@ use Filament\Resources\Pages\ListRecords\Tab;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Support\Enums\IconPosition;
 use App\Models\Order;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class ListOrders extends ListRecords
 {
@@ -19,6 +20,11 @@ class ListOrders extends ListRecords
         return [
             // Actions\CreateAction::make(),
         ];
+    }
+
+    protected function paginateTableQuery(Builder $query): Paginator
+    {
+        return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
     }
 
     public function getTabs(): array

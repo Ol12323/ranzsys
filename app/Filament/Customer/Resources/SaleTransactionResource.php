@@ -113,9 +113,9 @@ class SaleTransactionResource extends Resource
             ->columns([
                 TextColumn::make('sales_name')
                 ->searchable(),
-                ImageColumn::make('item.service.service_avatar')
-                ->square()
-                ->stacked(),
+                // ImageColumn::make('item.service.service_avatar')
+                // ->square()
+                // ->stacked(),
                 TextColumn::make('process_type')
                 ->label('Processed type')
                 ->badge()

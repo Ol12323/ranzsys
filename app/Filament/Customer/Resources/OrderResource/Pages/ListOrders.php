@@ -11,6 +11,7 @@ use Filament\Support\Enums\IconPosition;
 use App\Models\Order;
 use App\Filament\Pages\Catalogue;
 use Filament\Actions\Action;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class ListOrders extends ListRecords
 {
@@ -57,6 +58,11 @@ class ListOrders extends ListRecords
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Completed'))
                 ->badge(Order::query()->where('status', 'Completed')->where('user_id', $user)->count() >= 1 ? Order::query()->where('status', 'Completed')->where('user_id', $user)->count() : false),
         ];
+    }
+
+    protected function paginateTableQuery(Builder $query): Paginator
+    {
+        return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
     }
 
     protected function getHeaderActions(): array
