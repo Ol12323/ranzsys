@@ -22,7 +22,7 @@ class ServiceCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationGroup = 'Settings';
 
     protected static ?string $navigationLabel = 'Categories';
 
@@ -42,6 +42,7 @@ class ServiceCategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated([10, 25, 50, 100])
             ->columns([
                 TextColumn::make('id')
                 ->searchable(),

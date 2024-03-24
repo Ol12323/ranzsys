@@ -6,6 +6,8 @@ use App\Filament\Resources\SaleItemResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Forms\Components\DatePicker;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListSaleItems extends ListRecords
 {
@@ -32,5 +34,10 @@ class ListSaleItems extends ListRecords
             })
             ->openUrlInNewTab(),
         ];
+    }
+
+    protected function paginateTableQuery(Builder $query): Paginator
+    {
+        return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
     }
 }

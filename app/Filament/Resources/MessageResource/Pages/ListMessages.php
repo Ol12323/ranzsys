@@ -16,6 +16,7 @@ use Filament\Forms\Components\FileUpload;
 use App\Models\MessageContent;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class ListMessages extends ListRecords
 {
@@ -69,6 +70,11 @@ class ListMessages extends ListRecords
     
             }),
         ];
+    }
+
+    protected function paginateTableQuery(Builder $query): Paginator
+    {
+        return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
     }
 
 }

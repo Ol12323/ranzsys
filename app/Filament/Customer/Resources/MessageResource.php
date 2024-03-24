@@ -156,6 +156,7 @@ class MessageResource extends Resource
         $authId = Auth::id();
 
         return $table
+            ->paginated([10, 25, 50, 100])
             ->modifyQueryUsing(function (Builder $query) use ($authId) {
                 // Remove global scopes
                 $query->withoutGlobalScopes();
