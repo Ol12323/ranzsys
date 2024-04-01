@@ -27,7 +27,7 @@ class SalesPerServiceChart extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'Sales per service';
+    protected static ?string $heading = 'Top 10 Best-Selling Services by Total Revenue';
 
     /**
      * Chart options (series, labels, types, size, animations...)
@@ -47,6 +47,15 @@ class SalesPerServiceChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
+        // $data = SaleItem::with('service')
+        // ->select('service_id', DB::raw('SUM(total_price) as total_price'))
+        // ->whereRaw("created_at BETWEEN ? AND ?", [
+        //     Carbon::parse($this->filterFormData['date_start']),
+        //     Carbon::parse($this->filterFormData['date_end'])->addDay(),
+        // ])
+        // ->groupBy('service_id')
+        // ->get();
+
         $data = SaleItem::with('service')
         ->select('service_id', DB::raw('SUM(total_price) as total_price'))
         ->whereRaw("created_at BETWEEN ? AND ?", [
@@ -54,11 +63,14 @@ class SalesPerServiceChart extends ApexChartWidget
             Carbon::parse($this->filterFormData['date_end'])->addDay(),
         ])
         ->groupBy('service_id')
+        ->orderBy('total_price', 'desc') // Order by total_price in descending order
+        ->limit(10) // Limit the results to 10
         ->get();
 
         $labels = $data->map(function ($item) {
             return $item->service->service_name;
         });
+        
         $salesTotals = $data->pluck('total_price');
 
         // $data = Trend::model(SaleItem::class) 
