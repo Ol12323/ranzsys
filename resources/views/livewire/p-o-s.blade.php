@@ -3,7 +3,7 @@
    <div style="height: 35rem; display: flex; flex-direction: column; gap: 10px;">
     <div style="flex: .5;">
     <div style="height: 100%; display: grid; place-item: center;">
-        <x-filament::input.wrapper prefix-icon="heroicon-m-magnifying-glass">
+        <x-filament::input.wrapper prefix-icon="heroicon-m-magnifying-glass" style="height: 2.2rem;">
             <x-filament::input
                 type="text"
                 wire:model.live="search"
@@ -11,20 +11,20 @@
         </x-filament::input.wrapper>
     </div>
     </div>
-    <div style="flex: 4;">
+    <div style="flex: 4; overflow-y: auto;">
         <div style="height: auto;">
             <div style=" flex: 4;">
                 <div style="height: 100%;">
-                    <div class="catalog" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                    <div class="catalog" style="margin-top: 0.50rem; display: flex; flex-wrap: wrap; justify-content: space-between;">
                         @if ($services->isNotEmpty())
                         @foreach ($services as $product)
                         <div wire:click="addToCart({{ $product->id }})" style="border-radius: 10px; padding: 10px; border: 1px solid #ccc; margin: 10px; text-align: center; width: calc(33.33% - 20px); display: inline-block; cursor: pointer;">
-                            <div style="display: flex; flex-direction: column; height: 150px; justify-content: center;">
-                                <img src="{{ asset(Storage::url($product->service_avatar)) }}" alt="{{ $product->service_name }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            <div style="display: flex; flex-direction: column; height: 100px; justify-content: center; align-items: center;">
+                                <img src="{{ asset(Storage::url($product->service_avatar)) }}" alt="{{ $product->service_name }}" style="width: 4.5em; height: 3.5em; object-fit: contain; border-radius: 0.45em;">
                             </div>
-                            <h3 style="font-size: 1.2em; font-weight: bold; color: #333;">{{ $product->service_name }}</h3>
-                            <p style="font-size: 1em; color: #666;">₱{{ $product->price }}</p>
-                        </div>         
+                            <h1 style="font-size: 0.9em; font-weight: bold; color: #333;">{{ $product->service_name }}</h1>
+                            <p style="font-size: 0.7em; color: #666;">₱{{ $product->price }}</p>
+                        </div>                              
                         @endforeach
                         @else
                         <div>
@@ -62,10 +62,10 @@
 
                             <div style="flex: 2; display: flex; flex-direction: column;">
                                 <div style="flex: 1; padding-left: 4px;">
-                               <p style="font-size: 0.625em; font-weight: bold;">{{ $item['productName'] }}</p>
+                               <p style="font-size: 0.600em; font-weight: bold;">{{ $item['productName'] }}</p>
                                 </div>
                                 <div style="flex: .5; padding-left: 4px;">
-                                    <p style="font-size: 0.625em">₱{{ $item['productPrice'] }}</p>
+                                    <p style="font-size: 0.500em">₱{{ $item['productPrice'] }}</p>
                                 </div>
                             </div>
                         </div>

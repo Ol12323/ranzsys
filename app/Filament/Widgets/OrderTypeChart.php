@@ -100,7 +100,7 @@ class OrderTypeChart extends ApexChartWidget
             xaxis: {
                 labels: {
                     formatter: function (val, timestamp, opts) {
-                        return '₱' + val
+                        return '₱' + Number(val).toLocaleString();
                     }
                 }
             },
@@ -121,7 +121,7 @@ class OrderTypeChart extends ApexChartWidget
             dataLabels: {
                 enabled: true,
                 formatter: function (val, opt) {
-                    return '₱' + val
+                    return '₱' + Number(val).toLocaleString();
                 },
                 dropShadow: {
                     enabled: true

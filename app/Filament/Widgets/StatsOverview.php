@@ -73,7 +73,7 @@ class StatsOverview extends BaseWidget
                 'class' => 'cursor-pointer',
                 'wire:click'=> 'redirectToOrderResource',
             ]),
-            Stat::make('', '₱ '.$totalSales = SaleItem::sum('total_price'))
+            Stat::make('', '₱ '.number_format($totalSales = SaleItem::sum('total_price'), 2))
             ->description('Total sales')
             ->descriptionIcon('heroicon-m-banknotes')
             ->color('primary')

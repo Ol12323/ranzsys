@@ -200,12 +200,11 @@ class POS extends Component
     {
         $services = Service::query()
             ->where('service_name', 'like', '%' . $this->search . '%')
-            ->paginate(6);
+            ->paginate(30);
     
         return view('livewire.p-o-s', [
             'services' => $services,
             'cart' => $this->cart,
         ]);
     }
-    
 }

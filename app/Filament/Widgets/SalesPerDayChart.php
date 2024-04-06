@@ -141,7 +141,7 @@ class SalesPerDayChart extends ApexChartWidget
             yaxis: {
                 labels: {
                     formatter: function (val, index) {
-                        return '₱' + val
+                        return '₱' + Number(val).toLocaleString();
                     }
                 }
             },

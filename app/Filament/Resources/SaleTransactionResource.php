@@ -266,9 +266,6 @@ class SaleTransactionResource extends Resource
                 TextColumn::make('sales_name')
                 ->searchable()
                 ->sortable(),
-                // ImageColumn::make('item.service.service_avatar')
-                // ->square()
-                // ->stacked(),
                 TextColumn::make('process_type')
                 ->label('Processed type')
                 ->badge()
@@ -278,8 +275,7 @@ class SaleTransactionResource extends Resource
                 })
                 ->sortable(),
                 TextColumn::make('customer.full_name')
-                ->default('Customer: Guest')
-                ->sortable(),
+                ->default('Customer: Guest'),
                 TextColumn::make('staff.full_name')
                 ->label('Processed by')
                 ->sortable(),

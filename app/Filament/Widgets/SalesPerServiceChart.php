@@ -72,15 +72,7 @@ class SalesPerServiceChart extends ApexChartWidget
         });
         
         $salesTotals = $data->pluck('total_price');
-
-        // $data = Trend::model(SaleItem::class) 
-        //     ->between(
-        //         start: now()->subMonth(),
-        //         end: now(),
-        //     )
-        //     ->perYear()
-        //     ->sum('total_price'); 
-
+      
         return [
             'chart' => [
                 'type' => 'bar',
@@ -124,7 +116,7 @@ class SalesPerServiceChart extends ApexChartWidget
         xaxis: {
             labels: {
                 formatter: function (val, timestamp, opts) {
-                    return '₱' + val
+                    return '₱' + Number(val).toLocaleString();
                 }
             }
         },
@@ -145,7 +137,7 @@ class SalesPerServiceChart extends ApexChartWidget
         dataLabels: {
             enabled: true,
             formatter: function (val, opt) {
-                return '₱' + val
+                return '₱' + Number(val).toLocaleString();
             },
             dropShadow: {
                 enabled: true
