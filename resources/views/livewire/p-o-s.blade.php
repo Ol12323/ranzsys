@@ -45,8 +45,8 @@
    </x-filament::section>
    <x-filament::section style="flex: 1;">
     <div style="height: 35rem; display: flex; flex-direction: column; gap: 10px;">
-    <div style="flex: 3; border: 2px solid rgb(244, 244, 245); border-radius: 4px;">
-        <div style="height: 100%; padding: 10px; overflow-y: auto;">
+    <div style="flex: 3; border: 2px solid rgb(244, 244, 245); border-radius: 4px; overflow-y: auto;">
+        <div style="height: 100%; padding: 10px;">
             @if (count($cart) === 0)
                 <div style="height: 100%; display: flex; justify-content:center; align-items: center;">
                     <p style="font-weight: bold;">Cart is empty.</p>
