@@ -11,44 +11,51 @@
         </div>
   
         <div class="flex justify-center mt-10">
-            <img class="object-cover w-full h-full" src="{{asset('images/main-image.png')}}" />
+            <img class="object-cover w-full h-full" src="{{asset('images/promotional-image.jpg')}}" />
         </div>
     </div>
   </section>
-  <section class="bg-transparent text-gray-600 body-font">
-    <div class="container px-5 pt-24 mx-auto">
-      <div class="flex flex-wrap -m-4">
-        <div class="lg:w-1/3 sm:w-1/2 p-4">
-          <div class="flex relative">
-            <img alt="gallery" class="rounded absolute inset-0 w-full h-full object-cover object-center" src="{{asset('images/image-12.jpg')}}">
-            <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white dark:bg-gray-950 opacity-0 hover:opacity-100">
-              <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">CAPTURE THE MOMENT</h2>
-              <h1 class="title-font text-lg font-medium text-gray-800 dark:text-gray-300 mb-3">Solo Adventures in Photography</h1>
-              <p class="leading-relaxed">Embark on a journey in our photography studio. Capture beauty, moments, creativity.</p>
-            </div>
-          </div>
-        </div>
-        <div class="lg:w-1/3 sm:w-1/2 p-4">
-          <div class="flex relative">
-            <img alt="gallery" class="rounded absolute inset-0 w-full h-full object-cover object-center" src="{{asset('images/image-4.jpg')}}">
-            <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white dark:bg-gray-950 opacity-0 hover:opacity-100">
-              <h2 class="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">CAPTURE THE MOMENT</h2>
-              <h1 class="title-font text-lg font-medium text-gray-800 dark:text-gray-300 mb-3">Duo Studio Photography Sessions</h1>
-              <p class="leading-relaxed">Experience the magic of studio photography together. Explore poses, backdrops, and creativity.</p>
-            </div>
-          </div>
-        </div>
-        <div class="lg:w-1/3 sm:w-1/2 p-4">
-          <div class="flex relative">
-            <img alt="gallery" class="rounded absolute inset-0 w-full h-full object-cover object-center" src="{{asset('images/image-2.jpg')}}">
-            <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white dark:bg-gray-950 opacity-0 hover:opacity-100">
-              <h2 class="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">CAPTURE THE MOMENT</h2>
-              <h1 class="title-font text-lg font-medium text-gray-800 dark:text-gray-300 mb-3">Group Studio Photography Sessions</h1>
-              <p class="leading-relaxed">Gather your friends for a group studio photography session. Explore poses, backdrops, and creativity together.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+  <section class="dark:bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] dark:from-blue-800 dark:via-gray-950 dark:to-transparent bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-800 via-transparent to-transparent">
+    <div class="container px-6 py-10 mx-auto">
+        <section class="mt-8 space-y-8 lg:mt-12">
+            <section class="lg:flex lg:items-center">
+                <div class="lg:w-1/2 ">
+                    <p class="text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400 ">CAPTURE THE MOMENT</p>
+                    <h2 class="mt-2 text-2xl font-semibold capitalize dark:text-white text-gray-800">Solo Adventures in Photography</h2>
+                </div>
+  
+                <div class="mt-4 lg:w-1/2 lg:mt-0">
+                    <img class="object-cover w-full h-64 rounded-lg md:h-96"
+                    src="{{asset('images/image-12.jpg')}}"
+                        alt="">
+                </div>
+            </section>
+  
+            <section class="lg:flex lg:items-center">
+                <div class="lg:w-1/2 ">
+                    <p class="text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400 ">CAPTURE THE MOMENT</p>
+                    <h2 class="mt-2 text-2xl font-semibold capitalize dark:text-white text-gray-800">Duo Studio Photography Sessions</h2>
+                </div>
+  
+                <div class="mt-4 lg:w-1/2 lg:mt-0">
+                    <img class="object-cover w-full h-64 rounded-lg md:h-96"
+                    src="{{asset('images/image-4.jpg')}}"
+                        alt="">
+                </div>
+            </section>
+  
+            <section class="lg:flex lg:items-center">
+              <div class="lg:w-1/2 ">
+                  <p class="text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400 ">CAPTURE THE MOMENT</p>
+                  <h2 class="mt-2 text-2xl font-semibold capitalize dark:text-white text-gray-800">Group Studio Photography Sessions</h2>
+              </div>
+  
+              <div class="mt-4 lg:w-1/2 lg:mt-0">
+                  <img class="object-cover w-full h-64 rounded-lg md:h-96"
+                  src="{{asset('images/image-2.jpg')}}"
+                      alt="">
+              </div>
+          </section>
     </div>
   </section>
 <section class="text-gray-600 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-blue-600 via-transparent to-transparent dark:bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-blue-600 via-transparent to-transparent">
