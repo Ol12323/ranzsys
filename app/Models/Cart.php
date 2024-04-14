@@ -24,6 +24,8 @@ class Cart extends Model
         'design_file_path',
     ];
 
+    protected $casts = ['design_file_path'=> 'array'];
+
     /**
      * Get the service that owns the Cart
      *
