@@ -216,9 +216,6 @@ class InvoiceController extends Controller
      }
 
      public function displayReport($fromDate, $toDate){
-
-            ini_set('memory_limit', '256M');
-            
             $fromDate = $fromDate;
             $toDate = $toDate;
             $sortBy = 'created_at';
