@@ -66,135 +66,7 @@ class SaleTransactionResource extends Resource
     {
         return $form
             ->schema([
-                Wizard::make([
-                    Wizard\Step::make('Choose Services')
-                        ->schema([
-                            Repeater::make('item')
-                            ->relationship()
-                            ->label('Services')
-                            ->schema([
-                                Select::make('service_id')
-                                ->label('Service Name')
-                                ->options(Service::query()->pluck('service_name', 'id'))
-                                ->searchable()
-                                ->required()
-                                ->reactive()
-                                ->afterStateUpdated(function($state, callable
-                                $set){
-                                    $service= Service::find($state);
-                                     if ($service) {
-                                        $set('price', number_format
-                                        ($service->price));
-                                        $set('unit_price', $service->price);
-                                        $set('price', $service->price);
-                                        $set('total_price', $service->price);
-                                        $set('service_price', $service->price);
-                                        $set('service_price_visible', $service->price);
-                                        $set('total_price_visible', $service->price);
-                                        $set('service_name', $service->service_name);
-                                        $set('description', $service->description);
-                                     }
-                                }),
-                                Hidden::make('service_name'),
-                                TextArea::make('description')
-                                ->disabled()
-                                ->hidden(fn (Get $get) => $get('service_id') === null ),
-                                Hidden::make('service_price'),
-                                TextInput::make('service_price_visible')
-                                ->disabled()
-                                ->label('Price')
-                                ->prefix('₱')
-                                ->hidden(fn (Get $get) => $get('service_id') === null ),
-                                TextInput::make('quantity')
-                                                    ->numeric()
-                                                    ->default(1)
-                                                    ->minValue(1)
-                                                    ->reactive()
-                                                    ->afterStateUpdated(function($state, callable $set, $get) {
-                                                        $quantity = (int)$get('quantity');
-                                                        $price = (float)$get('service_price');
-                                                        
-                                                        if ($quantity >= 0 && $price >= 0) {
-                                                            $total = $quantity * $price;
-                                                            $set('total_price_visible', number_format($total, 2));
-                                                            $set('total_price', number_format($total, 2)); // Format total price with 2 decimal places
-                                                        }
-                                                    })
-                                                    ->hidden(fn (Get $get) => $get('service_id') === null ),
-                                Hidden::make('total_price'),
-                                TextInput::make('total_price_visible')
-                                                    ->disabled()
-                                                    ->label('Sub total')
-                                                    ->required()
-                                                    ->prefix('₱')
-                                                    ->dehydrated(false)
-                                                    ->hidden(fn (Get $get) => $get('service_id') === null ),       
-                            ])
-                            ->addActionLabel('Add services')
-                            ->collapsible()
-                        ]),
-                    Wizard\Step::make('Process Payment')
-                        ->schema([
-                            Hidden::make('sales_name')
-                            ->label('Appointment Name')
-                            ->default(Str::random(10))
-                            ->unique(),
-                            Hidden::make('process_type')
-                            ->default('Walk-in'),
-                            Hidden::make('processed_by')
-                            ->default(auth()->id()),
-                            Placeholder::make('total_amount')
-                                ->label("Total Amount")
-                                ->content(function ($get) {
-                                    return '    '.'₱'.' '. collect($get('item'))
-                                        ->pluck('total_price')
-                                        ->sum();
-                                }),
-                            TextInput::make('amount_recieved')
-                                ->prefix('₱')
-                                ->placeholder('Enter customer cash...')
-                                ->required()
-                                ->numeric()
-                                ->reactive()
-                                ->afterStateUpdated(function ($set, $get, $state, $record) {
-
-                                    $total_amount = collect($get('item'))
-                                        ->pluck('total_price')
-                                        ->sum();
-
-                                    $change = ($state) - $total_amount;
-                                    if ($change < 0) {
-                                        $set('change_visible', 'Insufficient cash');
-                                        $set('change', 'Insufficient cash');
-                                    } else {
-                                        $set('change_visible', max(0, $change));
-                                        $set('customer_cash_change', max(0, $change));
-                                        $set('total_amount', max(0, $total_amount));
-                                    }
-                                }),
-                            Hidden::make('total_amount'),
-                            TextInput::make('change_visible')
-                                ->prefix('₱')
-                                ->disabled()
-                                ->label('Change')
-                                ->doesntStartWith(['Insufficient cash']),
-                            Hidden::make('customer_cash_change')
-                                ->doesntStartWith(['Insufficient cash']),
-                        ]),
-                ])
-                ->columnSpan('full')
-                ->submitAction(new HtmlString(Blade::render(<<<BLADE
-                <x-filament::button
-                    type="submit"
-                    size="sm"
-                >
-                    Checkout
-                </x-filament::button>
-            BLADE)))
-            //     ->submitAction(new HtmlString('<button type="submit" class="bg-primary-600 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded">
-            //     Create
-            // </button>
-            // '))
+                //
             ]);
     }
 
@@ -218,6 +90,9 @@ class SaleTransactionResource extends Resource
                 ->label('Processed by')
                 ->size(TextEntry\TextEntrySize::Large)
                 ->weight(FontWeight::Bold),
+            Fieldset::make('Order')
+                ->label('')
+                ->schema([   
             Section::make([
                 TextEntry::make('process_type')
                         ->label('Processed type')
@@ -238,6 +113,7 @@ class SaleTransactionResource extends Resource
                 Fieldset::make('Services List')
                     ->schema([
                     RepeatableEntry::make('item')
+                    ->label('')
                         ->schema([
                             ImageEntry::make('service.service_avatar')
                             ->height(50),
@@ -250,12 +126,11 @@ class SaleTransactionResource extends Resource
                             TextEntry::make('total_price')
                             ->label('Subtotal')
                             ->money('PHP', true),
-                            TextEntry::make('service.description')
-                            ->label('Description'),
                         ])
                         ->columnSpan(2)
                         ->columns('5')
-                    ]),
+                    ])
+                ]),
             ]);
     }
     public static function table(Table $table): Table
@@ -290,7 +165,7 @@ class SaleTransactionResource extends Resource
                  ->money('PHP', true)
                  ->label('Change')
                  ->sortable(),
-                 TextColumn::make('updated_at')
+                 TextColumn::make('created_at')
                  ->label('Transaction date')
                  ->date()
                  ->sortable(),

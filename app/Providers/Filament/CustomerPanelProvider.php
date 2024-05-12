@@ -52,13 +52,6 @@ class CustomerPanelProvider extends PanelProvider
                 'customColor4' => '#800080', // Custom color 4 (Purple)
                 'customColor5' => '#ff6347', // Custom color 5 (Tomato)
             ])
-            ->userMenuItems([
-                MenuItem::make()
-                    ->label('Completed transactions')
-                    ->url(fn (): string => SaleTransactionResource::getUrl())
-                    ->icon('heroicon-o-credit-card'),
-                // ...
-            ])
             ->login(CustomerLogin::class)
             ->registration(Register::class)
             ->passwordReset()

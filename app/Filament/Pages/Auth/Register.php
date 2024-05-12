@@ -35,10 +35,12 @@ class Register extends BaseRegister
                     Wizard\Step::make('Step 1')
                         ->schema([
                             TextInput::make('last_name')
+                                 ->autocapitalize()
                                  ->minLength(2)
                                  ->maxLength(255)
                                  ->required(),
                             TextInput::make('first_name')
+                                 ->autocapitalize()
                                  ->minLength(2)
                                  ->maxLength(255)
                                  ->required(),
@@ -49,13 +51,15 @@ class Register extends BaseRegister
                                  ->tel()
                                  ->numeric()
                                  ->mask('99999999999')
-                                 //->regex('/^(09)\\d{9}/')
                                  ->maxLength(255),
                             DatePicker::make('date_of_birth')
                                  ->required(),
                             TextInput::make('address')
+                                 ->hint('Format: Baranggay, City, Province')
+                                 ->regex('/^[A-Za-z\s]+,\s*[A-Za-z\s]+,\s*[A-Za-z\s]+$/')
                                  ->required()
-                                 ->maxLength(255),
+                                 ->maxLength(255)
+                                 ->autocapitalize(),
                         ]),
                     Wizard\Step::make('Step 2')
                         ->schema([        

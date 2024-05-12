@@ -18,7 +18,6 @@ class EditProfile extends BaseEditProfile
         return $form
             ->schema([
                 FileUpload::make('avatar')
-                ->avatar()
                 ->required()
                 ->maxSize(512),
                 TextInput::make('last_name')
@@ -36,7 +35,10 @@ class EditProfile extends BaseEditProfile
                 ->required(),
                 TextInput::make('address')
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->hint('Format: Baranggay, City, Province')
+                ->regex('/^[A-Za-z\s]+,\s*[A-Za-z\s]+,\s*[A-Za-z\s]+$/')
+                ->autocapitalize(),
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),

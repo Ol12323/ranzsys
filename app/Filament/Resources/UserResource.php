@@ -43,36 +43,40 @@ class UserResource extends Resource
                 Fieldset::make('')
                         ->schema([
                             FileUpload::make('avatar')
-                            ->avatar()
                             ->columnSpanFull()
                             ->required()
                             ->maxSize(512),
-                        ])->columnSpanFull(),
+                        ])->columnSpan(1),
                 Fieldset::make('Personal Information')
+                ->label('')
                         ->schema([
                             Select::make('role_id')
                             ->relationship(name: 'role', titleAttribute: 'name')
                             ->required()
                             ->columnSpanFull(),
                             TextInput::make('last_name')
-                            ->columnSpanFull()
+                            ->columnSpan(1)
                             ->required()
                             ->maxLength(255),
                             TextInput::make('first_name')
-                            ->columnSpanFull()
+                            ->columnSpan(1)
                             ->required()
                             ->maxLength(255),
                             TextInput::make('phone_number')
-                            ->columnSpanFull()
+                            ->columnSpan(1)
                             ->required()
                             ->tel()
                             ->regex('/^(09)\\d{9}/')
                             ->maxLength(255),
                             DatePicker::make('date_of_birth')
-                            ->columnSpanFull()
+                            ->columnSpan(1)
                             ->required(),
                             TextInput::make('address')
-                            ->columnSpanFull(),
+                            ->required()
+                            ->columnSpanFull()
+                            ->hint('Format: Baranggay, City, Province')
+                            ->regex('/^[A-Za-z\s]+,\s*[A-Za-z\s]+,\s*[A-Za-z\s]+$/')
+                            ->autocapitalize(),
                             TextInput::make('email')
                              ->email()
                              ->required()
@@ -90,7 +94,7 @@ class UserResource extends Resource
                             )->label(static fn ($livewire): string =>
                             ($livewire instanceof EditUser) ? 'New Password' : 'Password',
                         ),
-                        ])->columnSpanFull(),
+                        ])->columnSpan(1),
             ]);
     }
 
@@ -120,7 +124,6 @@ class UserResource extends Resource
                 })
                 ->searchable(),
                 TextColumn::make('created_at')
-                ->searchable()
                 ->sortable()
                 ->date(),
             ])
@@ -187,13 +190,16 @@ class UserResource extends Resource
                 ->modalDescription('Are you sure you\'d like to unban this user? This action cannot be undone.')
                 ->modalSubmitActionLabel('Yes, unban user'),
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                ->hidden(
+                    function (Model $record) {
+                        return  $record->role->name === 'Customer'; 
+                    }
+                ),
             ])
+            ->defaultSort('role_id', 'asc')
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),

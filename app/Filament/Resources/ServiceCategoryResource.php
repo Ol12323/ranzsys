@@ -44,8 +44,6 @@ class ServiceCategoryResource extends Resource
         return $table
             ->paginated([10, 25, 50, 100])
             ->columns([
-                TextColumn::make('id')
-                ->searchable(),
                 TextColumn::make('category_name')
                 ->searchable(),
                 TextColumn::make('created_at')
@@ -56,12 +54,12 @@ class ServiceCategoryResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                //Tables\Actions\EditAction::make(),
+                //Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([

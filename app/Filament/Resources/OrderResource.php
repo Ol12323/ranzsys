@@ -186,7 +186,7 @@ class OrderResource extends Resource
                     return ($record->mode_of_payment === 'g-cash-partial' AND $record->status === 'In progress' || 'Ready for pickup' || 'Picked up' || 'Completed');
                 }),
                 ])->columns(5),
-                Fieldset::make('Order details')
+                Fieldset::make('Ordered services')
                 ->schema([
                     RepeatableEntry::make('service')
                     ->label('')
@@ -273,10 +273,6 @@ class OrderResource extends Resource
             ->columns([
                 TextColumn::make('order_name')
                 ->searchable(),
-                // ImageColumn::make('service.service.service_avatar')
-                // ->square()
-                // ->stacked()
-                // ->label('Orders'),
                 TextColumn::make('status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {

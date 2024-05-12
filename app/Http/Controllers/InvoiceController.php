@@ -232,7 +232,7 @@ class InvoiceController extends Controller
             ->orderBy($sortBy);
 
             $columns = [ // Set Column to be displayed
-                'Name' => 'service_name',
+                'Service Name' => 'service_name',
                 'Price' => 'service_price',
                 'Qty' => 'quantity', // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
                 'Total price' => 'total_price'
@@ -252,7 +252,7 @@ class InvoiceController extends Controller
                         'class' => 'left'
                     ])
                     ->showTotal([ // Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
-                        'Total price' => 'PHP ' // if you want to show dollar sign ($) then use 'Total Balance' => '$'
+                        'Total price' => 'PHP' // if you want to show dollar sign ($) then use 'Total Balance' => '$'
                     ])
                     ->stream(); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
             }

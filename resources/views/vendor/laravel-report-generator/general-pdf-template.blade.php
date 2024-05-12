@@ -51,11 +51,15 @@
 				font-weight: 600;
 			}
 			.bg-black {
-				background-color: #000;
+				background-color: #2563EB;
 			}
 			.f-white {
 				color: #fff;
 			}
+			img {
+                vertical-align: middle;
+                border-style: none;
+            }
 			@foreach ($styles as $style)
 			{{ $style['selector'] }} {
 				{{ $style['style'] }}

@@ -188,7 +188,7 @@ class OrderResource extends Resource
                     return ($record->mode_of_payment === 'g-cash-partial' AND $record->status === 'In progress' || 'Ready for pickup' || 'Picked up' || 'Completed');
                 }), 
                 ]) ->columns(5),
-                Fieldset::make('Order details')
+                Fieldset::make('Ordered services')
                 ->schema([
                     RepeatableEntry::make('service')
                     ->label('')

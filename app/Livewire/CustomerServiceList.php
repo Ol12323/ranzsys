@@ -127,7 +127,7 @@ class CustomerServiceList extends Component
         }
     
         // $this->services = $query->get();
-        $services = $query->paginate(8);
+        $services = $query->paginate(30);
 
         return view('livewire.customer-service-list',  [
             'categories' => ServiceCategory::all(),

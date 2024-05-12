@@ -26,7 +26,7 @@ class OrderTypeChart extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'Sales per order type';
+    protected static ?string $heading = 'Sales Per Order Type';
 
     /**
      * Chart options (series, labels, types, size, animations...)

@@ -57,8 +57,8 @@ class StatsOverview extends BaseWidget
         $lastDayOfMonth = Carbon::now()->endOfMonth();
 
         return [
-            Stat::make('', $unfinishedOrderCount = Order::whereNotIn('status', ['Decline', 'Completed', 'Cancelled'])->count())
-            ->description('Unfinished orders')
+            Stat::make('', $unfinishedOrderCount = Order::whereNotIn('status', ['Decline', 'Completed', 'Cancelled', 'Picked up'])->count())
+            ->description('Unfinished Online Orders')
             ->descriptionIcon('heroicon-m-clock')
             ->color('primary')
             ->extraAttributes([
@@ -66,7 +66,7 @@ class StatsOverview extends BaseWidget
                 'wire:click'=> 'redirectToOrderResource',
             ]),
             Stat::make('', $totalOrderCount = Order::where('status', 'Completed')->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->count())
-            ->description($monthString.' total orders')
+            ->description('Month of '.$monthString.' Online Orders')
             ->descriptionIcon('heroicon-m-check-circle')
             ->color('primary')
             ->extraAttributes([
@@ -74,7 +74,7 @@ class StatsOverview extends BaseWidget
                 'wire:click'=> 'redirectToOrderResource',
             ]),
             Stat::make('', '₱ '.number_format($totalSales = SaleItem::sum('total_price'), 2))
-            ->description('Total sales')
+            ->description('Total Sales')
             ->descriptionIcon('heroicon-m-banknotes')
             ->color('primary')
             ->extraAttributes([
@@ -84,7 +84,7 @@ class StatsOverview extends BaseWidget
             Stat::make('', $customerCount = User::whereHas('role', function ($query) {
                 $query->where('name', 'Customer');
             })->count())
-            ->description('Registered customers')
+            ->description('Registered Customer')
             ->descriptionIcon('heroicon-m-user-group')
             ->color('primary')
             ->extraAttributes([
