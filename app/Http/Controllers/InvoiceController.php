@@ -8,11 +8,13 @@ use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use App\Models\Appointment;
 use App\Models\SaleTransaction;
+use Illuminate\Support\Carbon;
 use App\Models\SaleItem;
 use App\Models\User;
 use App\Models\Order;
 use LaravelDaily\Invoices\Classes\Party;
 use PdfReport;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -216,45 +218,54 @@ class InvoiceController extends Controller
      }
 
      public function displayReport($fromDate, $toDate){
-            $fromDate = $fromDate;
-            $toDate = $toDate;
-            $sortBy = 'created_at';
-
-            $title = 'Sales report';
-
-            $meta = [ // For displaying filters description on header
-                'Sales on' => $fromDate . ' To ' . $toDate,
-                'Sort By' => $sortBy
-            ];
-
-            $queryBuilder = SaleItem::select(['service_name', 'service_price', 'quantity', 'total_price']) // Do some querying..
-            ->whereBetween('created_at', [$fromDate, $toDate])
-            ->orderBy($sortBy);
-
-            $columns = [ // Set Column to be displayed
-                'Service Name' => 'service_name',
-                'Price' => 'service_price',
-                'Qty' => 'quantity', // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
-                'Total price' => 'total_price'
-            ];
-
-            return PdfReport::of($title, $meta, $queryBuilder, $columns)
-                    ->editColumn('Total price', [
-                        'displayAs' => function ($result) {
-                            return 'PHP '. $result->total_price;
-                        },
-                        'class' => 'left'
-                    ])
-                    ->editColumn('Price', [
-                        'displayAs' => function ($result) {
-                            return 'PHP '. $result->service_price;
-                        },
-                        'class' => 'left'
-                    ])
-                    ->showTotal([ // Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
-                        'Total price' => 'PHP' // if you want to show dollar sign ($) then use 'Total Balance' => '$'
-                    ])
-                    ->stream(); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
+        $fromDate = Carbon::parse($fromDate)->format('F j, Y');
+        $toDate = Carbon::parse($toDate)->format('F j, Y');
+        $sortBy = 'created_at';
+    
+        $title = 'Sales report';
+    
+        $meta = [ // For displaying filters description on header
+            'Sales on' => $fromDate . ' To ' . $toDate,
+            'Sort By' => $sortBy
+        ];
+    
+        $queryBuilder = SaleItem::with('service')
+            ->select('service_id', DB::raw('SUM(total_price) as total_price'), DB::raw('SUM(quantity) as quantity'))
+            ->whereBetween('created_at', [
+                Carbon::parse($fromDate),
+                Carbon::parse($toDate),
+            ])
+            ->orderBy('total_price', 'desc')
+            ->groupBy('service_id');
+    
+        $columns = [
+            'Service Name' => function($result) {
+                return $result->service->service_name;
+            },
+            'Price' => function($result) {
+                return 'PHP ' . $result->service->price;
+            },
+            'Qty' => 'quantity',
+            'Total price' => 'total_price'
+        ];
+    
+        return PdfReport::of($title, $meta, $queryBuilder, $columns)
+            ->editColumn('Total price', [
+                'displayAs' => function ($result) {
+                    return 'PHP ' . $result->total_price;
+                },
+                'class' => 'left'
+            ])
+            ->editColumn('Price', [
+                'displayAs' => function ($result) {
+                    return 'PHP ' . $result->service->price;
+                },
+                'class' => 'left'
+            ])
+            ->showTotal([
+                'Total price' => 'PHP'
+            ])
+            ->stream();
             }
 
 }

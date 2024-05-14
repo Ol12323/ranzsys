@@ -47,15 +47,6 @@ class SalesPerServiceChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        // $data = SaleItem::with('service')
-        // ->select('service_id', DB::raw('SUM(total_price) as total_price'))
-        // ->whereRaw("created_at BETWEEN ? AND ?", [
-        //     Carbon::parse($this->filterFormData['date_start']),
-        //     Carbon::parse($this->filterFormData['date_end'])->addDay(),
-        // ])
-        // ->groupBy('service_id')
-        // ->get();
-
         $data = SaleItem::with('service')
         ->select('service_id', DB::raw('SUM(total_price) as total_price'))
         ->whereRaw("created_at BETWEEN ? AND ?", [

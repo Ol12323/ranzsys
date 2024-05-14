@@ -39,13 +39,6 @@ class ViewService extends Page implements HasForms, HasActions
 
     public function mount()
     {
-        // $this->id = session('id');
-        // $this->service = Service::find($this->id);
-        // $this->alternatives = Service::where('availability_status','!=','Not Available')
-        // ->whereNotIn('id', [$this->id])
-        // ->orderBy('created_at', 'desc')
-        // ->take(4)
-        // ->get();
 
         $this->id = session('id');
         $this->service = Service::find($this->id);
