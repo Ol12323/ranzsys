@@ -218,23 +218,26 @@ class InvoiceController extends Controller
      }
 
      public function displayReport($fromDate, $toDate){
-        $fromDate = Carbon::parse($fromDate)->startOfDay()->format('F j, Y');
-        $toDate = Carbon::parse($toDate)->endOfDay()->format('F j, Y');
+        // Parse the dates and keep them in Carbon format for the query
+        $fromDateParsed = Carbon::parse($fromDate)->startOfDay();
+        $toDateParsed = Carbon::parse($toDate)->endOfDay();
+
+        // Format the dates for display
+        $fromDateDisplay = $fromDateParsed->format('F j, Y');
+        $toDateDisplay = $toDateParsed->format('F j, Y');
+
         $sortBy = 'created_at';
-    
+
         $title = 'Sales report';
-    
+
         $meta = [ // For displaying filters description on header
-            'Sales on' => $fromDate . ' To ' . $toDate,
+            'Sales on' => $fromDateDisplay . ' To ' . $toDateDisplay,
             'Sort By' => $sortBy
         ];
-    
+
         $queryBuilder = SaleItem::with('service')
             ->select('service_id', DB::raw('SUM(total_price) as total_price'), DB::raw('SUM(quantity) as quantity'))
-            ->whereBetween('created_at', [
-                Carbon::parse($fromDate),
-                Carbon::parse($toDate),
-            ])
+            ->whereBetween('created_at', [$fromDateParsed, $toDateParsed])
             ->orderBy('total_price', 'desc')
             ->groupBy('service_id');
     
