@@ -223,7 +223,7 @@ class InvoiceController extends Controller
         $toDateParsed = Carbon::parse($toDate)->endOfDay();
 
         // Format the dates for display
-        $fromDateDisplay = $fromDateParsed->format('F j, Y');
+        $fromDateDisplay = $fromDate->format('F j, Y');
         $toDateDisplay = $toDateParsed->format('F j, Y');
 
         $sortBy = 'created_at';
