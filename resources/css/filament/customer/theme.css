@@ -2,7 +2,7 @@
 @config './tailwind.config.js';
 
 .fi-simple-layout {
-    background-image: url('../images/promotional-image-2.jpg');
+    background-image: url('../images/customers-auth-bg.png');
     background-size: cover;
 }
 

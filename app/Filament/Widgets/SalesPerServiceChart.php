@@ -50,8 +50,8 @@ class SalesPerServiceChart extends ApexChartWidget
         $data = SaleItem::with('service')
         ->select('service_id', DB::raw('SUM(total_price) as total_price'))
         ->whereRaw("created_at BETWEEN ? AND ?", [
-            Carbon::parse($this->filterFormData['date_start']),
-            Carbon::parse($this->filterFormData['date_end'])->addDay(),
+            Carbon::parse($this->filterFormData['date_start'])->startOfDay(),
+            Carbon::parse($this->filterFormData['date_end'])->endOfDay(),
         ])
         ->groupBy('service_id')
         ->orderBy('total_price', 'desc') // Order by total_price in descending order

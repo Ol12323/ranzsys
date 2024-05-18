@@ -63,8 +63,8 @@ class CustomersPerDayChart extends ApexChartWidget
             })
             )
             ->between(
-                  start: Carbon::parse($this->filterFormData['date_start']), 
-                  end: Carbon::parse($this->filterFormData['date_end'])->addDay(),
+                  start: Carbon::parse($this->filterFormData['date_start'])->startOfDay(), 
+                  end: Carbon::parse($this->filterFormData['date_end'])->endOfDay(),
             )
             ->perDay()
             ->count();

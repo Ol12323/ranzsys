@@ -232,8 +232,8 @@ class InvoiceController extends Controller
         $queryBuilder = SaleItem::with('service')
             ->select('service_id', DB::raw('SUM(total_price) as total_price'), DB::raw('SUM(quantity) as quantity'))
             ->whereBetween('created_at', [
-                Carbon::parse($fromDate),
-                Carbon::parse($toDate),
+                Carbon::parse($fromDate)->startOfDay(),
+                Carbon::parse($toDate)->endOfDay(),
             ])
             ->orderBy('total_price', 'desc')
             ->groupBy('service_id');
@@ -243,27 +243,31 @@ class InvoiceController extends Controller
                 return $result->service->service_name;
             },
             'Price' => function($result) {
-                return 'PHP ' . $result->service->price;
+                // return 'PHP ' . $result->service->price;
+                return number_format($result->service->price, 2);
             },
             'Qty' => 'quantity',
-            'Total price' => 'total_price'
+            'Total price' => function($result) {
+
+                return number_format($result->total_price, 2);
+            }
         ];
     
         return PdfReport::of($title, $meta, $queryBuilder, $columns)
             ->editColumn('Total price', [
                 'displayAs' => function ($result) {
-                    return 'PHP ' . $result->total_price;
+                    return '₱ ' . number_format($result->total_price, 2);
                 },
                 'class' => 'left'
             ])
             ->editColumn('Price', [
                 'displayAs' => function ($result) {
-                    return 'PHP ' . $result->service->price;
+                    return '₱ ' . number_format($result->service->price, 2);
                 },
                 'class' => 'left'
             ])
             ->showTotal([
-                'Total price' => 'PHP'
+                'Total price' => '₱ '
             ])
             ->stream();
             }

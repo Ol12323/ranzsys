@@ -20,9 +20,11 @@ class ListSaleTransactions extends ListRecords
             Actions\Action::make('generateSalesReport')
             ->form([
                 DatePicker::make('fromDate')
-                ->required(),
+                ->required()
+                ->default(now()->subMonth()),
                 DatePicker::make('toDate')
-                ->required(),
+                ->required()
+                ->default(now()),
             ])
             ->action(function (array $data){
                 $fromDate = $data['fromDate'];

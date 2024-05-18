@@ -5,18 +5,18 @@
     "src": "resources/css/app.css"
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-6d0dcfcf.css",
+    "file": "assets/theme-6cbb353d.css",
     "isEntry": true,
     "src": "resources/css/filament/admin/theme.css"
   },
   "resources/css/filament/customer/theme.css": {
-    "file": "assets/theme-4eb0daf8.css",
+    "file": "assets/theme-1da6fbab.css",
     "isEntry": true,
     "src": "resources/css/filament/customer/theme.css"
   },
-  "resources/css/filament/images/promotional-image-2.jpg": {
-    "file": "assets/promotional-image-2-212d8c35.jpg",
-    "src": "resources/css/filament/images/promotional-image-2.jpg"
+  "resources/css/filament/images/customers-auth-bg.png": {
+    "file": "assets/customers-auth-bg-1564cbfe.png",
+    "src": "resources/css/filament/images/customers-auth-bg.png"
   },
   "resources/js/app.js": {
     "file": "assets/app-5c2c607a.js",

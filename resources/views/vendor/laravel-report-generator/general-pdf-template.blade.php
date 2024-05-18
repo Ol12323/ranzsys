@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<style>
 			body {
-			    font-family: Arial, Helvetica, sans-serif;
+			    font-family: "DejaVu Sans";
 			}
 			.wrapper {
 				margin: 0 -20px 0;

@@ -3,5 +3,5 @@
 @config './tailwind.config.js';
 
 .fi-simple-layout {
-    @apply bg-gradient-to-t from-blue-100 via-blue-300 to-blue-500;
+    @apply bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600 via-slate-200 to-blue-600;
 }

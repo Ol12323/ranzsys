@@ -49,8 +49,8 @@ class OrderTypeChart extends ApexChartWidget
         $data = SaleTransaction::select('process_type', DB::raw('SUM(total_amount) as total_amount_sum'))
         ->groupBy('process_type')
         ->whereRaw("created_at BETWEEN ? AND ?", [
-            Carbon::parse($this->filterFormData['date_start']),
-            Carbon::parse($this->filterFormData['date_end'])->addDay(),
+            Carbon::parse($this->filterFormData['date_start'])->endOfDay(),
+            Carbon::parse($this->filterFormData['date_end'])->startOfDay(),
         ])
         ->get();
     
