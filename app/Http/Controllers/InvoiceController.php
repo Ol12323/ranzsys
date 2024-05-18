@@ -243,14 +243,10 @@ class InvoiceController extends Controller
                 return $result->service->service_name;
             },
             'Price' => function($result) {
-                // return 'PHP ' . $result->service->price;
-                return number_format($result->service->price, 2);
+                return 'PHP ' . $result->service->price;
             },
             'Qty' => 'quantity',
-            'Total price' => function($result) {
-
-                return number_format($result->total_price, 2);
-            }
+            'Total price' => 'total_price'
         ];
     
         return PdfReport::of($title, $meta, $queryBuilder, $columns)
