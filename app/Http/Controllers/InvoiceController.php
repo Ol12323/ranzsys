@@ -219,7 +219,7 @@ class InvoiceController extends Controller
 
      public function displayReport($fromDate, $toDate){
         // Parse the dates and keep them in Carbon format for the query
-        $fromDateParsed = Carbon::parse($fromDate)->startOfDay();
+        $fromDateParsed = Carbon::parse($fromDate)->subDay();
         $toDateParsed = Carbon::parse($toDate)->endOfDay();
 
         // Format the dates for display
