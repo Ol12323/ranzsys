@@ -103,7 +103,7 @@
 <div id="featuredServices" class="container px-6 py-8 mx-auto">
     <div class="bg-transparent">
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 class="text-2xl font-semibold tracking-tight text-white">Featured services</h2>
+          <h2 class="text-2xl font-semibold tracking-tight text-white">Featured Services</h2>
           <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           @if ($featured->isNotEmpty())
             @foreach ($featured as $item)
@@ -142,5 +142,48 @@
 </div>
 </div>
 {{-- End of Service List --}}
+{{-- Top Sales Service List --}}
+<div id="topSalesServices" class="container px-6 py-8 mx-auto">
+  <div class="bg-transparent">
+      <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white">Top Sales Services</h2>
+        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        @if ($featured->isNotEmpty())
+          @foreach ($topSalesServices as $item)
+          <div class="group relative">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                <img src="{{ asset(Storage::url($item->service_avatar)) }}" alt="Front of men's Basic Tee in black." class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="@apply mt-4 flex justify-between">
+                <div>
+                    <h3 class="@apply text-sm text-gray-300">
+                        <a href="{{ route('view-service', ['id' => $item->id]) }}">
+                            <span aria-hidden="true" class="@apply absolute inset-0"></span>
+                            {{ $item->service_name }}
+                        </a>
+                    </h3>
+                    <p class="@apply mt-1 text-sm text-gray-500">{{ $item->category->category_name }}</p>
+                </div>
+                <p class="@apply text-sm font-medium text-white">₱{{ $item->price }}</p>
+            </div>
+        </div>
+          @endforeach
+          @else
+              <div>
+                  No services are available yet.
+              </div>
+           @endif
+        </div>
+        <div class="mt-10 flex justify-center">
+          <a href="{{route('catalog')}}" class="text-blue-600 hover:underline text-lg font-semibold">
+              View all
+          </a>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+</div>
+{{-- Top Sales Service List --}}
 @endsection
 

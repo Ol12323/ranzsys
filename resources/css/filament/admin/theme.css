@@ -5,3 +5,7 @@
 .fi-simple-layout {
     @apply bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600 via-slate-200 to-blue-600;
 }
+
+.fi-dropdown-panel{
+    @apply z-30 !important;
+}

@@ -33,8 +33,11 @@ Route::get('/generate-acknowledgement-receipt/order/{record}', [InvoiceControlle
 Route::get('/generate-acknowledgement-receipt/sale/{record}', [InvoiceController::class, 'generateSaleAcknowledgementReceipt'])
     ->name('generate.sale-acknowledgement-receipt');
     
-Route::get('/generate-sales-report/from/{fromDate}/to/{toDate}', [InvoiceController::class, 'displayReport'])
-    ->name('generate.sales-report');
+Route::get('/generate-sales-per-service-report/from/{fromDate}/to/{toDate}', [InvoiceController::class, 'salesPerService'])
+    ->name('generate.sales-per-service-report');
+
+Route::get('/generate-sales-per-transaction-report/from/{fromDate}/to/{toDate}', [InvoiceController::class, 'salesPerTransaction'])
+    ->name('generate.sales-per-transaction-report');
 
 Route::get('/add-to-cart/{id}', [CustomerServiceController::class, 'addToCart'])->name('add-to-cart');
 Route::post('/set-appointment', [CustomerServiceController::class, 'setAppointment'])->name('setAppointment');

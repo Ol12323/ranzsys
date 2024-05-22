@@ -217,7 +217,7 @@ class InvoiceController extends Controller
          return response($pdf)->header('Content-Type', 'application/pdf');
      }
 
-     public function displayReport($fromDate, $toDate){
+     public function salesPerService($fromDate, $toDate){
         // Parse the dates and keep them in Carbon format for the query
         $fromDateStart = Carbon::parse($fromDate);
         $fromDateParsed = Carbon::parse($fromDate)->subDay();
@@ -229,11 +229,11 @@ class InvoiceController extends Controller
 
         $sortBy = 'created_at';
 
-        $title = 'Sales report';
+        $title = 'Sales Per Transaction Report';
 
         $meta = [ // For displaying filters description on header
             'Sales on' => $fromDateDisplay . ' To ' . $toDateDisplay,
-            'Sort By' => $sortBy
+            'Sort By' => 'Total Price'
         ];
 
         $queryBuilder = SaleItem::with('service')
@@ -250,11 +250,11 @@ class InvoiceController extends Controller
                 return 'PHP ' . $result->service->price;
             },
             'Qty' => 'quantity',
-            'Total price' => 'total_price'
+            'Total Price' => 'total_price'
         ];
     
         return PdfReport::of($title, $meta, $queryBuilder, $columns)
-            ->editColumn('Total price', [
+            ->editColumn('Total Price', [
                 'displayAs' => function ($result) {
                     return '₱ ' . number_format($result->total_price, 2);
                 },
@@ -271,5 +271,63 @@ class InvoiceController extends Controller
             ])
             ->stream();
             }
+
+        public function salesPerTransaction($fromDate, $toDate){
+                 // Parse the dates and keep them in Carbon format for the query
+                $fromDateStart = Carbon::parse($fromDate);
+                $fromDateParsed = Carbon::parse($fromDate)->subDay();
+                $toDateParsed = Carbon::parse($toDate)->endOfDay();
+
+                // Format the dates for display
+                $fromDateDisplay = $fromDateStart->format('F j, Y');
+                $toDateDisplay = $toDateParsed->format('F j, Y');
+
+                $sortBy = 'created_at';
+
+                $title = 'Sales Per Transaction Report';
+
+                $meta = [ // For displaying filters description on header
+                    'Sales on' => $fromDateDisplay . ' To ' . $toDateDisplay,
+                    'Sort By' => 'Transaction Date'
+                ];
+
+                $queryBuilder = SaleTransaction::select('sales_name','process_type', 'customer_id', 'processed_by', 'total_amount', 'created_at')
+                    ->whereBetween('created_at', [$fromDateParsed, $toDateParsed])
+                    ->orderBy('created_at');
+            
+                $columns = [
+                    'Invoice Number' => 'sales_name',
+                    'Process Type' => 'process_type',
+                    'Customer' => function($result) {
+                        return $result->customer_id === null ? 'Guest Customer' : $result->customer->full_name;
+                    },
+                    'Process By' => function($result) {
+                        return $result->staff->full_name;
+                    },
+                    'Transaction Date' => 'created_at',
+                    'Total Amount' => 'total_amount'
+                ];
+            
+                return PdfReport::of($title, $meta, $queryBuilder, $columns)
+                    ->editColumn('Total Amount', [
+                        'displayAs' => function ($result) {
+                            return '₱ ' . number_format($result->total_amount, 2);
+                        },
+                        'class' => 'left'
+                    ])
+                    ->editColumn('Transaction Date', [
+                        'displayAs' => function ($result) {
+                            $transactionDate = Carbon::parse($result->created_at);
+
+                            return $formatTransactionDate = $transactionDate->format('F j, Y');
+                        },
+                        'class' => 'left'
+                    ])
+                    ->showTotal([
+                        'Total Amount' => '₱ '
+                    ])
+                    ->stream();
+                    
+                } 
 
 }

@@ -9,9 +9,11 @@ class RegisterSales extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-plus';
 
+    protected static ?int $navigationSort = 10;
+
     protected static string $view = 'filament.pages.register-sales';
 
-    protected static ?string $navigationGroup = 'Shop';
+    // protected static ?string $navigationGroup = 'Shop';
 
     protected static ?string $navigationLabel = 'Walk In';
 

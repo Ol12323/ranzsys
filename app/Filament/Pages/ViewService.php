@@ -23,6 +23,7 @@ use App\Models\AppointmentItem;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class ViewService extends Page implements HasForms, HasActions
 {
@@ -33,14 +34,17 @@ class ViewService extends Page implements HasForms, HasActions
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public $service;
     public $id;
+    public $service;
+    public $containsTarpaulin;
+    public $tarpaulinServices;
     public $alternatives;
 
-    public function mount()
+    public function mount(Request $request)
     {
 
-        $this->id = session('id');
+        // $this->id = session('id');
+        $this->id = $request->query('id');
         $this->service = Service::find($this->id);
         $this->containsTarpaulin = Str::contains($this->service->service_name, 'Tarpaulin');
 

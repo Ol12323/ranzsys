@@ -89,7 +89,7 @@
             <img class="w-auto h-6 sm:h-7" src="{{asset('images/system-logo.png')}}" alt="">
         </a>
 
-        <p class="text-sm text-gray-300">© Copyright 2021. All Rights Reserved.</p>
+        <p class="text-sm text-gray-300">© Copyright {{ date('Y') }}. All Rights Reserved.</p>
 
         <div class="flex -mx-2">
             <a href="https://www.facebook.com/profile.php?id=100064168503688" class="mx-2 transition-colors duration-300 text-gray-300 hover:text-blue-500" aria-label="Facebook">

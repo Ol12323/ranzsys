@@ -26,7 +26,6 @@ class PreventAuthenticatedUsers
                 return redirect('/owner'); // Replace 'dashboard' with your actual dashboard route name
             }
          }
-
          return $next($request);
     }
 }
