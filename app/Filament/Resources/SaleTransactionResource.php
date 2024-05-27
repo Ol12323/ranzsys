@@ -75,7 +75,7 @@ class SaleTransactionResource extends Resource
     return $infolist
         ->schema([
             TextEntry::make('sales_name')
-                ->label('Sales name')
+                ->label('Invoice No.')
                 ->size(TextEntry\TextEntrySize::Large)
                 ->weight(FontWeight::Bold)
                 ->copyable()
@@ -87,7 +87,7 @@ class SaleTransactionResource extends Resource
                 ->size(TextEntry\TextEntrySize::Large)
                 ->weight(FontWeight::Bold),
             TextEntry::make('staff.full_name')
-                ->label('Processed by')
+                ->label('Processed By')
                 ->size(TextEntry\TextEntrySize::Large)
                 ->weight(FontWeight::Bold),
             Fieldset::make('Order')
@@ -139,10 +139,11 @@ class SaleTransactionResource extends Resource
             ->paginated([10, 25, 50, 100])
             ->columns([
                 TextColumn::make('sales_name')
+                ->label('Invoice No.')
                 ->searchable()
                 ->sortable(),
                 TextColumn::make('process_type')
-                ->label('Processed type')
+                ->label('Processed Type')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
                     'Online Order' => 'primary',
@@ -152,7 +153,7 @@ class SaleTransactionResource extends Resource
                 TextColumn::make('customer.full_name')
                 ->default('Customer: Guest'),
                 TextColumn::make('staff.full_name')
-                ->label('Processed by')
+                ->label('Processed By')
                 ->sortable(),
                 TextColumn::make('total_amount')
                  ->money('PHP', true)
@@ -166,7 +167,7 @@ class SaleTransactionResource extends Resource
                  ->label('Change')
                  ->sortable(),
                  TextColumn::make('created_at')
-                 ->label('Transaction date')
+                 ->label('Transaction Date')
                  ->date()
                  ->sortable(),
             ])

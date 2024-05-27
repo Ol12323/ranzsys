@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
+		<link rel="icon" type="image/png" href="{{ asset('images/system-logo.png') }}">
 		<style>
 			body {
 			    font-family: "DejaVu Sans";
@@ -25,13 +26,13 @@
 		    .head-content{
 		    	padding-bottom: 4px;
 		    	border-style: none none ridge none;
-		    	font-size: 18px;
+		    	font-size: 10px;
 		    }
             thead { display: table-header-group; }
             tfoot { display: table-row-group; }
             tr { page-break-inside: avoid; }
 		    table.table {
-		    	font-size: 13px;
+		    	font-size: 10px;
 		    	border-collapse: collapse;
 		    }
 			.page-break {
@@ -94,9 +95,12 @@
 		?>
 		<div class="wrapper">
 		    <div class="pb-5">
-			    <div class="middle pb-10 title">
-			        {{ $headers['title'] }}
-			    </div>
+				 <div class="middle pb-10 title">
+					<img src="{{ public_path('images/system-logo.png') }}" alt="Logo" width="100" height="100">
+					<br>
+					{{ $headers['title'] }}
+				</div>
+				</div>
     			@if ($showMeta)
 				<div class="head-content">
 					<table cellpadding="0" cellspacing="0" width="100%" border="0">

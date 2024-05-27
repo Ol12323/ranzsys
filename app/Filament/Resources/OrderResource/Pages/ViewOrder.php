@@ -614,7 +614,7 @@ class ViewOrder extends ViewRecord
                     $this->record->save();
                    
                     $sale_transaction = new SaleTransaction([
-                        'sales_name' => Str::random(10),
+                        'sales_name' => $this->record->order_name,
                         'process_type' => 'Online Order',
                         'customer_id' => $this->record->user_id,
                         'customer_cash_change' => $data['change'],

@@ -8,7 +8,7 @@ return [
     */
 
     'invoice'                => 'Invoice',
-    'serial'                 => 'Serial No.',
+    'serial'                 => 'Invoice No.',
     'date'                   => 'Invoice date',
     'seller'                 => 'Seller',
     'buyer'                  => 'Customer',

@@ -11,6 +11,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Filament\Forms\Components\DatePicker;
 use Filament\Actions\ActionGroup;
 
+
 class ListSaleTransactions extends ListRecords
 {
     protected static string $resource = SaleTransactionResource::class;
@@ -47,12 +48,12 @@ class ListSaleTransactions extends ListRecords
                  DatePicker::make('toDate')
                  ->required()
                  ->default(now()),
-             ])
+             ])         
              ->action(function (array $data){
                  $fromDate = $data['fromDate'];
                  $toDate = $data['toDate'];
  
-                 return redirect()->route('generate.sales-per-transaction-report', [
+                return redirect()->route('generate.sales-per-transaction-report', [
                      'fromDate' => $fromDate,
                      'toDate' => $toDate,
                  ]);
