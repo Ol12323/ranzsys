@@ -87,7 +87,8 @@ class InvoiceController extends Controller
                 $invoiceItem = (new InvoiceItem())
                     ->title($items->service->service_name)
                     ->quantity($items->quantity)
-                    ->pricePerUnit($items->service->price);
+                    ->pricePerUnit($items->service->price)
+                    ->subTotalPrice($items->subtotal);
                 
                 $invoice->addItem($invoiceItem);
             }
@@ -154,8 +155,8 @@ class InvoiceController extends Controller
                 $invoiceItem = (new InvoiceItem())
                     ->title($items->service->service_name)
                     ->quantity($items->quantity)
-                    ->pricePerUnit($items->service->price);
-                
+                    ->pricePerUnit($items->service->price)
+                    ->subTotalPrice($items->subtotal);
                 $invoice->addItem($invoiceItem);
             }
  
@@ -171,7 +172,7 @@ class InvoiceController extends Controller
          $record = SaleTransaction::findOrFail($record);
 
          if ($record->customer_id) {
-            $customer = User::findOrFail($record->user_id);
+            $customer = User::findOrFail($record->customer_id);
             $buyer = new Buyer([
                 'name' => $customer->full_name,
                 'custom_fields' => [
@@ -217,7 +218,8 @@ class InvoiceController extends Controller
                 $invoiceItem = (new InvoiceItem())
                     ->title($items->service->service_name)
                     ->quantity($items->quantity)
-                    ->pricePerUnit($items->service->price);
+                    ->pricePerUnit($items->service->price)
+                    ->subTotalPrice($items->total_price);
                 
                 $invoice->addItem($invoiceItem);
             }
