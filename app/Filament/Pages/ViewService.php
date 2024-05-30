@@ -43,7 +43,7 @@ class ViewService extends Page implements HasForms, HasActions
     public function mount(Request $request)
     {
 
-        // $this->id = session('id');
+       
         $this->id = $request->query('id');
         $this->service = Service::find($this->id);
         $this->containsTarpaulin = Str::contains($this->service->service_name, 'Tarpaulin');
@@ -66,8 +66,8 @@ class ViewService extends Page implements HasForms, HasActions
     public function addToCartAction(): Action
     {
         return Action::make('addToCart')
-            ->action(
-               function(){
+            ->action(function(){
+
                 $record = Service::find($this->id);
 
                 $existingCartItem = Cart::where('service_id', $record->id)
@@ -107,9 +107,6 @@ class ViewService extends Page implements HasForms, HasActions
                                 ])
                                 ->send();
                             }
-
-                            return redirect(ViewService::getUrl())->with('id', $this->id);
-        
                     } else {
                         // If the entity does not exist, create a new one
                         $add_to_cart = new Cart([
@@ -149,8 +146,6 @@ class ViewService extends Page implements HasForms, HasActions
                             ])
                             ->send();
                         }
-                        
-                        return redirect(ViewService::getUrl())->with('id', $this->id);
                }
             }
         );
