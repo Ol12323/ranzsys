@@ -48,16 +48,7 @@ class Home extends Page
 
     public function __construct()
     {
-        // Retrieve the featured services data
-        // $this->featured = Service::where('availability_status', '!=', 'Not Available')
-        //     ->orderBy('created_at', 'desc')
-        //     ->take(4)
-        //     ->get();
-
         $this->featured = Service::where('availability_status', '!=', 'Not Available')
-        ->whereHas('category', function($query) {
-            $query->where('category_name', 'Photography');
-        })
         ->whereNull('deleted_at')
         ->orderBy('created_at', 'desc')
         ->take(8)

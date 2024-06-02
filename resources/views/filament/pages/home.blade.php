@@ -99,7 +99,7 @@
         <div id="featuredServices" class="container px-6 py-8 mx-auto">
             <div class="bg-transparent">
                 <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                    <h2 class="text-2xl font-semibold tracking-tight text-gray-800 dark:text-white">Featured Services: Top New Additions by Ranz Photography</h2>
+                    <h2 class="text-2xl font-semibold tracking-tight text-gray-800 dark:text-white">Newly Added Services</h2>
                     <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                         @foreach ($featured as $item)
                         <div class="group relative">
@@ -133,7 +133,7 @@
         <div id="topSalesServices" class="container px-6 py-8 mx-auto">
           <div class="bg-transparent">
               <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                <h2 class="text-2xl font-semibold tracking-tight text-gray-800 dark:text-white">Best Sellers: Most Popular Services</h2>
+                <h2 class="text-2xl font-semibold tracking-tight text-gray-800 dark:text-white">Top Selling Services</h2>
                 <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 @if ($featured->isNotEmpty())
                   @foreach ($topSalesServices as $item)

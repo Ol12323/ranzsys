@@ -9,6 +9,7 @@ use App\Models\SaleItem;
 use Illuminate\Support\Str;
 use Filament\Notifications\Notification;
 use Livewire\WithPagination;
+use Filament\Notifications\Actions\Action as NotifAction;
 
 class POS extends Component
 {
@@ -154,7 +155,7 @@ class POS extends Component
 
         Notification::make()
             ->success()
-            ->title('Transaction complete.')
+            ->title('New sale has been registered.')
             ->send();
     }
 
@@ -185,15 +186,21 @@ class POS extends Component
         $this->clearCart();
         $this->customerCash = 0.00;
 
-        Notification::make()
-            ->success()
-            ->title('New sale has been registered.')
-            ->send();
-
         $saleId = $sale_transaction->id;
 
-        // $this->redirect(route('generate.sale-invoice', $saleId));
-        return redirect()->route('generate.sale-acknowledgement-receipt', $saleId)->with('_blank');
+        Notification::make()
+            ->title('New sale has been registered.')
+            ->body('Click the button "View receipt" to generate an acknowledgement receipt.')
+            ->success()
+            ->seconds(10)
+            ->actions([
+                NotifAction::make('viewReceipt')
+                    ->button('primary')
+                    ->url(route('generate.sale-acknowledgement-receipt', $saleId), shouldOpenInNewTab:true),
+                NotifAction::make('undo')
+                    ->color('gray'),
+            ])
+            ->send();
     }
 
     public function render()

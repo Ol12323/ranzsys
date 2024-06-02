@@ -326,10 +326,12 @@ class InvoiceController extends Controller
                     'Generated At' => now()->format('F j, Y'),
                 ];
 
-                $queryBuilder = SaleTransaction::select('sales_name','process_type', 'customer_id', 'processed_by', 'total_amount', 'created_at')
+                
+                $queryBuilder = SaleTransaction::with(['customer', 'staff'])
+                    ->select('sales_name','process_type', 'customer_id', 'processed_by', 'total_amount', 'created_at')
                     ->whereBetween('created_at', [$fromDateParsed, $toDateParsed])
                     ->orderBy('created_at');
-            
+        
                 $columns = [
                     'Invoice No.' => 'sales_name',
                     'Process Type' => 'process_type',
@@ -373,6 +375,5 @@ class InvoiceController extends Controller
                 
                         return redirect()->back()->with('error', 'Failed to generate report. Please try again later.');
                     }
-                } 
-
+                 } 
 }

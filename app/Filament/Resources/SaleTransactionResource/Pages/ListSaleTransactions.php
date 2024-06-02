@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Filament\Forms\Components\DatePicker;
 use Filament\Actions\ActionGroup;
-
+use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action as NotifAction;
 
 class ListSaleTransactions extends ListRecords
 {
@@ -34,10 +35,22 @@ class ListSaleTransactions extends ListRecords
                 $fromDate = $data['fromDate'];
                 $toDate = $data['toDate'];
 
-                return redirect()->route('generate.sales-per-service-report', [
-                    'fromDate' => $fromDate,
-                    'toDate' => $toDate,
-                ]);
+                Notification::make()
+                ->title('Sales Per Service Report Generated Successfully')
+                ->body('Click the button "View Report" to open the report in a new tab.')
+                ->success()
+                ->seconds(10)
+                ->actions([
+                    NotifAction::make('viewReport')
+                        ->button('primary')
+                        ->url(route('generate.sales-per-service-report', [
+                            'fromDate' => $fromDate,
+                            'toDate' => $toDate,
+                        ]), shouldOpenInNewTab:true),
+                    NotifAction::make('undo')
+                        ->color('gray'),
+                ])
+                ->send();
             }),
              //2nd Action
              Actions\Action::make('salesPerTransaction')
@@ -52,11 +65,23 @@ class ListSaleTransactions extends ListRecords
              ->action(function (array $data){
                  $fromDate = $data['fromDate'];
                  $toDate = $data['toDate'];
- 
-                return redirect()->route('generate.sales-per-transaction-report', [
-                     'fromDate' => $fromDate,
-                     'toDate' => $toDate,
-                 ]);
+
+                 Notification::make()
+                 ->title('Sales Per Transaction Report Generated Successfully')
+                 ->body('Click the button "View Report" to open the report in a new tab.')                 
+                 ->success()
+                 ->seconds(10)
+                 ->actions([
+                    NotifAction::make('viewReport')
+                        ->button('primary')
+                        ->url(route('generate.sales-per-transaction-report', [
+                                'fromDate' => $fromDate,
+                                'toDate' => $toDate,
+                            ]), shouldOpenInNewTab:true),
+                    NotifAction::make('undo')
+                        ->color('gray'),
+                ])
+                ->send();
              }),
             ])
             ->label('Generate Sales Report')

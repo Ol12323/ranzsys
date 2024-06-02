@@ -33,9 +33,6 @@ class CustomerServiceController extends Controller
     public function index()
     {
         $featured = Service::where('availability_status', '!=', 'Not Available')
-        ->whereHas('category', function($query) {
-            $query->where('category_name', 'Photography');
-        })
         ->whereNull('deleted_at')
         ->orderBy('created_at', 'desc')
         ->take(8)
