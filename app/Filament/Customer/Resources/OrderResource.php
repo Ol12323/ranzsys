@@ -46,8 +46,7 @@ class OrderResource extends Resource
         $count = static::getModel()::query()
             ->where('user_id', $user)
             ->where(function($query) {
-                $query->where('status', '!=', 'Completed')
-                    ->where('status', '!=', 'Canceled');
+                $query->whereNotIn('status', ['Decline', 'Completed', 'Cancelled', 'Picked up']);
             })
             ->count();
 
@@ -277,10 +276,6 @@ class OrderResource extends Resource
                 TextColumn::make('order_name')
                 ->searchable()
                 ->sortable(),
-                // ImageColumn::make('service.service.service_avatar')
-                // ->square()
-                // ->stacked()
-                // ->label('Orders'),
                 TextColumn::make('status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {

@@ -91,11 +91,6 @@ class User extends Authenticatable implements FilamentUser, HasName, HasAvatar, 
         return $this->last_name . ','.' ' . $this->first_name;
     }
 
-    public function appointments()
-    {
-        return $this->hasMany(Appointment::class, 'customer_id');
-    }
-
     public function carts()
     {
         return $this->hasMany(Cart::class);

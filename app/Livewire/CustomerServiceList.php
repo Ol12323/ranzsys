@@ -28,12 +28,14 @@ class CustomerServiceList extends Component
             // ->whereNull('deleted_at');
 
             // Retrieve all rows except for those with "Tarpaulin" in their service_name
-        $query1 = Service::where('Availability_status', '!=', 'Not Available')
+        $query1 = Service::with('category')
+        ->where('Availability_status', '!=', 'Not Available')
         ->where('service_name', 'not like', '%Tarpaulin%')
         ->whereNull('deleted_at');
 
         // Retrieve only one row with "Tarpaulin" in its service_name
-        $query2 = Service::where('Availability_status', '!=', 'Not Available')
+        $query2 = Service::with('category')
+            ->where('Availability_status', '!=', 'Not Available')
             ->where('service_name', 'like', '%Tarpaulin%')
             ->whereNull('deleted_at')
             ->take(1);
@@ -76,16 +78,15 @@ class CustomerServiceList extends Component
 
     public function render(): View
     {
-        // $query = Service::where('Availability_status', '!=', 'Not Available')
-        // ->whereNull('deleted_at');
-
         // Retrieve all rows except for those with "Tarpaulin" in their service_name
-        $query1 = Service::where('Availability_status', '!=', 'Not Available')
+        $query1 = Service::with('category')
+            ->where('Availability_status', '!=', 'Not Available')
             ->where('service_name', 'not like', '%Tarpaulin%')
             ->whereNull('deleted_at');
 
         // Retrieve only one row with "Tarpaulin" in its service_name
-        $query2 = Service::where('Availability_status', '!=', 'Not Available')
+        $query2 = Service::with('category')
+            ->where('Availability_status', '!=', 'Not Available')
             ->where('service_name', 'like', '%Tarpaulin%')
             ->whereNull('deleted_at')
             ->take(1);

@@ -27,7 +27,7 @@ class SalesPerServiceChart extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'Top 10 Best-Selling Services by Total Revenue';
+    protected static ?string $heading = 'Top 10 Leading Services by Sales';
 
     /**
      * Chart options (series, labels, types, size, animations...)

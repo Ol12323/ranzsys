@@ -101,6 +101,9 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing( function ($query){
+                return $query->with('role');
+            })
             ->paginated([10, 25, 50, 100])
             ->columns([
                 ImageColumn::make('avatar')

@@ -95,6 +95,9 @@ class ServiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing( function ($query){
+                return $query->with('category');
+            })
             ->paginated([10, 25, 50, 100])
             ->columns([
                 ImageColumn::make('service_avatar')

@@ -46,7 +46,7 @@ class OrderResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::query()->where('status','!=', 'Completed')->count() >= 1 ? static::getModel()::query()->where('status','!=', 'Completed')->count() : false ;
+        return static::getModel()::query()->whereNotIn('status', ['Decline', 'Completed', 'Cancelled', 'Picked up'])->count() >= 1 ? static::getModel()::query()->whereNotIn('status', ['Decline', 'Completed', 'Cancelled', 'Picked up'])->count() : false ;
     }
 
     public static function getNavigationBadgeColor(): ?string

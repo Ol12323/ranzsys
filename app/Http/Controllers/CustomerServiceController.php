@@ -32,7 +32,8 @@ class CustomerServiceController extends Controller
 
     public function index()
     {
-        $featured = Service::where('availability_status', '!=', 'Not Available')
+        $featured = Service::with('category')
+        ->where('availability_status', '!=', 'Not Available')
         ->whereNull('deleted_at')
         ->orderBy('created_at', 'desc')
         ->take(8)
@@ -47,7 +48,7 @@ class CustomerServiceController extends Controller
         ->pluck('service_id'); // Get the top 8 service IDs
 
         // Fetch the service details using the top 8 service IDs
-        $topSalesServices = Service::whereIn('id', $topServices)->get();
+        $topSalesServices = Service::with('category')->whereIn('id', $topServices)->get();
 
         return view('welcome', compact('featured', 'topSalesServices'));
     }

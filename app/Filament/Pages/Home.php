@@ -48,7 +48,8 @@ class Home extends Page
 
     public function __construct()
     {
-        $this->featured = Service::where('availability_status', '!=', 'Not Available')
+        $this->featured = Service::with('category')
+        ->where('availability_status', '!=', 'Not Available')
         ->whereNull('deleted_at')
         ->orderBy('created_at', 'desc')
         ->take(8)
@@ -63,7 +64,7 @@ class Home extends Page
         ->pluck('service_id'); // Get the top 8 service IDs
 
         // Fetch the service details using the top 8 service IDs
-        $this->topSalesServices = Service::whereIn('id', $this->topServices)->get();
+        $this->topSalesServices = Service::with('category')->whereIn('id', $this->topServices)->get();
     }
 
     protected static string $view = 'filament.pages.home';

@@ -192,6 +192,9 @@ class CartResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing( function ($query){
+                return $query->with('service');
+            })
             ->paginated([10, 25, 50, 100])
             ->defaultGroup('service.category.category_name')
             ->headerActions([
