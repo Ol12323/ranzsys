@@ -16,7 +16,7 @@
     </div>
   </section>
   <section class="dark:bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] dark:from-blue-800 dark:via-gray-950 dark:to-transparent bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-800 via-transparent to-transparent">
-    <div class="container px-6 py-10 mx-auto">
+    <div class="container px-14 py-10 mx-auto">
         <section class="mt-8 space-y-8 lg:mt-12">
             <section class="lg:flex lg:items-center">
                 <div class="lg:w-1/2 ">
@@ -59,7 +59,7 @@
     </div>
   </section>
 <section class="text-gray-600 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-blue-600 via-transparent to-transparent dark:bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-blue-600 via-transparent to-transparent">
-  <div class="container px-5 py-24 mx-auto flex flex-wrap">
+  <div class="container px-14 py-24 mx-auto flex flex-wrap">
     <div class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
       <h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight text-gray-800 xl:text-3xl dark:text-white">
         Capturing Moments, Creating Memories: <span class="text-blue-400">The Importance of Photography.</span>
